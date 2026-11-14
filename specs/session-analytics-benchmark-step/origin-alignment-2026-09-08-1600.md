@@ -26,6 +26,5 @@ Confidence: high
 
 Checked 2026-09-08 by re-reading the owner's messages, the proposal
 (§3 of doc_internal/plans/studio-graph-search-benchmark-2026-09-08.md,
-gitignored), the shipped correlate contract (#91: Claude Code-only exact
 join; outcomes for every backend, #92), and the reviewer's findings on
 PR #321 at a7f01d7.

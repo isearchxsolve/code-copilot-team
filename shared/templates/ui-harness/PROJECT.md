@@ -2,7 +2,6 @@
 
 An **add-on bundle**, not a standalone project type. It gives any web project a
 committed design-steering bundle plus a tool-agnostic visual-review loop that stops
-AI-generated UI from converging on the generic "AI look." Layer it on top of a web
 template (e.g. `web-dynamic`, `web-static`) or any existing frontend.
 
 ## What it ships
@@ -42,7 +41,6 @@ npm run copilot:review
 ```
 
 - **Critic = agent** (default): the runner emits screenshots + a request; the driving
-  agent (Claude Code `visual-reviewer`) reads the PNGs and scores them.
 - **Critic = vision** (`CRITIC=vision`): the runner calls a vision LLM over HTTPS
   (key via `ANTHROPIC_API_KEY`/`VISION_API_KEY`) and gates via exit code — for
   copilots without a multimodal agent.
@@ -56,7 +54,6 @@ and SKIPs the visual pass (DOM rubric + critique need a browser); a dead server 
 - Read the `design-system` skill before building UI (derive direction, override the
   four defaults, enforce the anti-slop catalog + state coverage).
 - Read the `visual-review` skill for the loop protocol and exit criteria.
-- On Claude Code, the `visual-reviewer` agent drives the loop as the multimodal critic.
 
 This governs **appearance and structure only** — a polished UI is not a secure
 backend. Keep `security-review` in the loop for auth/data paths.

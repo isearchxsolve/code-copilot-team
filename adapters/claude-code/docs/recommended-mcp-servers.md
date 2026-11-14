@@ -1,6 +1,4 @@
-# Recommended MCP Servers for Claude Code
 
-MCP (Model Context Protocol) servers extend Claude Code with external capabilities — databases, documentation, file systems, and custom tools.
 
 ## Recommended Servers
 

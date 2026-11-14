@@ -85,7 +85,6 @@ def run_setup(
                 "  via your local `claude` CLI (raw code is stripped under 'code'\n"
                 "  redaction). Choose Ollama for a fully-local judge.\n"
             )
-            model = _prompt("Anthropic model (blank = Claude Code default / Opus 4.8)", "")
         elif backend == "ollama":
             model = _prompt("Ollama model", "llama3")
         else:  # openai-compatible

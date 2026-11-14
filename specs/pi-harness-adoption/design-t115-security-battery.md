@@ -11,7 +11,6 @@ genuine gaps, and honestly calls out what is intentionally degraded.
 - **Item 11 (security tests):** path traversal, symlinks, shell-wrapper bypass,
   injection via docs/tool output, package substitution, fork bombs, worktree
   cross-contamination, analytics secret leakage.
-- **Item 12 (cross-adapter contract):** Claude Code and Pi agree on SDD
   classification, artifacts, phase order, gate/permission decisions, review
   artifact formats, provider dispatch, verification outcomes, analytics
   semantics — **behavioral parity, not identical text**.

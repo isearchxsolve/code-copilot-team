@@ -23,7 +23,6 @@ build → boot dev server → rubric pre-filter (cheap, deterministic)
 **Deterministic harness + pluggable critic.** The `harness/` runner does the
 identical-for-every-copilot parts (boot, screenshot, axe, rubric pre-filter, emit
 artifacts). The **critic** (aesthetic judgment) is either:
-- **Agent critic** (Claude Code): the `visual-reviewer` agent reads the PNGs
   directly (a picture is worth 1000 tokens) and scores them.
 - **Runner critic** (any other copilot): the runner calls a vision-LLM (provider,
   model, key from env) and writes `critique-feedback.json`.

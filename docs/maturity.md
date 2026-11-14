@@ -58,7 +58,6 @@ An adapter is **Enforced** when at least one feature names it `enforced`, and
 or a web app and need nothing from any adapter.
 
 Per-capability detail for the enforced adapters (which runtime capabilities
-are `enabled`, `degraded` or `disabled` on Claude Code and Pi) is the
 generated [compatibility matrix](../shared/capabilities/COMPATIBILITY.md);
 the feature catalog references those capability ids rather than restating
 their status.

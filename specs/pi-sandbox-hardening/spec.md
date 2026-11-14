@@ -107,7 +107,6 @@ the `pi-code worktree run` handoff exec's the worker pi with the full host env.
   `claude-code.yaml`, `adapters/pi/runtime/capabilities.ts`). Pi:
   **`degraded`** — enforced at CCT spawn boundaries; the primary session's env
   is untouched by design and Pi cannot verify what the OS/sandbox exposes.
-  Claude Code: **`disabled`** (not implemented in that adapter; its sandboxing
   is native). `validate-capabilities.sh` stays green.
 - **FR-7 — Battery consolidation.** One new canonical invariant in
   `security-battery.test.mjs`: a credential-shaped var present in the parent

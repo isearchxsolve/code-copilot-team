@@ -3,7 +3,6 @@
 // Deterministic parts (identical for every copilot): boot check, screenshot per
 // breakpoint, axe-core a11y gate, anti-slop rubric. Pluggable CRITIC:
 //   --critic=agent  (default) → emit screenshots + request; the driving agent
-//                                (e.g. Claude Code visual-reviewer) reads the PNGs
 //                                and decides. Runner exits 0 after emitting.
 //   --critic=vision           → call a vision LLM over HTTPS (no SDK), parse a
 //                                JSON verdict, gate via exit code.
@@ -290,7 +289,6 @@ async function visionCritique(designMd: string, shots: { label: string; file: st
     VISUAL_REQUEST
       ? ', "criteria": [{"verdict": "pass"|"fail", "evidence": string}]'
       : ''
-  }}. passed=false if it reads as generic/AI-generated or violates the steering.${
     VISUAL_REQUEST
       ? ` Return EXACTLY ${VISUAL_REQUEST.criteria.length} criteria entries, one per numbered criterion above, in the same order. Do NOT echo the criterion text or any identifier — only your verdict and the evidence you observed.`
       : ''

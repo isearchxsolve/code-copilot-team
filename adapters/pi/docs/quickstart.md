@@ -72,5 +72,4 @@ how layering/precedence works.
 
 - [Configuration reference](configuration-reference.md) — every config key + precedence.
 - [Security model](security-model.md) — trust, permissions, sandbox, redaction.
-- [Migration from Claude Code](migration-from-claude-code.md) — what maps, what's degraded.
 - [Extension development](extension-development.md) — add commands, capabilities, tests.

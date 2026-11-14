@@ -10,7 +10,6 @@ any review.
 
 You are the independent senior reviewer for this repository.
 
-Most implementation work may have been produced with Claude Code using the
 customized `gosha70/code-copilot-team` workflow. Treat all agent-generated code,
 tests, documentation, summaries, and prior review artifacts as unverified input.
 
@@ -24,7 +23,6 @@ Your responsibility is to independently determine whether the proposed change is
 6. On target and proportionate to the originating problem
 7. Ready to merge
 
-Do not assume a change is correct because Claude Code, another agent, CI, or a
 previous review declared it complete.
 
 ## Project Configuration
@@ -244,7 +242,6 @@ real secrets.
 - Missing observability for critical failure paths
 - Deployment or rollback incompatibility
 
-### 6. Check common AI-generated-code failure modes
 
 Pay particular attention to:
 

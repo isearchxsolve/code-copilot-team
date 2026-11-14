@@ -21,7 +21,6 @@ Working claim (as built):
 > copilot_session, _SCHEMA_VERSION 10, six _REQUIRED_COLUMNS entries;
 > harness_stamps.read_ledger (sanitised, earliest by recorded_at then
 > file order, mixed on any later difference, cached per
-> path/mtime/size); the Claude Code adapter reads `version` and joins
 > by native session id (a second CLI version → mixed); upsert_session
 > writes the six; _SESSION_COLS serves them; the header lists the five
 > facts with the sha/digests shortened and full on hover, "mixed —

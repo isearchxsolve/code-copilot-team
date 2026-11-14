@@ -34,7 +34,6 @@ the primary guide. Maturity and release state are defined in
 | [UI design harness](../shared/templates/ui-harness/DESIGN.md) | Generated UI is steered by a committed DESIGN.md and design tokens and gated by a visual-review loop with an accessibility check and an anti-slop rubric. | stable | v1.1.0 |
 | [LLM wiki maintainer](../knowledge/README.md) | Lessons and decisions are promoted into a curated project wiki that agents consult before re-reading raw sources, with an ingest pipeline and a lint. | stable | v1.1.0 |
 | [Benchmark harness](../benchmarks/README.md) | Coding agents are run against a task set through pluggable backends and scored with a judge, so a configuration change is measured rather than felt. | beta | v1.1.0 |
-| [Session analytics](../docs/session-analytics-cookbook.md) | Claude Code, Pi and Aider sessions are ingested into a store and queried for cost, turns, tool use, phases, labels and struggle signals from a CLI or an MCP server. | stable | v1.1.0 |
 | [Studio web UI](../docs/session-analytics-cookbook.md) | The analytics, benchmarks, auto-build runs, team alerts and the project's own documentation are browsed in one local web app with a settings page for the judge and embedding providers. | beta | v2.0.0 |
 | [LLM routing profiles](../docs/llm-routing.md) | Auto-build tasks are routed to a backend by route class and role under an execution profile, with validate, status and explain commands and a scheduled tick. | experimental | v2.0.0 |
 | [MemKernel persistent memory](../shared/skills/memkernel-memory/SKILL.md) | Session context is recalled at start, checkpointed before compaction and recovered after it by hooks that activate only when MemKernel is installed. | experimental | v1.1.0 |
@@ -71,7 +70,6 @@ that the feature runs outside any adapter.
 
 ## Slash commands
 
-Type these in an agent session (e.g. Claude Code).
 
 | Command | What it does |
 |---------|--------------|
@@ -80,7 +78,6 @@ Type these in an agent session (e.g. Claude Code).
 | `/cooldown` | Close out a cycle — invoke `cooldown-report` and finalize the active pitch's bet status. |
 | `/cycle-start` | Begin a cycle for a bet pitch — initializes the hill chart and transitions the pitch to `building`. |
 | `/hill` | Update a scope's status on the hill chart of the active pitch. |
-| `/list-agents` | List the custom subagents installed on this machine and in this project — the replacement for the built-in `/agents` command removed from recent Claude Code versions. |
 | `/origin-check` | Run the origin-confirmation circuit breaker for a feature. Validates that the working spec/plan is a faithful realisation of the user's original idea, and surfaces an interactive escalation if it has drifted. |
 | `/phase-complete` | Signal phase completion. Validates that the review loop has passed (if peer review is enabled) and runs the post-phase checklist. |
 | `/promote-lesson` | Promote a session-level lesson into the project wiki at `knowledge/wiki/`. Follows the canonical curator procedure; never edits the wiki without it. |

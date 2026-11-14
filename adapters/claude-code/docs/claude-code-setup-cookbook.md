@@ -1,4 +1,3 @@
-# **🎛️ Claude Code Setup Cookbook**
 
 *(Optimized for Multi-Phase SDLC \+ Token Economy \+ Shared Rules)*
 
@@ -32,9 +31,7 @@ COPILOT\_RULES.md
 This separates internal reference from public code, reduces accidental context leaks, and keeps project config tidy. ([YouTube](https://www.youtube.com/watch?v=P-5bWpUbO60&utm_source=chatgpt.com))
 
 🔹 **Editor Integrations**  
-Use Claude Code CLI inside terminal plus editor extensions:
 
-* VS Code (via “Claude Code” or local LLM extensions)  
 * Cursor (with custom rules)  
 * JetBrains (IntelliJ/PyCharm)  
 * Dedicated shell workflow (CLI with aliases)
@@ -72,7 +69,6 @@ This folder contains non-public artefacts (which should *not be re-sent to the L
 * **OPERATIONAL\_RULES.md** — specific coding rules  
 * **CONTEXT.md** — summaries intended for Claude  
 * **HISTORY.md** — timestamped log of prior sessions  
-* **CLAUDE.md** — Claude Code manifest & default rules
 
 This structure avoids accidental repetition of *full context* in prompts, saving tokens over time. ([YouTube](https://www.youtube.com/watch?v=P-5bWpUbO60&utm_source=chatgpt.com))
 
@@ -80,7 +76,6 @@ This structure avoids accidental repetition of *full context* in prompts, saving
 
 ## **📜 3\. Model Selection & Prompt Modules**
 
-Claude Code (Opus 4.5+) supports model selection and prompt scaffolding. Use **prompt modules** — reusable sections — and use *prompt caching* where supported:
 
 Model and effort are real `settings.json` keys (`~/.claude/settings.json`
 globally, `.claude/settings.json` per project); `/model` and `/effort` change
@@ -116,7 +111,6 @@ This lets you trade token cost vs reasoning depth. ([Wikipedia](https://en.wikip
 
 **Prompt Caching — Extended TTL**
 
-By default, Claude Code uses a 5-minute prompt cache TTL. For long multi-phase sessions (30+ minutes with the same context), enable the 1-hour TTL:
 
 ```bash
 export ENABLE_PROMPT_CACHING_1H=1
@@ -128,7 +122,6 @@ Or persist in `settings.json` via `"env": {"ENABLE_PROMPT_CACHING_1H": "1"}`. Th
 
 ## **🧠 4\. Universal Engineering Rules (Enforce Across Copilots)**
 
-These should live in **OPERATIONAL\_RULES.md** and be enforced by Claude Code / your local Copilot workflows:
 
 ### **🔹 General Best Practices**
 
@@ -242,7 +235,6 @@ Trigger: code\_write
 Follow-up: run linters \+ test suite  
 Output: failures \+ suggested fixes
 
-Claude Code’s agent frameworks increasingly support test runs and integrations (even GitHub Actions). ([YouTube](https://www.youtube.com/watch?v=nItsfXwujjg&utm_source=chatgpt.com))
 
 ---
 
@@ -262,7 +254,6 @@ Reflecting current research, “agentic coding manifests” like Claude.md files
 
 ## **📈 9\. Shared Config Templates (Cross-Copilot)**
 
-Here are reusable templates you can apply whether you’re using **Claude Code, GitHub Copilot, Cursor, or local LLM workflows**:
 
 ### **🔹 Error Patterns File**
 
@@ -290,7 +281,6 @@ All AI copilots can be coerced to follow these by embedding them into prompts on
 
 ## **🧠 Closing**
 
-What you want is **not just better prompts**, it’s **a shared engineering contract** — files, templates, rules, versioned artifacts, and workflows that all agents respect. This turns Claude Code / Copilot / Cursor / local LLMs into *repeatable, programmable teammates* rather than unpredictable assistants.
 
 If you want, I can generate **executable CLI templates** (shell scripts) that initialize this entire repo structure and include pre-built templates oriented to your SDLC. Just let me know your preferred language ecosystem (Python \+ Node \+ Java?) and I’ll produce them.  
 

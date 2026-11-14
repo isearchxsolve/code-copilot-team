@@ -2,7 +2,6 @@
 #
 # Mirrors benchmark_runner.contracts: frozen dataclasses + a
 # runtime_checkable Protocol. The pipeline is copilot-agnostic — any
-# copilot (Claude Code, Aider, future Cursor/Codex) implements
 # ``SessionAdapter`` to turn its native on-disk format into a uniform
 # ``RawSession``. The relational/graph/judge layers downstream never see
 # copilot-specific shapes.
@@ -34,7 +33,6 @@ class SessionRef:
 
     ``discover`` must be cheap (a directory glob / index query) so the
     incremental layer can decide whether to ``load`` (full parse) at all.
-    A logical session may span multiple source files (Claude Code writes
     one JSONL per continuation but they share a ``sessionId``);
     ``source_files`` lists every file that contributes, and
     ``latest_mtime`` is the max mtime across them — the incremental gate
@@ -78,7 +76,6 @@ class RawToolCall:
 class RawTurn:
     """One message turn in a session.
 
-    ``parent_uuid`` threads the turn DAG (Claude Code); ``is_sidechain``
     marks subagent branches. Token fields are ``Optional[int]`` —
     ``None`` when the source did not report them. ``model`` is the model
     that produced THIS turn (per-message attribution, E5); adapters fall

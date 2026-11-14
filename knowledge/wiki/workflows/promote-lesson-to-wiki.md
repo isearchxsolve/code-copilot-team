@@ -24,7 +24,6 @@ If any of those four is false, do **not** run this workflow. Park
 the content in `knowledge/raw/`, in session memory, or in an issue
 — but not in the wiki.
 
-In Claude Code, the `/promote-lesson <description>` slash command
 runs this workflow on your behalf. The procedure below is the
 canonical, adapter-agnostic version; the slash command is a
 convenience wrapper around it.

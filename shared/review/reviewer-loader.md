@@ -15,7 +15,6 @@ Before reviewing:
    `docs/CODE_REVIEW_PROJECT.md` (project-owned configuration) with it.
 2. Read the applicable issue, origin artifact, and SDD files under `specs/`.
 3. Determine the complete review diff and merge base.
-4. Treat Claude Code completion claims and prior agent reviews as unverified.
 5. Perform an independent, read-only review.
 6. Do not modify files, commit, push, or apply fixes unless the user separately
    and explicitly requests implementation.

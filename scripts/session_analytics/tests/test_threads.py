@@ -2343,7 +2343,6 @@ class TestLineageSupport(StoreCase):
         """The non-empty registry is not a complete one.
 
         Registering one custom adapter first used to skip register_all()
-        and make Claude Code report unsupported.
         """
         from session_analytics import _register
         from session_analytics.registry import register_adapter

@@ -1,6 +1,5 @@
 # Session Management — Cheat Sheet
 
-Daily reference for managing Claude Code sessions effectively.
 
 ## Starting a Session
 
@@ -29,7 +28,6 @@ You do **not** need to run `/init` every time. `/init` is a one-time command to 
 
 ### Checkpointing & Rewind
 
-Claude Code automatically checkpoints conversation state and file edits made through Claude's file-editing tools (Edit, Write, etc.). You can rewind to any of those points without leaving the session.
 
 | Action | How |
 |---|---|
@@ -83,7 +81,6 @@ Because bash-side file changes are out of scope, treat rewind as a fast undo for
 
 - **Project session log** (`doc_internal/HISTORY.md`): Add to your project CLAUDE.md if you want it.
 - **Explicit memory requests**: Say `"remember that we use pnpm"` to save to auto-memory.
-- **Plan mode locality**: Claude Code's `/plan` mode writes a system file to `~/.claude/plans/` — ephemeral and invisible to new sessions or other copilot tools. **Write plan artifacts to the project directory FIRST, during plan creation:** `specs/<feature-id>/plan.md` for SDD feature work, or `doc_internal/plans/` for ad-hoc plans. Do not wait until plan mode exits. The `~/.claude/plans/` file is not the authoritative plan — the project-local file is.
 - **Spec artifact handoff**: The Plan agent writes `specs/<id>/plan.md` during planning (and `spec.md` when `spec_mode` is `full` or `lightweight`). Ensure they are committed so the Build agent can read them. Include `specs/lessons-learned.md` in handoff if it was updated.
 
 ## Parallel Development with Git Worktrees

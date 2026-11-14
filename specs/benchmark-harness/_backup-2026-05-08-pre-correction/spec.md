@@ -83,7 +83,6 @@ Out-of-scope for the MVP, on the explicit fork from issue origin:
 5. **Local vLLM run for an open-weights model.** A maintainer with a vLLM
    server running locally exports `CCT_VLLM_ENDPOINT=http://localhost:8000/v1`
    and runs `./scripts/benchmark run --benchmark aider-polyglot --backend vllm:<model> --runs 1`.
-   The harness produces the same shape of run record as for Claude Code,
    with token usage where the response includes it and `null` where it
    doesn't.
 
@@ -260,7 +259,6 @@ The stub backend copies `golden_patch` into the worktree and exits 0 — verifie
 
 The original issue required reproducing rlmkit#37 within strict bounds, against a single hand-graded gist. The rescoped gate:
 
-> Run the Aider Polyglot adapter against `claude-code:sonnet` on a small task subset (≥10 tasks, ≥1 per language). Compare the harness's per-language pass rate against Aider's published leaderboard for the same model. Material divergence is calibration data, not a blocker — but the merge commit must classify the cause: harness bug, backend difference (Claude Code wraps the model differently from Aider's edit loop), prompt difference, or agent-loop difference. If the harness cannot run the adapter end-to-end at all, the issue does not merge.
 
 The optional `rlmkit-llm-wiki-backbone` adapter from the original gate is deferred to issue #33 as one possible custom-CCT-fixture adapter, on equal footing with SWE-bench and BigCodeBench adapters.
 
@@ -372,7 +370,6 @@ Nothing in `scripts/` is reused; this is a new subsystem. The existing `scripts/
 ## Risks
 
 - **Aider Polyglot dataset shape changes.** The benchmark is maintained externally. Pin to a specific commit SHA in `benchmarks/adapters/aider-polyglot/REVISION` and document the upgrade procedure.
-- **Claude Code headless transcript format drifts.** The transcript parser is the most fragile MVP surface. Snapshot a transcript in tests; fail loudly on schema changes rather than silently mis-parsing usage.
 - **vLLM endpoint variability.** Different vLLM deployments expose different usage fields. Treat all token-usage fields as `Optional`; never crash on absence.
 - **Worktree contention.** `--runs 3` in parallel could race over the same worktree path. Worktrees are per-(run, task, attempt) — never shared. Cleanup on success; preserve on failure for postmortem.
 

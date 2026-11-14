@@ -161,7 +161,6 @@ New id **`agents.teams`**.
 - **Pi: `degraded`** (my/your default) — coordination state enforced; live peer
   execution + real message transport are not Pi primitives; synthesis/recovery/UI
   are T8.2.
-- **Claude Code: lean `disabled`** — Claude Code has native "Agent Team"
   configs, but the **CCT team-coordination ledger** (FR-012 shared ledger /
   claiming / approval / shutdown) is not implemented in the Claude adapter —
   parallel to how `agents.worktrees` is `disabled` there (native mechanism
@@ -183,7 +182,6 @@ a real message transport; live `/cct:` command wiring.
 
 ## Open questions for approval
 
-1. **Capability status** — Pi `degraded` (confirm). Claude Code `disabled`
    (lean, parallel to `agents.worktrees`) vs `enabled` (credit native Agent
    Teams like `agents.subagents`). My lean: **`disabled`**.
 2. **Two-file state model** — `.cct/team.json` (ledger) + `.cct/team-messages.jsonl`

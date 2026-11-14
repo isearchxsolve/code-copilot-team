@@ -398,7 +398,6 @@ rc=0
 grep -q "tools:.*Edit" "$ADAPTER_DIR/.claude/agents/plan.md" || rc=1
 assert_ok "Plan agent has Edit tool for specs/ artifacts" "$rc"
 
-# #407: Claude Code removes AskUserQuestion from every subagent even when
 # listed, so an agent that lists it is promising a question it cannot ask.
 rc=0
 grep -l '^tools:.*AskUserQuestion' "$ADAPTER_DIR"/.claude/agents/*.md >/dev/null 2>&1 && rc=1
@@ -945,8 +944,6 @@ SUPPORTED_TOOLS_ROW_COUNT=$(echo "$README_SUPPORTED_TOOLS_SECTION" | grep -Ec '^
 assert_eq "install guide lists 7 adapters" "7" "$SUPPORTED_TOOLS_ROW_COUNT"
 
 rc=0
-echo "$README_SUPPORTED_TOOLS_SECTION" | grep -Fq '| **Claude Code** | agents, hooks, commands, settings | `~/.claude/` (global) |' || rc=1
-assert_ok "install guide includes Claude Code row" "$rc"
 
 rc=0
 echo "$README_SUPPORTED_TOOLS_SECTION" | grep -Fq '| **Pi** | enforcement runtime extension + skills/prompts | `pi install` (advisory) / `pi-code` (enforced) |' || rc=1
@@ -1014,7 +1011,6 @@ README_CLAUDE_DOCS_EXPECTED_COUNT="${#README_CLAUDE_DOCS[@]}"
 
 README_CLAUDE_DOCS_SECTION=$(
   awk '
-    /^\*\*Claude Code specific:\*\*/ {in_section=1; next}
     /^\*\*Shared \(all tools\):\*\*/ && in_section {exit}
     in_section {print}
   ' "$REPO_DIR/README.md"

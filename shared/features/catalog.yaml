@@ -312,7 +312,6 @@ features:
   - id: session-analytics
     title: Session analytics
     problem: >-
-      Claude Code, Pi and Aider sessions are ingested into a store and
       queried for cost, turns, tool use, phases, labels and struggle
       signals from a CLI or an MCP server.
     maturity: stable

@@ -356,7 +356,6 @@ export default async function (pi: any): Promise<void> {
   };
 
   // The Pi adapter dir (<adapter>/runtime -> <adapter>), used to locate the
-  // sibling Claude Code plugin scripts the shell-hook adapter reuses (T5.1).
   const piAdapterDir = (): string | null => {
     try {
       const here = path.dirname(new URL(import.meta.url).pathname);
@@ -751,7 +750,6 @@ export default async function (pi: any): Promise<void> {
       }
     }
 
-    // 5) FR-010: reuse existing Claude Code PreToolUse veto hooks where the
     // semantics match, as a defense-in-depth layer behind the in-runtime
     // checks. Support-gated, audited, fail-closed (a veto hook that errors
     // blocks rather than silently allows). No-op when no script resolves.

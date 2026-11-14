@@ -64,8 +64,6 @@ is_always() {
   return 1
 }
 
-# ── Claude Code ──────────────────────────────────────────────
-# Claude Code reads shared/skills/ directly via setup.sh symlinks.
 # Sync authored-in-claude_code agents to adapters/claude-code/.
 CC_AGENTS_SOURCE="$REPO_DIR/claude_code/.claude/agents"
 CC_AGENTS_TARGET="$ADAPTERS/claude-code/.claude/agents"
@@ -79,7 +77,6 @@ for agent_file in $CC_SYNC_AGENTS; do
   fi
 done
 
-# ── Claude Code plugin ───────────────────────────────────────
 # The plugin is a second install path, generated from the same sources
 # setup.sh installs (spec: plugin-generate-from-sources). Authored, never
 # written here: .claude-plugin/plugin.json and hooks/hooks.json.
@@ -361,7 +358,6 @@ Review results are written to `specs/<feature-id>/collaboration/`:
 - `build-review.md` — build phase review (PASS or bypass required)
 - `plan-consult.md` — plan phase advisory review
 
-See `shared/skills/review-loop/SKILL.md` for the full protocol. The review commands (`/review-submit`, `/review-decide`) are currently implemented in the Claude Code adapter only.
 REVIEW_ADVISORY
     echo ""
   fi
@@ -413,7 +409,6 @@ Review results are written to `specs/<feature-id>/collaboration/`:
 - `build-review.md` — build phase review (PASS or bypass required)
 - `plan-consult.md` — plan phase advisory review
 
-See `shared/skills/review-loop/SKILL.md` for the full protocol. The review commands (`/review-submit`, `/review-decide`) are currently implemented in the Claude Code adapter only.
 REVIEW_ADVISORY
     echo ""
   fi
@@ -425,7 +420,6 @@ echo "[aider] Generated CONVENTIONS.md"
 # Generate CONTENT resources only (spec: pi-harness-adoption FR-003/P3):
 #   resources/skills/   — verbatim Agent Skills copies (Pi implements the
 #                         Agent Skills spec; zero conversion)
-#   resources/prompts/  — prompt templates converted from the Claude Code
 #                         adapter's static commands
 #   resources/context/  — always-context bundle (ALWAYS_SKILLS bodies)
 # NEVER writes into adapters/pi/runtime/, bin/, schemas/, or tests/ —
@@ -456,7 +450,6 @@ done
 PI_SKILL_COUNT=$(ls -d "$PI_RES/skills"/*/ 2>/dev/null | wc -l | tr -d ' ')
 echo "[pi] Copied $PI_SKILL_COUNT skills (verbatim, Agent Skills spec)"
 
-# Prompt templates: convert static Claude Code commands. Stateful commands
 # (mutate workflow state / start agents / enforce gates) are excluded here
 # and will be registered as extension commands by the runtime (Phase 2,
 # spec §11.5). Keep this list in sync with tasks.md T2.2.

@@ -42,7 +42,6 @@ agent in a subsequent session cannot reliably read prior chat state.
   has no access to the Plan phase's conversation. Anything in the
   conversation is gone.
 - **Memory layers are session-scoped.** Adapter-specific session
-  memory (Claude Code memory, MemKernel, equivalents) helps within
   a session and across short-term recalls, but is not the same
   contract as a committed file. A file in `specs/<id>/` survives
   any session, agent, or copilot tool.

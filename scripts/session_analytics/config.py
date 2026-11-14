@@ -144,7 +144,6 @@ ENV_FILE = REPO_ROOT / ".env"
 class JudgeConfig:
     """Judge resolution. ``model == ""`` means 'use the backend's native
     default model' — for the default ollama judge that is llama3; for the
-    opt-in claude-code judge it is Claude Code's own default (Opus 4.8
     today)."""
 
     override: Optional[tuple[str, str]]            # explicit (backend, model) from .env/env — global
@@ -356,7 +355,6 @@ class AnalyticsConfig:
     #: benchmark runs" step is skipped. Expanded, never validated here
     #: (the step reports a missing directory as its failure reason).
     benchmark_runs_root: str
-    #: #371 A4: the harness-stamp ledger the Claude Code adapter joins at
     #: ingest. Environment-only (CCT_HARNESS_STAMPS, the same name the
     #: hook honours) or the default ~/.cct/harness-stamps.jsonl — never a
     #: JSON key, which the hook could not see. A missing file is a no-op

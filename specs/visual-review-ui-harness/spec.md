@@ -16,7 +16,6 @@ Origin: gosha70/code-copilot-team#66 (authoritative `origin:` block in plan.md f
 
 ### US1: Copilot builds a non-generic frontend (Priority: HIGH)
 
-**Given** a copilot (Claude Code / Cursor / Codex / Copilot / Windsurf / Aider) starts UI work in a project with the harness installed
 **When** it reads the `design-system` skill and the committed `DESIGN.md` + `design/tokens.json` bundle
 **Then** it derives a domain-fit direction, overrides the four framework defaults (neutral/accent/font/radius), and builds against semantic tokens — so the output is bespoke by construction, not the training-data mean.
 
@@ -26,11 +25,9 @@ Origin: gosha70/code-copilot-team#66 (authoritative `origin:` block in plan.md f
 **When** the copilot runs `npm run copilot:review`
 **Then** the harness boots the app, runs the axe-core WCAG 2.2 AA gate + deterministic anti-slop rubric, screenshots at 375/768/1440, and a critic scores the result against `DESIGN.md`; the loop iterates (cap 3) until the design bar is met or hands residual findings to the human.
 
-### US3: The loop serves every adapter, not just Claude Code (Priority: MEDIUM)
 
 **Given** a non-Claude copilot with no multimodal agent
 **When** it runs the harness with `CRITIC=vision`
-**Then** the runner calls a vision LLM over HTTPS (provider/key from env) and gates via exit code — same rubric, same gates as the Claude Code agent critic.
 
 ### US4: Absent Playwright degrades cleanly (Priority: MEDIUM)
 
@@ -62,7 +59,6 @@ Origin: gosha70/code-copilot-team#66 (authoritative `origin:` block in plan.md f
 
 - **Steering bundle**: `DESIGN.md` (prose + machine-readable front-matter) + `design/tokens.json` (DTCG primitive→semantic) — the committed art-direction boundary.
 - **Harness**: `shared/templates/ui-harness/harness/` — `runner.ts` (orchestrator), `audit.ts` (a11y gate), `rubric.ts` (anti-slop pre-filter).
-- **Critic**: the aesthetic judge — the `visual-reviewer` agent (Claude Code) or a vision-LLM call (other adapters).
 - **Anti-slop catalog**: the enumerated tells→remedies bans enforced by the skill and the rubric.
 
 ## Success Criteria

@@ -1,6 +1,5 @@
 # Manual Testing Guide — Copilot Session Analytics (#63)
 
-Step-by-step manual verification for the Claude Code session-analytics pipeline.
 Each case lists the **command**, the **expected result**, and the **pass
 criterion**. Run from the repo root unless noted:
 `/Users/gosha/dev/repo/code-copilot-team`.
@@ -89,7 +88,6 @@ export DSN="sqlite:////tmp/sa.db"     # or your Postgres URL
 
 ---
 
-## 3. Ingestion (Claude Code — primary)
 
 | # | Command | Expected | Pass |
 |---|---|---|---|
@@ -206,7 +204,6 @@ judge math itself is covered by `test_judge.py` (fake judge).
 | # | Command | Expected | Pass |
 |---|---|---|---|
 | 9.1 starts | `PYTHONPATH=scripts:. /tmp/sa-venv/bin/python -m session_analytics mcp --db "$DSN"` | blocks on stdio (no crash); Ctrl-C to stop | starts without error |
-| 9.2 client | add to an MCP client (e.g. Claude Code) and call `search_sessions`, `get_session_details`, `analyze_patterns` | JSON results from your store | tools return data |
 
 Quick build check without a client:
 ```bash
@@ -247,7 +244,6 @@ Open `http://localhost:3000`. Tab checklist:
 | Tab | Check | Pass |
 |---|---|---|
 | **Dashboard** | counters (sessions/turns/tools/errors), by-copilot, tool-usage, sentiment, by-day render | numbers match `doctor` |
-| **Sessions** | search box filters; copilot dropdown shows only Claude Code + Aider; row → detail | navigates to detail |
 | **Session Detail → Insights** | turn timeline with role chips, slash-command + sentiment/correction/rework badges, quality | badges render |
 | **Session Detail → Agent Tuning** | assessment bullets + copy-ready JSON config | renders |
 | **Session Detail → Prompt Coaching** | per-user-turn table with "issue" column | renders |

@@ -144,7 +144,6 @@ The plugin adds safety guards: max iteration enforcement, stuck detection, and g
 
 ### Option 3: Slash Command
 
-Use `/project:ralph-start` within a Claude Code session to set up the PRD, progress file, and prompt interactively.
 
 ## Safety Guards
 

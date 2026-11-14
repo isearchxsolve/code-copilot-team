@@ -191,7 +191,6 @@ Validation rules (see `scripts/validate-pitch.sh`):
 
 ## Install surface
 
-After `setup.sh --sync` (Claude Code adapter), the runtime files live under
 `~/.claude/`:
 
 - `~/.claude/agents/{pitch-shaper,scope-executor,cycle-retro,cooldown-report}.md`

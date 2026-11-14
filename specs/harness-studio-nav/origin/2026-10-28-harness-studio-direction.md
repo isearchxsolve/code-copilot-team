@@ -50,11 +50,9 @@ three apologetically. They are under-represented, not over-represented.
 
 ## 3. The build instruction
 
-> Also can you setup the cli command to start a new Claude Code session
 > which will autonomously build the UI refacrtoring including adjusting
 > UI tool name from "Session Analyzer" to "Harness Studio" with auto
 > code review done by DeepSeek? The changes should be done in seperated
-> commis in one PR (Claude Code should be able create one). At the end I
 > will review all finished feature tomorrow.
 
 So: separate commits, one PR, DeepSeek as the gating reviewer, no merge

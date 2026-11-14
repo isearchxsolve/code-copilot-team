@@ -36,9 +36,7 @@ Opus 4.7 introduces a new effort level `xhigh` between `high` and `max`. Other m
 | `high` | Architecture, planning, detailed review | Research, Plan, Review |
 | `xhigh` | Complex multi-file reasoning, deep architectural analysis, hard debugging | Plan (large features), Review (cross-cutting PRs) |
 
-**Availability:** `xhigh` became selectable in Claude Code **v2.1.111+** when running Opus 4.7.
 
-**Default change:** From Claude Code **v2.1.117+**, `xhigh` is the **default** effort level for Opus 4.7. On v2.1.111–v2.1.116 the default is still `high` and you must opt in with `/effort xhigh`. Other models continue to default to `high` regardless of Claude Code version.
 
 Set per-session with `/effort <level>` (opens an interactive slider if called without arguments). Persist across sessions with the `effortLevel` setting in `settings.json`.
 
@@ -119,7 +117,6 @@ The 5-minute TTL is fine for short tasks. Use 1-hour when a session will span 30
 
 ### Caching Awareness
 
-Per Anthropic's April 30 2026 guidance, prompt caching is the single most important optimization for Claude Code workflows — but adaptive thinking interacts with it in ways worth knowing:
 
 - **Switching between `adaptive` and `enabled`/`disabled` thinking modes breaks cache breakpoints for messages.** System prompts and tool definitions remain cached, but per-message cache hits are lost.
 - **Pick one thinking mode per session and stay with it.** Toggling mid-session quietly halves cache effectiveness.
@@ -141,7 +138,6 @@ Use for: tailing a dev server during UI work, watching a long build or test suit
 
 ## CLI Facts (September 2026)
 
-Version-gated Claude Code facts from the v2.1.269–v2.1.273 releases. These are CLI behaviour, not tied to a model. Each gate is taken from the Claude Code changelog.
 
 ### `/output-style [name]` (v2.1.269+)
 
@@ -153,7 +149,6 @@ When the Bash tool handles file edits, the tool result includes a diff of the fi
 
 ### MCP disconnect notice (v2.1.273+)
 
-When an MCP server disconnects mid-session and automatic reconnection gives up, Claude Code shows a notification pointing at `/mcp`.
 
 ### Per-command network hosts in auto mode (v2.1.271+)
 

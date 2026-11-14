@@ -11,7 +11,6 @@ origin:
   origin_claim: |
     Integrate MemKernel (a code-aware memory MCP server at v0.1.0,
     /Users/gosha/dev/repo/memkernel) as an optional persistent-memory layer
-    for Claude Code sessions in this repo. The user owns both projects;
     this integration is the bridge from MemKernel's MCP surface into
     code-copilot-team's session loop.
 ---
@@ -20,7 +19,6 @@ origin:
 
 ## Context
 
-MemKernel is a code-aware memory MCP server (at `/Users/gosha/dev/repo/memkernel`) that provides persistent, searchable memory across Claude Code sessions via hybrid vector+BM25 search. It's at v0.1.0, not yet published to PyPI.
 
 A previous similar integration (GCC / Git Context Controller via Aline MCP) was added and removed after 23 days because: (1) external dependency fragility — silent failures when Aline was down, (2) conditional logic scattered across all 5 phase agents + hooks. This integration avoids both problems by isolating all MemKernel logic into a single on-demand rule + self-guarding hooks.
 

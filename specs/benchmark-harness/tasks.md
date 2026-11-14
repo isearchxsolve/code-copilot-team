@@ -75,14 +75,11 @@ Phased delivery on `feat/benchmark-harness`. Each task is bounded and independen
 
 **Phase 2 commit:** `feat(benchmark): Aider Polyglot adapter (pinned, multi-language)`
 
-## Phase 3 — Claude Code backend with provider-routing recording
 
-### T3.1 — Claude Code backend
 - **Output:** `backends/claude_code.py`. Spawns `claude -p <prompt>` in the worktree (no `--bare` by default — measures real product behavior with full autodiscovery + OAuth/keychain auth), captures stdout transcript, parses final-event usage. Model passed via `--model <id>` (separate flag from `--backend`). Transcript parser is its own function with a snapshot test.
 - **Done when:** unit test against committed transcript fixtures asserts parsed `tokens_input`, `tokens_output`, `tool_calls` match expected values; the fake-`claude`-shim test asserts the backend invokes the CLI with the right argv, sends the prompt on stdin, sets cwd to the worktree, and writes the transcript + model-output files.
 
 ### T3.2 — Provider-routing record (replaces the discarded vLLM backend)
-- **Output:** Claude Code backend reads `ANTHROPIC_BASE_URL`, `ANTHROPIC_AUTH_TOKEN_present` (boolean only — never the value), and the `claude_code_invocation` mode (`"launcher" | "bare"`) at run time and writes them into `BackendResult.backend_metadata`. The harness does NOT have a `--vllm-endpoint`-style flag — provider routing is set by the user in their shell, recorded by the harness.
 - **Done when:** with `ANTHROPIC_BASE_URL` set in the env, a run's `run-record.json["backend"]["metadata"]["provider_endpoint"]` reflects the value; with it unset, the field is `null`. With `CCT_CLAUDE_BARE=1`, `claude_code_invocation` is `"bare"` and `--bare` appears in the actual argv; otherwise `"launcher"` and no `--bare` flag.
 
 ### T3.3 — Backend registry + selection
@@ -93,7 +90,6 @@ Phased delivery on `feat/benchmark-harness`. Each task is bounded and independen
 - **Output:** documented invocation that runs `claude-code --model sonnet` against one Polyglot Python task, lands a real run record, and produces a real score. README documents a parallel example showing the same command with `ANTHROPIC_BASE_URL` set to a local vLLM/Ollama gateway. Not in CI.
 - **Done when:** maintainer can paste the command from the README and observe `result: pass` in `score.json`. With the gateway env var set, `backend_metadata.provider_endpoint` reflects the local URL.
 
-**Phase 3 commit:** `feat(benchmark): Claude Code backend with provider-routing recording`
 
 ## Phase 4 — Report + winner rule + dogfood gate
 
@@ -144,7 +140,6 @@ See `doc_internal/benchmark-issue-2-v3.md` and `-3-v3.md` for the v3 issue body 
 
 ## Out of scope entirely (not deferred — never)
 
-- vLLM/Ollama/LM Studio as **backends** — they are *providers*, configured per-backend via that backend's gateway env vars (e.g. `ANTHROPIC_BASE_URL` for Claude Code). The harness records the provider env vars; it does not set them.
 - Cursor / Windsurf as backends — GUI-only, no headless agent loop.
 - Per-run `--vllm-endpoint` / `--provider` CLI flags — provider routing is a shell-environment concern; the harness reads the env, doesn't set it.
 - Dollar-cost reporting — permanently deferred until cross-provider billing-correlation is solved.

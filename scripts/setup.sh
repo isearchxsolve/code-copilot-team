@@ -3,7 +3,6 @@
 #
 # Usage:
 #   ./scripts/setup.sh                     # auto-detect installed tools
-#   ./scripts/setup.sh --claude-code       # install Claude Code adapter
 #   ./scripts/setup.sh --codex             # install Codex adapter
 #   ./scripts/setup.sh --cursor <dir>      # install Cursor rules into project
 #   ./scripts/setup.sh --github-copilot <dir>  # install GH Copilot instructions
@@ -13,7 +12,6 @@
 #   ./scripts/setup.sh --sync              # regenerate + re-install active tools
 #   ./scripts/setup.sh --claude-code --memkernel /path/to/memkernel
 #
-# Claude Code and Codex install to global config dirs (~/.claude/, ~/.codex/).
 # Cursor, GitHub Copilot, Windsurf, and Aider install into a target project directory.
 
 set -euo pipefail
@@ -85,8 +83,6 @@ if $SHOW_HELP; then
   echo "Usage: $0 [--tool ...] [--all] [--sync] [project-dir]"
   echo ""
   echo "Tools (global install — no project dir needed):"
-  echo "  --claude-code     Install Claude Code config to ~/.claude/"
-  echo "  --playwright      Also install the Playwright MCP server (Claude Code only)"
   echo "  --codex           Install Codex config to ~/.codex/"
   echo "  --pi              Install Pi adapter (pi-code + runtime) to ~/.code-copilot-team/pi/"
   echo ""
@@ -100,15 +96,12 @@ if $SHOW_HELP; then
   echo "  --all             Install all adapters"
   echo "  --sync            Regenerate configs before installing"
   echo "  --wiki            Require the wiki tooling (wiki-studio in .venv); fail setup if it cannot be made ready"
-  echo "  --memkernel [dir] Install or enable MemKernel support for Claude Code"
   echo "  --help            Show this help"
   echo ""
   echo "Examples:"
-  echo "  $0 --claude-code              # Install Claude Code globally"
   echo "  $0 --claude-code --memkernel ~/src/memkernel"
   echo "  $0 --cursor ~/my-project      # Install Cursor rules into project"
   echo "  $0 --all ~/my-project         # Install everything"
-  echo "  $0 --sync --claude-code       # Regenerate then install Claude Code"
   exit 0
 fi
 
@@ -130,7 +123,6 @@ if [[ ${#TOOLS[@]} -eq 0 ]]; then
   echo "=== Auto-detecting installed tools ==="
   if command -v claude >/dev/null 2>&1 || [[ -d "$HOME/.claude" ]]; then
     TOOLS+=("claude-code")
-    echo "  Detected: Claude Code"
   fi
   if command -v codex >/dev/null 2>&1 || [[ -d "$HOME/.codex" ]]; then
     TOOLS+=("codex")
@@ -145,7 +137,6 @@ if [[ ${#TOOLS[@]} -eq 0 ]]; then
       # #212 (review P1): `setup.sh --playwright` is the command the docs
       # recommend. Exiting 0 here left the issue's own acceptance command
       # silently doing nothing — the exact defect, one branch further along.
-      echo "[ERROR] --playwright needs the Claude Code adapter, and no tools were detected."
       echo "        Run: bash $0 --claude-code --playwright"
       echo "        or:  bash adapters/claude-code/setup.sh --playwright"
       exit 1
@@ -181,7 +172,6 @@ if [[ ${#PLAYWRIGHT_ARGS[@]} -gt 0 ]]; then
     [[ "$tool" == "claude-code" ]] && _pw_ok=1
   done
   if [[ $_pw_ok -eq 0 ]]; then
-    echo "[ERROR] --playwright applies to the Claude Code adapter, which is not"
     echo "        in this run's tool set (${TOOLS[*]})."
     echo "        Add --claude-code, or run: bash adapters/claude-code/setup.sh --playwright"
     exit 1

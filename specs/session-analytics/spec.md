@@ -14,7 +14,6 @@ origin:
     - https://github.com/gosha70/code-copilot-team/issues/63
   origin_claim: |
     Issue #63 asks for a session analytics & process-mining pipeline mirroring
-    the (now-unreachable) kiro-analyzer: ingest Claude Code + other copilot
     sessions into PostgreSQL + an embedded Kùzu knowledge graph, run an
     LLM-as-Judge heuristic pass over turns, expose an MCP server, and surface a
     rich Next.js Studio UI (Dashboard, 5-step Analysis wizard, Knowledge-Graph
@@ -32,7 +31,6 @@ origin:
         false — the benchmark harness writes JSON files and the only SQLite is
         the Kiro source DB. This PR introduces Postgres via docker-compose; that
         footprint is net-new and owned here.
-      - The on-disk Claude Code JSONL format is richer than the issue's sketch:
         it has `thinking` blocks, `usage` token fields, `parentUuid` DAG
         threading, `isSidechain` subagent branches, and non-conversational line
         `type`s (`queue-operation`, `file-history-snapshot`, `system`, …) the
@@ -52,7 +50,6 @@ benchmarks don't capture. #63 fills that gap.
 
 ## Goals
 
-1. Ingest Claude Code (+ Aider) session data into a unified relational schema,
    idempotently and incrementally, with nothing leaving the machine by default.
 2. Build an embedded Kùzu knowledge graph (Session→Turn→Tool→File→Error + Workspace/
    Agent/Model/Developer) from the relational data.
@@ -63,11 +60,9 @@ benchmarks don't capture. #63 fills that gap.
 
 ## Non-Goals (this PR)
 
-- **A Kiro ingestion adapter.** This tool is the *Claude Code* analyzer; it mirrors
   the *architecture* of the upstream kiro-analyzer, which already owns Kiro
   ingestion. Re-implementing Kiro here would duplicate that. The relational/graph
   schema stays copilot-agnostic so a Kiro (or Cursor/Codex) adapter can be added
-  later without rework, but none ships in this PR. Claude Code is the primary,
   fully-validated adapter; Aider is the secondary multi-copilot example.
 - Enhancements E1–E10 are **not implemented** — but schema columns / extension hooks
   that would otherwise force a later migration are added up front (see Data Model).
@@ -132,7 +127,6 @@ the machine — this keeps the issue's privacy acceptance criterion ("no session
 content leaves the local machine unless explicitly configured") true out of the
 box. Fully pluggable via `.env` / Settings / `--judge` as an explicit opt-in:
 `claude-code` (reuses the benchmark `claude_code_judge` headless invocation;
-blank model = Claude Code's default, Opus 4.8 — sends *redacted* previews to
 Anthropic via the local `claude` CLI), or `openai` (any OpenAI-compatible
 endpoint — LM Studio / vLLM / OpenAI / Azure, via `CCT_SA_JUDGE_BASE_URL`;
 localhost endpoints keep it fully local).
@@ -143,14 +137,12 @@ the Studio lands on Settings until configured).
 
 ## Requirements (acceptance criteria from issue #63)
 
-- [ ] `session-analytics ingest` parses Claude Code JSONL into PostgreSQL.
 - [ ] `session-analytics analyze` runs LLM-as-Judge on un-labeled turns.
 - [ ] `session-analytics serve` starts the Studio UI on localhost.
 - [ ] Knowledge graph populated with Session→Turn→Tool→File→Error relationships.
 - [ ] MCP server exposes `search_sessions`, `get_session_details`, `analyze_patterns`.
 - [ ] Dashboard shows session counts, tool usage, error rates, heuristic distributions.
 - [ ] Graph explorer supports double-click expansion and Cypher queries.
-- [ ] At least 2 copilot adapters working (Claude Code + one other).
 - [ ] Idempotent ingestion (re-running doesn't duplicate data).
 - [ ] Privacy: no session content leaves the local machine unless explicitly configured.
 
@@ -179,7 +171,6 @@ the Studio lands on Settings until configured).
   + a restricted freeform editor, not full Neo4j parity.
 - Embedded Kùzu is single-writer: all writes funnel through the CLI/FastAPI process;
   the Next.js UI never opens a DB directly.
-- The Claude Code `parentUuid` DAG (threading + sidechains + multi-file continuations)
   is the subtlest parser surface — gets the most fixtures.
 
 See `plan.md` for the build milestones and `tasks.md` for the task breakdown.

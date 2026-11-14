@@ -53,7 +53,6 @@ ABSENT_FIELDS = (
 class PiAdapter:
     copilot_id = COPILOT_ID
     #: #371 A6 — whether this source exposes a STABLE PER-TURN IDENTITY
-    #: that survives a resume. Claude Code replays the ancestor's
     #: records and preserves their `uuid`, which is what makes lineage
     #: provable rather than inferred; Pi carries no such
     #: identifier, so a thread is not merely absent for it, it is

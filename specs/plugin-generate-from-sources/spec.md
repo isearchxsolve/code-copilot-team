@@ -62,7 +62,6 @@ commands and agents.
 
 **Not yet verified; settled at build time (plan.md):** whether a bare
 agent name in prose ("the build agent") resolves to
-`code-copilot-team:build` for a plugin-only user; what Claude Code does
 with same-named skills, commands and agents when both installs exist
 (a debug line reads "plugin skills loaded: N (M duplicate/user-owned
 entries skipped)", which suggests it de-duplicates); whether
@@ -71,7 +70,6 @@ is in skills.
 
 ## Requirements
 
-- **FR-1** `scripts/generate.sh` gains a "Claude Code plugin" section
   that writes, under `adapters/claude-code/plugin/`: `skills/` from
   `shared/skills/`, `agents/` from the adapter agents (after the
   existing agent sync), `commands/` from the adapter commands,
@@ -93,7 +91,6 @@ is in skills.
   hook runs and the `setup.sh` copy is installed, the plugin copy exits
   0 so the work is not done twice. `protect-files.sh` and
   `protect-git.sh` carry no such guard: they run twice, by design.
-- **FR-5** Coexistence, names: what Claude Code does with same-named
   components is verified and stated in `docs/install.md`. No
   de-duplication logic is written unless the verification shows real
   harm.

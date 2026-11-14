@@ -142,7 +142,6 @@ shape as planning-time clarifying questions.
      mind after the spec was written). The divergence file becomes
      part of the feature record.
 
-   No fourth option. No silent proceed. For Claude Code, the slash
    command renders the prompt as `AskUserQuestion`. For other adapters,
    the skill renders the same three options as plain-text and waits.
 

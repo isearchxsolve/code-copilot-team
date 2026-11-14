@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # scripts/run-compare-anthropic-vs-ollama.sh
 #
-# Automated 2-LLM benchmark: Claude Code → <anthropic-model> (Anthropic API)
-# vs. Claude Code → <ollama-model> (local Ollama), on Aider Polyglot.
 #
 # Usage:
 #   ./scripts/run-compare-anthropic-vs-ollama.sh [ANTHROPIC_MODEL] [OLLAMA_MODEL]
@@ -240,10 +238,8 @@ else
 
     # 1e. claude CLI present?
     if ! command -v claude > /dev/null; then
-        err "claude CLI not on PATH. Install Claude Code first."
         exit 1
     fi
-    ok "Claude Code: $(claude --version)"
 
     # 1f. Polyglot dataset cached?
     if ! find benchmarks/.cache/polyglot -name "*.md" -print -quit 2>/dev/null | grep -q .; then

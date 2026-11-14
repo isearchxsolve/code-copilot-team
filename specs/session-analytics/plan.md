@@ -6,7 +6,6 @@ justification: |
   New subsystem touching scripts/ (new session_analytics package + bash
   dispatcher), a new top-level studio/ Next.js app, .github/workflows/, and
   introducing two data stores the repo does not currently run (PostgreSQL via
-  docker-compose + embedded Kùzu). Multi-adapter ingestion (Claude Code primary,
   Aider secondary) of external on-disk formats; an LLM-as-Judge pass reusing the existing
   benchmark judge infrastructure; an MCP server; and a rich multi-tab UI.
   Delivered as one PR (P1–P6 as internal milestones) per user decision, with a
@@ -31,7 +30,6 @@ origin:
 ## Architecture
 
 ```
-Claude Code JSONL ┐  (primary)
                   ├─► SessionAdapter ─► normalize ─► PostgreSQL ─► Kùzu graph
 Aider md history  ┘  (secondary)          (idempotent upsert)         │
                                                │                      │
@@ -119,7 +117,6 @@ judge→`analyze`, analyze→`kpis`.
 
 ## Test strategy
 
-- Per-adapter unit tests with tiny committed fixtures (Claude Code JSONL incl.
   unknown-type skip + sidechain; Aider markdown).
 - Registry-reset `conftest.py`; idempotency test (ingest twice → identical rows/ids;
   ingest grown session → converges); normalization table-driven; graph rebuild

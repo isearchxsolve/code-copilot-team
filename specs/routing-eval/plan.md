@@ -363,7 +363,6 @@ evaluation that declares a `cost_basis` for it.
 
 | Provenance | Producer | Notes |
 |---|---|---|
-| `measured` | `total_cost_usd` read from the backend transcript by the routing-eval reader | The in-tree precedent is `rb_measured_cost` (`scripts/lib/routing-probe.sh`), which reads exactly this field and requires it to be a number `>= 0`. Claude Code headless (`--output-format json`) emits it. Read by E1's own reader, never surfaced through `backend_metadata`. |
 | `estimated` | `tokens × price_table: v1` | A versioned price table checked into the repo. The version is recorded in every record and in the report. |
 | `unavailable` | neither is obtainable | Propagates to `insufficient_evidence`; never defaulted. |
 

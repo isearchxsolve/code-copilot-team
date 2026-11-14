@@ -30,14 +30,12 @@ editing its source, never the page.
 ### Start here
 
 - [Documentation — all of it, grouped](README.md) — Everything written down about Code Copilot Team, grouped the way the Studio's **Guides** tab groups it — this page and that tab read the same registry, so they cannot disagree about what exists
-- [Code Copilot Team — README](../README.md) — An enforceable harness for AI-assisted coding: your rules, your workflow and your safety rails, applied the same way by every coding agent you use
 - [Codespace tour — the harness in a browser, nothing to install](codespace-tour.md) — A ten-minute guided tour of Code Copilot Team in a GitHub Codespace: the harness is already installed when the terminal opens, and every step is a command you run and an output you can check
 - [Developer Cookbook — the SDLC of this project](developer-cookbook.md) — How a change moves from idea to merged PR in **code-copilot-team**, in two modes:
 - [Auto code review — setup cookbook](auto-code-review-setup.md) — How to have a second model review your work automatically: which reviewer, what goes in the provider profile, how to prove it works before it gates a run, how to turn it on per session and per unattended build, and where to read the result
 - [Feature Index](features.md) — generated from its sources; edit the source, not the page
 - [Feature maturity, release state and adapter support](maturity.md) — The feature catalog (`shared/features/catalog.yaml`) records four separate things about every user-facing feature
 - [Shape-Up Workflow](shape-up-workflow.md) — Shape-Up is Basecamp's product development methodology
-- [Spec-Driven Development vs Code Copilot Team](sdd-vs-code-copilot-team.md) — A side-by-side comparison of two complementary approaches to AI-assisted software development
 
 ### Feature guides
 
@@ -53,8 +51,6 @@ editing its source, never the page.
 
 ### Analytics & benchmarks
 
-- [Session Analytics — user cookbook](session-analytics-cookbook.md) — Session Analytics reads the transcripts your AI coding assistant leaves on disk (Claude Code, Aider, Pi), stores them in a local database, and opens a Studio where you can see what happened in your sessions, find what to fix in your harness, and measure whether the numbers can be trusted
-- [Session Analytics](../scripts/session_analytics/README.md) — Copilot session analytics & process-mining pipeline (issue #63) — the **Claude Code analyzer**, mirroring the architecture of the upstream kiro-analyzer (which already covers Kiro)
 - [Benchmark Harness](../benchmarks/README.md) — Benchmark-agnostic runner for evaluating AI copilots and LLMs on coding tasks under reproducible isolation, with deterministic scoring and SDD-aware run records
 - [Knowledge Layer](../knowledge/README.md) — A durable, structured knowledge layer for `code-copilot-team`, designed to be read and maintained by both humans and AI agents, and to outlive any single session
 - [CCT Capability Compatibility Matrix](../shared/capabilities/COMPATIBILITY.md) — generated from its sources; edit the source, not the page
@@ -73,7 +69,6 @@ editing its source, never the page.
 ### Background
 
 - [Evidence & Influences](evidence-and-influences.md) — External reviews, scorecards, and the sources that shaped this harness
-- [Case study: an A/B autonomous build of MAP-ATLAS (Claude Code vs pi.dev)](mapatlas-harness-experiment.md) — A hands-off experiment: two AI coding harnesses built the **same** open-source product — **MAP-ATLAS** (repository not yet public), a domain-agnostic TypeScript mapping engine — from an identical, harness-neutral specification, phase by phase, and were scored on a fixed rubric with every claim independently verified
 - [GitHub Hardening Playbook](github-hardening-playbook.md) — This playbook sets repository-level guardrails that complement in-repo checks
 <!-- generated:end docs-index -->
 

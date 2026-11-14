@@ -1,7 +1,6 @@
 # Session Analytics — user cookbook
 
 Session Analytics reads the transcripts your AI coding assistant leaves on
-disk (Claude Code, Aider, Pi), stores them in a local database, and opens a
 Studio where you can see what happened in your sessions, find what to fix
 in your harness, and measure whether the numbers can be trusted. Nothing
 leaves your machine unless you point the judge at a cloud model on purpose.
@@ -543,7 +542,6 @@ folder (the harness's default is `runs/` at the repository root). Set
 that folder under **Settings → Benchmarks**, then press **Link benchmark
 runs** on the Analysis pipeline page — or on the Benchmark page, which offers the
 same step. It stores every attempt's result, for every benchmark
-backend, and links Claude Code runs whose run record names a Claude
 Code session that is loaded; a linked session is never hidden as noise,
 however short it was. Older runs whose records carry no session id, or
 name a session you have not loaded, keep their outcomes but link

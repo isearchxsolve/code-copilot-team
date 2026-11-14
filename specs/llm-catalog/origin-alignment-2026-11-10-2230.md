@@ -40,7 +40,6 @@ in `origin/2026-11-10-issue-400-origin.md`), and the repository at
   generating the id-only command; Studio never spawns an interactive
   session (D14).
 - **Unified entry.** `cct harness start <harness>` arrives with F;
-  `cct start --llm` covers Claude Code from B (D15). The issue's
   command forms are preserved, not renamed.
 
 None of these changes the promise, the selector, the no-secret rule,

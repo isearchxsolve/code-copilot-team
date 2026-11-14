@@ -493,7 +493,7 @@ class TestBackendEndToEndAgainstFakeCli(unittest.TestCase):
         # Set a dummy key; only the boolean True must be recorded, not the value.
         out = self._run_backend(
             "transcript-success.txt",
-            env_overrides={"ANTHROPIC_API_KEY": "sk-ant-dummy-key-for-testing"},
+            env_overrides={"ANTHROPIC_API_KEY": "dummy_openai_key_placeholder"},
         )
         meta_str = str(out["result"].backend_metadata)
         self.assertNotIn("sk-", meta_str)

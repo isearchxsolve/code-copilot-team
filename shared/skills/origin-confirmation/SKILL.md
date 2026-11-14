@@ -200,7 +200,6 @@ How do you want to resolve this?
        gate releases again.
 ```
 
-For Claude Code, render this as `AskUserQuestion`. For other adapters
 (Codex, Cursor, GitHub Copilot, Windsurf, Aider) without a structured
 question primitive, render the same three options as plain-text and
 wait for the user's pick. Same labels, same semantics.

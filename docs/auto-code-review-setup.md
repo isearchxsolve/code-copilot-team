@@ -35,7 +35,6 @@ The same profile, runner and format serve both.
 |---|---|---|
 | A hosted OpenAI-compatible API (DeepSeek, OpenAI, …) | `openai-compatible` | Cheapest and fastest of the three in practice; needs an API key; can be **measured** (§6). |
 | A local model behind vLLM or LM Studio (the DGX Spark) | `openai-compatible` | No key, no bill; must have thinking turned off for reasoning models (§3). |
-| A CLI (Codex CLI, Claude Code headless) | `cli` | Reviews with the tool's own permissions; `--version` passing does not mean `exec` works — the probe (§4) is what tells you. |
 
 Any reviewer needs two things you can verify before a run: it answers
 a request in the required format (the probe), and it can do so on a

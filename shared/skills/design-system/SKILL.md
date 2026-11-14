@@ -6,7 +6,6 @@ description: "Derive a unique, domain-fit design direction and enforce design-to
 # Design System Protocol
 
 Invoke this skill for **any web UI work** (new frontend, new screen, UI refactor).
-Its job: stop AI-generated UI from converging on the statistical mean of the
 training data ("AI slop") by committing design decisions *before* code, and
 enforcing them as a machine-checkable filter.
 

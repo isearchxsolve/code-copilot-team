@@ -36,7 +36,6 @@ cap_dir = ARGV[0]
 # Fixed adapter order for deterministic output.
 ADAPTERS = [
   { file: "pi.yaml", label: "Pi" },
-  { file: "claude-code.yaml", label: "Claude Code" },
 ]
 
 catalog = YAML.load_file(File.join(cap_dir, "catalog.yaml"))

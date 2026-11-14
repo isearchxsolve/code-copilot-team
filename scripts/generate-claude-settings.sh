@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # generate-claude-settings.sh — project the SHARED permission profile that Pi
-# imports into a Claude Code settings.json permission posture (FR-5..FR-8 of
 # specs/unattended-cross-harness-execution).
 #
 # The single source of truth is adapters/claude-code/permissions/<profile>.json —

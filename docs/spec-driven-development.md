@@ -68,11 +68,9 @@ The [spec-workflow skill](../shared/skills/spec-workflow/SKILL.md) defines risk 
 
 ### Adapter Support
 
-SDD rules propagate through the same `shared/ → generate.sh → adapters/` pipeline as all other rules. Claude Code gets enforced gating via agent manifests. Other adapters receive advisory content appropriate to their capabilities:
 
 | Adapter | SDD Support Level |
 |---|---|
-| Claude Code | **Enforced** — agents gate on frontmatter |
 | GitHub Copilot | Full instructions (advisory) |
 | Cursor, Windsurf | Always-on rules only (advisory) |
 | Aider | Conventions only (advisory) |

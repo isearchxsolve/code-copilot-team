@@ -9,7 +9,6 @@ carries only objective signals — release, CI, and install paths.
 Independently scored **5.0 / 5.0** on
 [OpenAI Harness Engineering](https://openai.com/index/harness-engineering/)
 and **10.0 / 10.0** on
-[Claude Code Best Practice](https://github.com/shanraisshan/claude-code-best-practice)
 (February 2026) — see the
 [scorecards](images/harness-engineering-scorecard.png).
 

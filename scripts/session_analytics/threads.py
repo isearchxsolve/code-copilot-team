@@ -73,7 +73,6 @@ __all__ = [
 class SourceRef:
     """One source transcript and the turn uuids it carries.
 
-    The unit of lineage is a SOURCE, not a session row. The Claude Code
     adapter groups several transcripts into one session and dedupes
     their uuids — correct, and load-bearing, but it consumes the
     evidence that there were several. Keeping sources distinct here is
@@ -179,7 +178,6 @@ class ThreadGraph:
     joins: tuple[tuple[str, str], ...] = ()
 
 
-#: The record types the Claude Code adapter admits as turns. A6 must
 #: read the SAME universe the turn-uuid index holds: the probe searches
 #: `copilot_turn.uuid`, which only ever contains conversational records
 #: that carry a `message` object. Reading every record's uuid instead
@@ -1593,7 +1591,6 @@ def lineage_support(copilot: str) -> str:
     # UNCONDITIONALLY, because it is idempotent and because "the
     # registry is non-empty" does not mean "the built-ins are in it":
     # one custom adapter registered first would skip this and make
-    # Claude Code report unsupported — a capability answer must not
     # depend on who happened to register what.
     register_all()
     try:

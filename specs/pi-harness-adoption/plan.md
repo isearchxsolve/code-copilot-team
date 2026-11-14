@@ -8,7 +8,6 @@ date: 2026-07-21
 issue: TBD
 collaboration_mode: single
 origin:
-  user_message: "Provide a detailed Spec Driven Development plan for supported PI harness in Code Copilot Team and adding the heavy discoverable and flexible configuration for supporting all features available in Claude Code to this PI adoption. [Consolidated across three independent plans + final resolutions R1–R6 + verification addenda V1–V3, 2026-07-21.]"
   date: 2026-07-21
   transcripts:
     - specs/pi-harness-adoption/origin/2026-07-21-user-directive.md
@@ -128,7 +127,6 @@ distinct; the security floor is monotonic (P7).
 **Decision**: capabilities, agent manifests, lifecycle events, permission
 policies get provider-neutral schemas under `shared/`; Claude-specific
 resources are imported/mapped, not rewritten; the same fixture features run
-through Claude Code and Pi and must agree on classifications, gates,
 artifacts, and analytics semantics.
 
 ## Concrete Integration Points (verified @ f8acd33)

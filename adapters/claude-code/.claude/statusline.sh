@@ -1,5 +1,4 @@
 #!/bin/bash
-# Claude Code status line — single-line ops dashboard
 # Shows: [Model] agent | branch +staged ~modified | project | ctx% $cost +add/-del duration
 #
 # Installed by: setup.sh

@@ -34,7 +34,6 @@ Each entry says where the term shows up in the project.
 
 A directory under `adapters/<tool>/` that maps the project's
 shared rules and skills onto the conventions of a specific AI
-copilot tool (Claude Code, Codex, Cursor, GitHub Copilot,
 Windsurf, Aider). Every adapter consumes content from `shared/`
 via `scripts/generate.sh`.
 

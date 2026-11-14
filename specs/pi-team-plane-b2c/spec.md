@@ -10,7 +10,6 @@ origin:
     - specs/pi-team-plane-b2c/origin/2026-09-08-owner-decisions.md
   origin_claim: |
     Cross-team visibility into active autonomous runs, global token
-    spend and aggregated metrics for a team of Pi/Claude Code
     developers: sessions report progress to a central interface,
     `pi-team status` shows precise tracking for all current team
     tasks. Decided 2026-09-08: the central plane is one shared

@@ -38,7 +38,6 @@ The implementation is **provider-agnostic** (Claude ↔ Codex, Claude ↔ Ollama
 **Language/Version**: Bash (hooks, scripts, launcher), Markdown (rules, agent manifests, commands)
 **Primary Dependencies**: `peer-review-runner.sh`, `peer-review-on-stop.sh`, `provider-collaboration-protocol.md`, `phase-workflow.md`, `ralph-loop.md`, `build.md` agent manifest, `scripts/generate.sh`
 **Testing**: `test-hooks.sh` (existing peer-review-on-stop tests), new `test-peer-review.sh`, new `test-review-loop.sh`
-**Constraints**: All shared rule changes flow through `shared/ → generate.sh → adapters/`. Agent manifest changes are Claude Code adapter-specific. Reviewer session must be **read-only** (no commits, no file writes to working tree).
 
 ---
 
@@ -267,7 +266,6 @@ Circuit breakers **do not silently accept unreviewed work**. Every breaker escal
 | Stale findings | 2 consecutive rounds | `CCT_REVIEW_STALE_THRESHOLD` | **Escalate**: write `breaker-tripped.json` listing stale finding IDs, agent stops, wait for `/review-decide` |
 | Provider unreachable (all fallbacks exhausted) | — | — | **Escalate**: write `breaker-tripped.json` with `"reason": "provider_unavailable"`, wait for `/review-decide` |
 
-**Human decision channel**: The `/review-decide` command (new Claude Code command). The human runs `/review-decide approve`, `/review-decide reject`, or `/review-decide retry` within the active session. The command writes `.cct/review/decision.json` and the Build agent reads it to determine next action. This replaces the previous environment-variable-based approach, which cannot work because a running process cannot observe env vars set after its launch.
 
 | Decision | Effect |
 |----------|--------|
@@ -336,7 +334,6 @@ The framework supports three provider types, each with a dedicated configuration
 
 #### Type 1: `cli` — Local CLI Tool
 
-For tools installed on the same machine (Codex CLI, Claude Code in headless mode, Aider).
 
 ```toml
 [providers.codex]

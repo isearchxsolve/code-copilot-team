@@ -128,7 +128,6 @@ capabilities:
       are reported as external-platform so parity is never overclaimed.
     default: unavailable
     security_level: none
-    claude_equivalent: "Claude Code hosted features"
     docs: specs/pi-harness-adoption/spec.md
 
   - id: memory.session-state

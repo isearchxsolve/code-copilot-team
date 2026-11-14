@@ -101,7 +101,6 @@ playwright-cli install --skills
 ## Design System & Visual Review
 
 This project uses the **UI-Enhancement harness** to keep generated UI unique,
-on-brand, and release-grade — not "AI-generated"-looking.
 
 - **Steering bundle**: `DESIGN.md` + `design/tokens.json` at the repo root define the
   committed art direction and design tokens. Read them before building any UI.

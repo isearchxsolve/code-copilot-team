@@ -1,8 +1,6 @@
-# Claude Code Session Kickoff — Infrastructure Verification Gate
 
 ## How to Use This
 
-Start Claude Code in the `code-copilot-team` repo root, then paste the
 appropriate prompt below for each phase. Run one phase per session.
 
 ---
@@ -16,7 +14,6 @@ Skip straight to Build.
 
 ## Phase 2: Build
 
-Start a new Claude Code session (`claude` from repo root), then paste this
 prompt directly:
 
 ```
@@ -36,7 +33,6 @@ the code-copilot-team repo itself repeated the same pattern with shell scripts (
 
 Key constraints:
 - Shared rule changes go through shared/ → generate.sh → adapters/
-- Agent manifest (build.md) is Claude Code adapter-specific — edit directly
 - Hook changes go in claude_code/.claude/hooks/verify-on-stop.sh
 - Do NOT modify shared/rules/always/* or shared/templates/sdd/*
 - Run the full test suite (834+ tests) after all changes
@@ -52,7 +48,6 @@ verification. Task 5b adds `bash -n` syntax checking for modified .sh files to t
 
 ## Phase 3: Review
 
-Start a new Claude Code session (`claude` from repo root), then paste this
 prompt directly:
 
 ```

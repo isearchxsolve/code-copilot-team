@@ -81,7 +81,6 @@
         "security_level": { "$ref": "#/$defs/security_level" },
         "claude_equivalent": {
           "type": ["string", "null"],
-          "description": "Corresponding Claude Code surface, or null when there is none. Never claim parity that does not exist."
         },
         "status_probe": {
           "type": "string",

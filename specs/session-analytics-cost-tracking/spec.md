@@ -3,7 +3,6 @@
 Issue #83 (E5, Tier-1 from the #65 prioritization). Base: the #63 pipeline
 (P1–P5) shipped in PR #64. Groundwork in place: `copilot_turn` carries
 `tokens_input`/`tokens_output` + `cache_read_tokens`/`cache_write_tokens`
-(populated by the Claude Code adapter) and a nullable `cost_usd` column (never
 populated); `copilot_session.model` records a session-level model; the judge
 writes `heuristic_label` rows. No price/cost computation exists yet.
 
@@ -29,7 +28,6 @@ writes `heuristic_label` rows. No price/cost computation exists yet.
   A table mixing currencies without normalization is rejected at load.
 - FR-2: **Per-turn model attribution**. Add a nullable `copilot_turn.model`
   column (both SQLite + postgres DDL) and capture the model per assistant
-  message in the Claude Code adapter (it already reads `msg.get("model")`);
   fall back to `copilot_session.model` when a turn's message has none. This
   handles mid-session model switches (different models → different rates).
 - FR-3: **Compute `cost_usd` at ingest** for turns with a known `(model, rate)`:

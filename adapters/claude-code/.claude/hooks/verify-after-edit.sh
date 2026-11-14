@@ -9,7 +9,6 @@ set -euo pipefail
 #
 # Non-source files (.md, .json, .yaml, .env, etc.) are silently skipped.
 #
-# PREFERRED ALTERNATIVE: For Claude Code users, the official *-lsp plugins
 # from claude-plugins-official provide native LSP integration with better
 # fidelity than this bash hook. Each requires its language-server binary
 # on $PATH (e.g., pyright, typescript-language-server, gopls). Install with:

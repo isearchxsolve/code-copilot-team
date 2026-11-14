@@ -131,7 +131,6 @@ transcripts, which record it per assistant message since 2.1.212.
 - **Limitation.** On a CLI before 2.1.267, `effort` on the opus agents
   is ignored (pinned-default bug). Inert, not harmful. Documented in P2.
 - **Edge case, unverified.** Sessions routed to a local model through
-  `ANTHROPIC_BASE_URL`: whether Claude Code forwards frontmatter effort
   to a gateway that does not accept it is not documented. 2.1.113 fixed
   a related 400 on the `CLAUDE_CODE_EXTRA_BODY` path. Not tested here.
 

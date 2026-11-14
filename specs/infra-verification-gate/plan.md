@@ -24,7 +24,6 @@ Add infrastructure artifact verification to the Build agent workflow and the `ve
 **Language/Version**: Bash (hooks, scripts), Markdown (rules, agent manifests)
 **Primary Dependencies**: `verify-on-stop.sh`, `phase-workflow.md`, `build.md` agent manifest, `integration-testing.md`
 **Testing**: `test-shared-structure.sh`, `test-generate.sh`, `test-hooks.sh` (existing), plus new hook test cases
-**Constraints**: All shared rule changes must flow through `shared/ → generate.sh → adapters/`. Agent manifest changes are Claude Code adapter-specific.
 
 ## Scope
 
@@ -299,7 +298,6 @@ After the infrastructure verification block (Task 5), add a **shell script verif
 **Changes:**
 
 Add `infra-verification.md` to the on-demand rule propagation, so all 6 adapters receive the "build it, run it" guidance:
-- Claude Code: enforced via agent manifest + hook
 - Other adapters: advisory content (consistent with SDD Sprint 1 pattern)
 
 **Acceptance criteria:**

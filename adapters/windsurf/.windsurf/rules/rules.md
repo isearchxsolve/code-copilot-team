@@ -56,7 +56,6 @@ Before declaring a change ready for review, do the homework yourself — do not 
 
 # Cross-Copilot Conventions
 
-Shared rules that apply whether using Claude Code, GitHub Copilot, Cursor, or local LLMs.
 These conventions ensure consistent behaviour regardless of which AI tool is driving.
 
 ## Core Contract
@@ -79,7 +78,6 @@ Before planning, implementing, or approving agent-produced work:
 5. Complete the required path before optional improvements. Record useful extras as follow-up work instead of silently expanding scope.
 6. Before approval, ask: **What can be removed without weakening correctness, safety, or the acceptance criteria?**
 
-For a handoff from Claude Code or any other agent, explicitly classify the change as `on-target`, `overcomplicated`, or `off-target`, and explain the evidence. Green tests do not compensate for scope drift. Judge the artifact rather than guessing at a vendor's intent; complexity required by a concrete failure mode is not overengineering when the link is explicit.
 
 ## Single Source of Truth
 
@@ -412,7 +410,6 @@ How do you want to resolve this?
        gate releases again.
 ```
 
-For Claude Code, render this as `AskUserQuestion`. For other adapters
 (Codex, Cursor, GitHub Copilot, Windsurf, Aider) without a structured
 question primitive, render the same three options as plain-text and
 wait for the user's pick. Same labels, same semantics.
@@ -566,7 +563,6 @@ out of date with the current code:
 3. Do not silently fix wiki content as a side effect of other
    work — wiki edits are intentional, single-purpose changes.
 
-In Claude Code, the `/promote-lesson <description>` slash command
 runs the promotion workflow on your behalf. Other adapters can
 follow the workflow document directly. Its final lint runs
 wiki-studio 0.9.0 through `./scripts/wiki lint` from a CCT checkout
@@ -603,6 +599,4 @@ When peer review is enabled (`CCT_PEER_REVIEW_ENABLED=true`), an external review
 Review results are written to `specs/<feature-id>/collaboration/`:
 - `build-review.md` — build phase review (PASS or bypass required)
 - `plan-consult.md` — plan phase advisory review
-
-See `shared/skills/review-loop/SKILL.md` for the full protocol. The review commands (`/review-submit`, `/review-decide`) are currently implemented in the Claude Code adapter only.
 

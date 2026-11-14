@@ -27,7 +27,6 @@ This installs:
 - Hook scripts to `~/.claude/hooks/`
 - Hook wiring to `~/.claude/settings.json`
 
-The hooks are **globally active** in all Claude Code sessions immediately after setup. No per-project configuration needed.
 
 Source scripts are also available in `.claude/hooks/` within this repository for reference.
 
@@ -35,7 +34,6 @@ Source scripts are also available in `.claude/hooks/` within this repository for
 
 ## How Hooks Work
 
-Hooks are shell scripts that Claude Code runs at specific lifecycle events.
 
 **Input:** JSON on stdin containing session info and event-specific fields.
 
@@ -47,7 +45,6 @@ Hooks are shell scripts that Claude Code runs at specific lifecycle events.
 - Any other code — hook failure (logged, Claude proceeds)
 
 **Output:**
-- stdout — data passed back to Claude Code (JSON or plain text)
 - stderr — error messages fed to Claude (on exit code 2) or logged
 
 ---
@@ -231,7 +228,6 @@ Non-source files (`.md`, `.json`, `.yaml`, `.env`, etc.) are silently skipped.
   "session_id": "...",
   "cwd": "/project/path",
   "hook_event_name": "Notification",
-  "title": "Claude Code",
   "message": "Waiting for permission...",
   "notification_type": "permission_prompt"
 }

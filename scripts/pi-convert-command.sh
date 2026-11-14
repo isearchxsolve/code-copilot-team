@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# pi-convert-command.sh — convert one Claude Code slash command into a Pi
 # prompt template (spec FR-003, T2.2).
 #
 # Emits the converted prompt to stdout; warnings (e.g. dropped Claude-only

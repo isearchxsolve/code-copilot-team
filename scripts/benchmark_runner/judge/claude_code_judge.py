@@ -20,7 +20,6 @@
 # values — presence boolean only.
 #
 # Subprocess hardening: ``start_new_session=True`` + ``os.killpg`` on
-# timeout, mirroring the backend's Bug #6 fix (Claude Code is a Node
 # binary that spawns MCP/hook grandchildren; killing the immediate
 # child alone leaves stdout/stderr FDs open and blocks ``communicate``).
 

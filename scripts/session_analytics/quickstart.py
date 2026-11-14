@@ -8,7 +8,6 @@
 # the repair command and is safe to re-run.
 #
 # Why this module exists at all: the pieces were already here — the
-# launcher probes for a venv, defaults.json knows where Claude Code
 # keeps transcripts, setup_cmd has sane defaults — but nothing tied them
 # together, and the one un-automated step (dependencies) is the one the
 # platform blocks. On a Homebrew python `pip install -r …` is refused

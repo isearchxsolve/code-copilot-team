@@ -1,4 +1,3 @@
-# Claude Code Project Configuration Guide
 
 ## Overview
 
@@ -173,7 +172,6 @@ claude-code
 
 ### What Claude sees when it starts:
 
-Claude Code automatically reads these files (in this order):
 
 1. **`~/.claude/CLAUDE.md`** — your global preferences (coding style, git conventions, communication style)
 2. **`./CLAUDE.md`** — project-specific rules (stack, architecture, conventions, commands)
@@ -355,7 +353,6 @@ CMD
 ```
 
 ### Session management (token efficiency)
-Claude Code accumulates context over a conversation. Left unchecked, this bloats token usage and degrades quality. Three habits keep it tight:
 
 **One task per session.** If you finish a feature and pivot to something unrelated (e.g., API design → test refactoring), start a fresh session. The launcher's per-project tmux sessions help — but even within a project, `/clear` resets context when you shift focus.
 
@@ -391,7 +388,6 @@ tmux list-sessions
 
 ## Output Styles
 
-Output styles modify Claude Code's system prompt to change how it responds. They go beyond verbosity — they can fundamentally change the interaction model.
 
 ### Built-in styles
 
@@ -425,7 +421,6 @@ Your instructions here — these replace the default system prompt
 (unless keep-coding-instructions is true).
 ```
 
-Set `keep-coding-instructions: true` to retain Claude Code's software engineering behavior alongside your custom instructions. Without it, the coding-specific parts of the system prompt are removed — useful for non-engineering agents.
 
 ### Phase recommendations
 

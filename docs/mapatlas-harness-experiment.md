@@ -1,4 +1,3 @@
-# Case study: an A/B autonomous build of MAP-ATLAS (Claude Code vs pi.dev)
 
 A hands-off experiment: two AI coding harnesses built the **same** open-source
 product — **MAP-ATLAS** (repository not yet public), a domain-agnostic
@@ -13,7 +12,6 @@ competence. The full result was a near-tie.
 
 > ⚠️ **Read [“What the two harnesses actually were”](#2-what-the-two-harnesses-actually-were)
 > before drawing conclusions about out-of-the-box pi.dev.** The comparison did
-> **not** pit raw pi.dev against raw Claude Code — both ran through this project's
 > adaptation layer. That materially changes what you should expect to reproduce.
 
 ---
@@ -40,7 +38,6 @@ same seed commit and never saw the other's tree.
 | In the write-up | What it actually was |
 |---|---|
 | **"pi.dev"** | upstream **pi 0.83.0** driven through **this repo's pi adapter** — the `pi-code` launcher + CCT enforcement runtime, run under the CCT **`unattended`** profile with `CCT_SANDBOX_OVERRIDE=1`. |
-| **"Claude Code"** | **Claude Code** with a CCT-generated permission posture (`.claude/settings.json` `dontAsk`, produced by `scripts/generate-claude-settings.sh` from the shared `relaxed` profile); the overnight run added `--dangerously-skip-permissions`. |
 
 Both ran on the **same model — `claude-opus-4-8`** — pinned for parity (see
 §4). So this is genuinely a **harness** comparison at a fixed model, not a model
@@ -76,7 +73,6 @@ different operability.**
   produce different file layouts, test counts, and ADRs. Treat the specific
   numbers below as one sample, not a fixed expectation.
 
-The same caveat applies to the Claude side: out-of-the-box Claude Code would
 prompt more (or need `--dangerously-skip-permissions`) without the CCT-generated
 `dontAsk` posture.
 
@@ -98,11 +94,9 @@ each harness's own summary. Method limits are in §6.
 ## 4. Setup notes worth knowing (things that bit us)
 
 - **Model parity took work.** pi authenticated and selected `claude-opus-4-8`.
-  Claude Code's picker defaulted to a *different* model (Fable 5) and its menu
   offered Opus 5, not 4.8 — we forced `--model claude-opus-4-8` on both. **A
   harness A/B is only fair if both run the same model; check this explicitly.**
 - **Billing is asymmetric.** As a third-party harness, pi.dev draws from metered
-  "extra usage" (~a few dollars for the whole 7-phase build); Claude Code ran
   plan-included. Compare **tokens**, not dollars.
 - **The `unattended` profile requires isolation.** On a bare host it correctly
   fail-closed (sandbox gate); the overnight run used `CCT_SANDBOX_OVERRIDE=1`.
@@ -115,7 +109,6 @@ Both delivered a complete v1, verified green from a clean checkout: **build ·
 typecheck · lint · test · isolation scan · SPDX scan — all pass**, every commit
 **DCO-signed**, `@mapatlas/core` isolation intact.
 
-| | pi.dev | Claude Code |
 |---|---|---|
 | Phases committed | 8 (0→7) | 9 (0→7) |
 | Total tests | 79 | 107 |
@@ -127,7 +120,6 @@ typecheck · lint · test · isolation scan · SPDX scan — all pass**, every c
 
 **Per-phase — the lead kept changing:**
 
-| Phase(s) | pi.dev | Claude Code | Won on |
 |---|:--:|:--:|---|
 | 0 (toolchain) | 14 | **15** | Claude — cleaner host operability + a scanner *unit* test |
 | 1 (core) | **15** | 14 | pi — stricter core isolation + self-committed |
@@ -142,7 +134,6 @@ tokens all are).
 - **pi.dev = faithful · lean · autonomous.** Built exactly to the prescribed
   architecture (5 packages), minimal contract drift, finished and committed every
   phase hands-off. Lighter on verification (no coverage tooling) and docs.
-- **Claude Code = thorough · rigorous · documented.** Measurable coverage, more
   tests, 6 ADRs, a fully documented public surface, more modular. Took reasoned,
   ADR-backed architectural liberties (7 packages vs the prescribed 5), and needed
   one manual commit to finish.
@@ -201,7 +192,6 @@ missed — and the same "each strong where the other is lighter" pattern.
 Claude's field logger (with review fixes applied — fit-to-track, live track line,
 crosshair cursor, Esri Ocean bathymetry base + OpenSeaMap seamark overlay):
 
-![Claude Code demo](images/mapatlas-claude-demo.jpg)
 
 pi's field logger (bootstrapped) — a more polished, centered layout with custom
 fit/locate map controls and a live OSM + OpenSeaMap seamark base:
@@ -255,7 +245,6 @@ Both harnesses launched ~21:07 and ran continuously; values are inter-commit
 durations. (Phases 0–1 ran interactively with review/setup gaps and are not
 speed-comparable.)
 
-| Phase | pi.dev | Claude Code |
 |---|---|---|
 | 2 · storage-idb | ~6 min | ~7 min |
 | 3 · web recorder | 2m 26s | 4m 24s |
@@ -270,7 +259,6 @@ for both — the most components.
 
 ### Tokens handled (from each harness's session logs)
 
-| Metric | pi.dev | Claude Code |
 |---|---|---|
 | Assistant turns | 191 | 565 (≈3×) |
 | **Output tokens** | 183K (63K reasoning) | **826K** (≈4.5×) |
@@ -289,4 +277,3 @@ turns × context and are weighted differently from fresh tokens), so **output
 tokens + turns are the fairer "work done" metric**. Cost is not directly
 comparable — pi is metered ($13.50 for the whole build, under the $50 budget);
 Claude ran plan-included.
-

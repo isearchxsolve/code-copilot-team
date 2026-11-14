@@ -41,18 +41,15 @@ plus a hardcoded peer-review advisory** — they have no on-demand
 skill surface at all, so `infra-verification` does not reach them
 through the generator.
 
-The **gating mechanism is Claude Code-specific**: the build agent
 at `adapters/claude-code/.claude/agents/build.md` reads the skill
 in its required-reads list (step 1) and step 9 makes execution of
 any infrastructure artifact a mandatory precondition for declaring
 the build done. The three adapters that *do* receive the skill
 (codex, cursor, github-copilot) surface it as advisory; only
-Claude Code currently enforces it. The rationale and mechanism for
 the broader gate live in `specs/infra-verification-gate/spec.md@2753e34`.
 
 ## Context
 
-Multiple Claude Code sessions shipped Dockerfiles, launcher flags,
 and shell scripts that had never been executed before commit. Each
 artifact passed its language-level test runner (`pytest`,
 `npm test`) — the agent's only verification signal — and was
@@ -89,7 +86,6 @@ The pre-decision options were:
 - **Option 3 — gating rule (chosen).** Implemented via the
   `infra-verification` shared skill (on-demand for the three
   adapters that have an on-demand surface: codex, cursor,
-  github-copilot) plus the Claude Code build-agent manifest making
   infrastructure execution a mandatory precondition for phase
   completion (step 9 of `adapters/claude-code/.claude/agents/build.md`),
   plus an explicit "Build it, run it" line in coding-standards.

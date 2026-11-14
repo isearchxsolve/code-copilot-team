@@ -24,7 +24,6 @@ facts and is missing the 2.1.269–2.1.273 items.
 
 ## Verified facts (sources, 2026-09-19)
 
-Sources: the Claude Code changelog
 (`raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md`,
 grepped locally, not summarised), the sub-agents doc page
 (`code.claude.com/docs/en/sub-agents`), and a probe on the local CLI

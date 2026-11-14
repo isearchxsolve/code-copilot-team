@@ -16,7 +16,6 @@ Assumes the scripts are in your home directory on the Spark (that is where you h
   Phase 8   Mac prerequisites                [MAC]     ~5 min
   Phase 9   gate over the real network path  [MAC]     ~5 min
   Phase 10  Codex                            [MAC]     ~5 min
-  Phase 11  Claude Code                      [MAC]     ~5 min
   Phase 12  the tests that actually matter   [MAC]     hours
 ```
 
@@ -183,11 +182,8 @@ Seven gates. Two of them decide what you do next:
 |---|---|
 | 2 — structured tool_calls[] | Restart with VLLM_TOOL_CALL_PARSER=qwen3_xml. If the XML is in .reasoning instead, the reasoning parser is intercepting. |
 | 5 — function_call in /v1/responses | Codex cannot use this server. Fix before Phase 10. |
-| **6 — trailing system turn** | **Go to Phase 7.** Claude Code needs the LiteLLM bridge on this build. |
 
-**Gate 6 PASS** → skip Phase 7. Claude Code talks to vLLM directly. **Gate 6 FAIL** → do Phase 7. This is the expected case on many builds and is not a fault in your setup.
 
-Gate 6 is the only one whose failure returns HTTP 200. Gates 1–5 and 7 all pass against a server that is silently broken for Claude Code, so do not skip it.
 
 ## Phase 7 — [SPARK] LiteLLM bridge (only if gate 6 failed)
 
@@ -286,7 +282,6 @@ cd ~/some-repo
 codex
 ```
 
-## Phase 11 — [MAC] Claude Code
 
 Pick the block that matches your Phase 6 result. Put it in ~/.zshrc or a sourced file — **not** typed once and forgotten.
 
@@ -319,9 +314,7 @@ export CCT_LOCAL_OPENAI_BASE_URL="http://spark-c2e5.local:8001/v1"
 VLLM_ORIGIN="http://spark-c2e5.local:8001" bash check-transport-wiring.sh
 ```
 
-That last command catches the silent cross-wire — pointing Claude Code at vLLM's own origin when you meant the bridge. It also catches a /v1 suffix on the wrong URL and any unpinned model tier.
 
-If a session later fails with `422 … unknown variant tool_definition, expected tool_reference`, the endpoint rejects Claude Code's dynamic tool block; see the setup cookbook, "Gateways that reject dynamic tool blocks" (#399), and start a fresh session with the fallback variables it lists.
 
 Then, in a repo:
 
@@ -337,7 +330,6 @@ Everything so far proves the plumbing. None of it proves the model can do the jo
 
 **12.1 — Codex on a real repo task.** Not a prompt: inspect files → edit → run a command or test → fix → finish.
 
-**12.2 — Claude Code for 15–30 tool turns.** A one-prompt smoke test cannot distinguish a working agent from the gate-6 failure, which by construction dies on turn two.
 
 **12.3 — the anchor benchmark**, in code-copilot-team:
 
@@ -394,7 +386,6 @@ bash verify-qwen38-spark.sh spark-c2e5.local 8001 qwen38-27b
 bash check-transport-wiring.sh
 ```
 
-**Re-run gate 6 after every Claude Code update.** The trailing-system failure is version-coupled on both sides, and it returns HTTP 200.
 
 The Coder-Next fallback is untouched throughout. If you need it:
 

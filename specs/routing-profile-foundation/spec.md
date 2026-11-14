@@ -12,7 +12,6 @@ circuit state, checkpoints, and probes are increments B–D.
 ## User Scenarios
 
 - An operator declares an ordered set of execution profiles (e.g.
-  Anthropic Sonnet via Claude Code; DeepSeek via Claude Code's
   Anthropic-compatible endpoint; GPT via Codex; a local vLLM model for
   bounded work) in one user-level file, validates it, and sees exactly
   why each profile would or would not be considered for a given route

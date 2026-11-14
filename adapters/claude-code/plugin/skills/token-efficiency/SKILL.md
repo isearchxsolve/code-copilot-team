@@ -28,7 +28,6 @@ Practices to minimise token waste across all sessions.
 
 ## Task Budgets (Opus 4.7, public beta — API only)
 
-An advisory token budget for the **full agentic loop**, not a single request. Currently public beta on Opus 4.7 via the API; not available in Claude Code or Cowork at launch.
 
 - Set via `output_config.task_budget: {type: "tokens", total: N}` in the API request.
 - Minimum `total`: **20,000 tokens**.
@@ -67,7 +66,6 @@ If the answer requires fresh tool work, ask it as a normal turn so the lookup ru
 
 ## Prompt Caching Discipline
 
-Per Anthropic's April 30 2026 guidance, prompt caching is the single most important token optimization for Claude Code workflows. Specific rules to keep cache hit rates high:
 
 - **Don't switch thinking modes mid-session.** Toggling between `adaptive` and `enabled`/`disabled` breaks per-message cache breakpoints. Pick one and stay with it. (See `opus-4-7-features.md` § Caching Awareness.)
 - **Use `ENABLE_PROMPT_CACHING_1H=1` for sessions over 30 minutes.** Default 5-minute TTL evicts warm cache between turns when you take a break. (See `opus-4-7-features.md` § Prompt Caching.)

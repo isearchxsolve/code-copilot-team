@@ -34,7 +34,6 @@ origin:
 Grounded code facts (verified 2026-07-15):
 - `copilot_turn` has token fields + a nullable `cost_usd` (never populated) but
   **no model column**; `copilot_session.model` holds a session-level model.
-- The Claude Code adapter (`adapters/claude_code.py`) reads `msg.get("model")`
   per assistant message but keeps only the first (→ session model).
 - Judge output is `heuristic_label` (per-turn labels) + a session judge rollup;
   there is no single "outcome" column.

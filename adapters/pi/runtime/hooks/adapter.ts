@@ -1,9 +1,7 @@
 /**
  * Shell-hook subprocess adapter (T5.1, FR-010).
  *
- * Runs existing Claude Code `.sh` hooks as subprocesses, fed the neutral event
  * serialized to Claude-Code-shaped stdin JSON. Hook logic is NOT ported — the
- * scripts execute unmodified. The exit-code convention matches Claude Code:
  * 0 = allow, 2 = block (stderr is the reason); any other code is a non-blocking
  * error whose disposition follows the per-hook fail mode.
  *
@@ -23,7 +21,6 @@ import { toClaudeStdin } from "./events.ts";
 export const DEFAULT_HOOK_TIMEOUT_MS = 5000;
 export const DEFAULT_HOOK_RETRIES = 0;
 
-/** Claude Code hook exit-code convention. */
 const EXIT_ALLOW = 0;
 const EXIT_BLOCK = 2;
 
@@ -197,7 +194,6 @@ export function dispatchHooks(
   };
 }
 
-/** Existing Claude Code PreToolUse veto scripts, by Pi tool name (reuse map). */
 const PRE_TOOL_SCRIPTS: Record<string, string> = {
   edit: "protect-files.sh",
   write: "protect-files.sh",
@@ -213,7 +209,6 @@ function isExecutableFile(p: string): boolean {
 }
 
 /**
- * Resolve the shell scripts that reuse existing Claude Code hooks for an event.
  * Only PreToolUse maps to reusable veto scripts today (protect-files.sh /
  * protect-git.sh); every other supported event resolves to none (a reported,
  * audited no-op) until a semantically-matching script exists.
@@ -232,7 +227,6 @@ export function resolveHookScripts(
 
 /**
  * Locate the directory holding the reusable `.sh` hooks. `CCT_HOOK_SCRIPTS_DIR`
- * wins when set; otherwise fall back to the sibling Claude Code plugin scripts
  * relative to the Pi adapter dir. Returns null when neither exists — the
  * adapter then no-ops cleanly and doctor reports "no scripts configured".
  */

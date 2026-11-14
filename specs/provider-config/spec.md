@@ -96,7 +96,6 @@ with primary-source citations. Summary:
 
 | Copilot | Primary config surface | Env vars (or config file) the harness records |
 |---|---|---|
-| **Claude Code** | env vars (Anthropic Messages gateway) | `ANTHROPIC_BASE_URL`, `ANTHROPIC_AUTH_TOKEN_present` (bool), `ANTHROPIC_DEFAULT_*_MODEL`, `CLAUDE_CODE_USE_BEDROCK`, `CLAUDE_CODE_USE_VERTEX` |
 | **Aider** | env vars + YAML config | `OPENAI_API_BASE`, `OLLAMA_API_BASE`, presence of `OPENAI_API_KEY` / `OLLAMA_API_KEY`, the active `--model` arg |
 | **Codex** | `$CODEX_HOME/config.toml`, else `~/.codex/config.toml` | path to the BASE user config only. ~~the active provider id from `[model_providers.<id>]` block + `wire_api`~~ **SUPERSEDED by #281** — the backend passes codex no provider selection, and codex resolves its config in LAYERS, so the provider is recorded as unestablished (`provider_id: null`) and the file is not parsed. See T3.2 in `tasks.md`. |
 | **GitHub Copilot CLI** | env vars | `COPILOT_PROVIDER_BASE_URL`, `COPILOT_MODEL`, `COPILOT_PROVIDER_TYPE`, `COPILOT_OFFLINE` (bool) |
@@ -123,7 +122,6 @@ canonical fields:
 Per-copilot extensions (recorded under the same keys, since they map
 to the same semantic):
 
-- **Claude Code**: `provider_endpoint = ANTHROPIC_BASE_URL` (or null);
   `provider_auth_token_present = bool(ANTHROPIC_AUTH_TOKEN)`. Plus
   `claude_code_invocation: "launcher" | "bare"` for the invocation
   mode (per spec.md § "Backends vs providers"). Already implemented in
@@ -157,7 +155,6 @@ flag. When set:
 2. Look up the provider section by id.
 3. Translate the provider's `type` + `base_url` + `model` +
    `api_key_env` into the right per-copilot config:
-   - **Claude Code**: print to stdout an env-var block the user
      sources (`export ANTHROPIC_BASE_URL=... ; export
      ANTHROPIC_AUTH_TOKEN=...`).
    - **Aider**: print the env-var block + suggested

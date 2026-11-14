@@ -17,7 +17,6 @@ Every non-trivial task follows three phases with distinct behaviors:
 - **Model:** Highest-capability (e.g., Opus) · **Effort:** `xhigh` (Opus 4.7) / `high` (other models)
 - Work alone. Do NOT delegate to sub-agents.
 - Read the full codebase context, understand architecture, identify risks.
-- **Ask clarifying questions** about data model shape, auth strategy, UI layout, and output formats BEFORE producing the plan. (See `clarification-protocol.md` for the full protocol and data model review gate.) When the plan phase runs as a **subagent** (the `plan` agent, `/shape`'s `pitch-shaper`), it cannot ask: Claude Code removes `AskUserQuestion` from every subagent even when listed in `tools:` (#407). The agent lists the open decisions with defaults in its output (`### Open decisions` / `## Open decisions`), and the main session asks them and records the answers before approval.
 - Produce a concrete plan: files to touch, interfaces to change, test strategy.
 - Get user approval before moving to Phase 2.
 
@@ -190,5 +189,3 @@ Effort levels assume Opus 4.7 for the Plan/Review tier. `xhigh` is Opus 4.7 only
 **Opus 4.7 calibration note:** Opus 4.7 spawns fewer subagents by default and calibrates response length to task complexity — it prefers concise, inline work over verbose, sprawling delegation. If your task genuinely benefits from parallel subagents or a verbose written analysis, spell that out explicitly in the delegation prompt (e.g., "use subagents to investigate X and Y in parallel" or "produce a detailed written analysis with code examples"). Do not assume it will infer the same defaults Opus 4.6 used.
 
 ## Multi-Session Coordination (Tool-Specific)
-
-Some copilots offer experimental multi-session coordination beyond the single-session pattern above (e.g., Claude Code's Agent Teams, Cursor's Cloud Agents, Codex's Subagents SDK). These are tool-specific mechanisms that are not wire-compatible with each other. The single-session principles in this document — non-overlapping file ownership, bounded tasks, lead integration — apply regardless of mechanism. See your tool's documentation for multi-session details.

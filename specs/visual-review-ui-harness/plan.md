@@ -6,7 +6,6 @@ justification: |
   Additive capability wired through the existing generation path: two on-demand
   skills (shared/skills → generate.sh → 6 adapters), one new template
   (shared/templates/ui-harness) carrying a shippable Node/TS runner, one
-  Claude Code agent (claude_code/.claude/agents → synced to adapters), and
   template wiring for web-dynamic/web-static. Touches generate.sh (agent-sync
   generalization + one glob case) and the two test suites' expected counts.
   spec_mode=full because it adds a new user-facing capability, ships executable
@@ -26,7 +25,6 @@ origin:
     distributional convergence — fixed only by pre-committed constraints + a
     verification loop. Scope: design-system + visual-review skills across all 6
     adapters; a tool-agnostic ui-harness template (DESIGN.md + DTCG tokens +
-    Playwright/axe/rubric runner with a pluggable critic); a Claude Code
     visual-reviewer agent; web-template wiring.
 
     User-confirmed scope decisions (this planning session):

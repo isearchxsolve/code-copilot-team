@@ -204,9 +204,7 @@ ten steps in summary:
 9. Run `./scripts/wiki lint` — must exit 0.
 10. **Stop.** No drive-by edits to other pages.
 
-### 5c. Claude Code shortcut: `/promote-lesson`
 
-In Claude Code, you can run:
 
 ```
 /promote-lesson <one-line description of the lesson>

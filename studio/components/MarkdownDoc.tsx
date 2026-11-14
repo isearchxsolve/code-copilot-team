@@ -255,7 +255,6 @@ export function CodeBlock({
 /** The text a React subtree would render — for heading ids and Copy. */
 /** react-markdown's default transform drops `data:` URLs, which left
  *  an embedded screenshot (`[image1]: <data:image/png;base64,…>` in the
- *  Claude Code setup cookbook) with an empty src. Embedded IMAGES are
  *  allowed; everything else keeps the default (safe) treatment. */
 export function docUrlTransform(url: string): string {
   if (/^data:image\/(png|jpeg|jpg|gif|webp|svg\+xml);base64,/i.test(url)) return url;

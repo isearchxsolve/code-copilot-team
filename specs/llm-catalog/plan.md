@@ -96,7 +96,6 @@ Layers, each with one owner:
 | Slice | Issue (to file) | Delivers | Depends on |
 |---|---|---|---|
 | A | catalog and read-only CLI | layers 1–4 without any launcher change; `cct llm list/show/validate/compatibility/test/sessions`, `cct harness explain`; `start`/`exec` definitions; plan schema with "adapter not implemented" refusals; rule table; probe records; doctor section; docs; example file | — |
-| B | Claude Code | capture first; the `claude-code` adapter; `--llm` on `claude-code` and `cct start`; child-side resolution inside the cmux/tmux pane; `rejects-dynamic-tools`; stamps, promotion and exact-id resume rules; native byte-for-byte; behavioral probe through the real launcher (mock and one real run on the owner's machine) | A |
 | C | Codex | capture against the installed CLI; `adapters/codex/bin/codex-code`; `-c` overlay; rule table amended by capture; stamps, exact-id resume, native byte-for-byte (FR-17–19, FR-27); probe | A, B's launch contract |
 | D | Pi | capture: launch-scoped agent-directory overlay versus owned merge; D11 ruled on the capture; `--llm` on `pi-code`; `--provider/--model`; stamps, exact-id resume, native byte-for-byte (FR-17–19, FR-27); probe | A, B |
 | E | Kiro | capture of the installed `kiro-cli`; `adapters/kiro/bin/kiro-code`, managed-model-only; `--model`, `--resume-id`; endpoint bindings `unsupported`; stamps, exact-id resume, native byte-for-byte (FR-17–19, FR-27); managed-harness evidence contract; docs state the limit | A, B |
@@ -224,7 +223,6 @@ and credential sentences amended to match on the same day.
   values, `--profile` layering, `codex resume`, the effective-model
   field of `exec --json`. A disproving capture stops the slice for a
   ruling (D10).
-- Claude Code (B): whether `--output-format json` reports the
   effective model; `--session-id` on a new session and the transcript
   path that proves the session was established; minimum version for
   the #399 retry behaviour; whether a settings-file `env` block

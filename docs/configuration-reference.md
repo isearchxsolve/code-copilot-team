@@ -253,7 +253,6 @@ Completed per key by the code that reads them:
 
 ## Where the rest lives
 
-- **Claude Code session settings** (`~/.claude/settings.json`, hooks wiring,
   permissions) — [Setup Cookbook](../adapters/claude-code/docs/claude-code-setup-cookbook.md)
   and [Permissions Guide](../adapters/claude-code/docs/permissions-guide.md).
 - **Pi's TOML config** — [Pi Configuration Reference](../adapters/pi/docs/configuration-reference.md).

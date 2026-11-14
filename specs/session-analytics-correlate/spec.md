@@ -4,7 +4,6 @@ Issue #91 (E9, final Tier-2 candidate from the #65 prioritization). Base: the
 #63 pipeline + E5/E8/E7/E6. Groundwork (verified 2026-07-16): the
 `copilot_session` table already ships a `benchmark_run_dir VARCHAR(1000)`
 column (`config_data/ddl/postgres/001_core.sql`) that nothing writes or reads;
-the Claude Code `session_id` is captured on BOTH sides — benchmark
 `run-record.json → backend.metadata.session_id` (`scripts/benchmark_runner/run.py`)
 and `copilot_session.session_id` — giving an exact equi-join. No schema change
 is required; E9 is write-logic + surfacing only. Scope = the **link + export +

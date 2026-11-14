@@ -101,7 +101,6 @@ Tests that assert the conceptual separation, not just behavior:
 
 **No new id.** Fold into **`agents.teams`** (stays **`degraded`**): refresh the
 reason to add "status snapshot + result synthesis + failure recovery present;
-live-updating UI + live peer execution remain absent." Claude Code stays
 `disabled`. No status/kind drift.
 
 ## Scope (in / out)
@@ -129,4 +128,3 @@ transport (T7.2/T7.4 + not-a-Pi-primitive); FR-021 analytics.
    (reclaimable by peers); `reopenOrphanedClaims` sweeps claims held by
    left/inactive members. **Reopen**, never auto-`done`/auto-`failed`. Confirm.
 4. **Capability** — fold into `agents.teams` (reason refresh, stays `degraded`),
-   no new id; Claude Code stays `disabled`. Confirm.

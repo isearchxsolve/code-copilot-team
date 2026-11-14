@@ -1,4 +1,3 @@
-# Driving Claude Code with a local vLLM model
 
 > **Why this file exists.** Confirming that a local LLM (Qwen3-Coder-Next
 > on a DGX Spark) could stand in for an Anthropic model behind Claude
@@ -19,7 +18,6 @@ claude-code ──Anthropic /v1/messages──▶ LiteLLM proxy ──OpenAI /v1
 (claude -p)                              127.0.0.1:8787                                 DGX Spark :8000
 ```
 
-Claude Code speaks the Anthropic API; vLLM serves only the OpenAI API.
 The LiteLLM proxy is the translation layer. `vLLM` is a *provider*, not
 a backend — the only backend family is still `claude-code`; routing is
 pure gateway env-vars (`ANTHROPIC_BASE_URL` etc.). The
@@ -105,7 +103,6 @@ the statistically correct call.
 ## How to read the result
 
 - **Correctness: tied** on this one task. Qwen3-Coder-Next via vLLM is
-  *capable* of driving Claude Code's tool loop end-to-end.
 - **Speed: Qwen ~3.3× slower, high variance** (120 s → 978 s). Cause is
   the DGX launch profile, not the model: `--enforce-eager` (no CUDA
   graphs) + `--max-num-batched-tokens 8192` re-prefilling the ~38K

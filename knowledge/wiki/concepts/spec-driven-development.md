@@ -37,9 +37,7 @@ build phase begins.
   `specs/<feature-id>/`. Cross-feature work spawns multiple
   directories, never one shared bucket.
 - **Adapter-agnostic intent.** SDD artifacts are markdown, so
-  every copilot (Claude Code, Codex, Cursor, GitHub Copilot,
   Windsurf, Aider) can read them. The adapter-specific
-  enforcement layer is what differs (Claude Code has agent
   manifests; the others have advisory rules).
 
 ## Where this shows up
@@ -52,7 +50,6 @@ build phase begins.
 - `docs/shape-up-workflow.md` — the Shape-Up flavor of SDD used
   for cycle-bet features (pitch → bet → cycle → cooldown).
 - `claude_code/.claude/CLAUDE.md` — Plan Mode guidance enforces
-  the "write plan first" rule for the Claude Code adapter.
 
 ## Related
 

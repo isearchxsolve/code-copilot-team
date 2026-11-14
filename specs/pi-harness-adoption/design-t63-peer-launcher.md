@@ -1,7 +1,6 @@
 # T6.3 Design Read — peer-review launcher flags + audited override (FR-000a)
 
 Status: **design read — paused for decisions before implementation.**
-Scope: `pi-code` mirrors the Claude Code launcher's peer-review flags
 (`--peer-review [provider]`, `--peer-review-off`, `--peer-review-scope`), exports
 the env contract (`CCT_PEER_REVIEW_ENABLED`, `CCT_PEER_PROVIDER`,
 `CCT_PEER_REVIEW_SCOPE`), and provides an audited human override.

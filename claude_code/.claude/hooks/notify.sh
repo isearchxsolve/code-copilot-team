@@ -3,7 +3,6 @@ set -euo pipefail
 
 # notify.sh — Desktop notification hook (Notification event)
 #
-# Sends a native desktop notification when Claude Code fires a notification
 # event (permission prompt, idle, etc.). Cross-platform: macOS + Linux.
 #
 # Exit: always 0 — notifications are passive, never block.
@@ -16,7 +15,6 @@ fi
 # --- Read event JSON from stdin ---
 INPUT=$(cat)
 
-TITLE=$(echo "$INPUT" | jq -r '.title // "Claude Code"' 2>/dev/null) || exit 0
 MESSAGE=$(echo "$INPUT" | jq -r '.message // ""' 2>/dev/null) || exit 0
 
 if [[ -z "$MESSAGE" ]]; then

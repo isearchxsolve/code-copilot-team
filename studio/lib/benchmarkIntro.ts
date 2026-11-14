@@ -51,7 +51,6 @@ export function unlinkedCause(job: BenchmarkSummary["link_job"]): string {
     );
   if (p.out_of_scope)
     parts.push(
-      `${p.out_of_scope.toLocaleString()} came from a backend other than Claude Code`,
     );
   if (!parts.length) return "";
   return `The last scan read ${(p.scanned ?? 0).toLocaleString()} run records: ${parts.join("; ")}.`;
@@ -103,7 +102,6 @@ export function benchmarkIntro(d: BenchmarkSummary): BenchmarkIntro {
       return {
         state,
         headline:
-          "Nothing is linked yet. Press Link benchmark runs to store every attempt's outcome from the folder below and link the Claude Code runs whose records name a loaded session.",
         cause: "",
         canLink: true,
         rootLine: root.path,

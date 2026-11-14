@@ -14,7 +14,6 @@ sources:
 
 ## What happened
 
-The Claude Code Plan agent manifest contained a load-bearing
 contradiction: it promised to **emit** SDD artifacts to
 `specs/<feature-id>/` (lines 26–29, 66 of the manifest) while
 simultaneously **forbidding all file writes** (line 61). The same
@@ -25,7 +24,6 @@ The failure mode was confirmed in the ai-atlas Mar 9 session
 (1M+ output lines). Across that session:
 
 - **Zero SDD artifacts were ever written to `specs/`.**
-- Plans went to Claude Code's internal ephemeral `~/.claude/plans/`
   directory or to `doc_internal/`, neither of which the Build
   agent reads.
 - The Build agent's gating on `spec_mode` was bypassed entirely

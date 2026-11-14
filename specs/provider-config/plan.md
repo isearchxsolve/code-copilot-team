@@ -39,7 +39,6 @@ Done when: `bash scripts/validate-spec.sh --feature-id provider-config` passes; 
 ## Phase 2 — `provider-emit.sh` translator + per-adapter `--provider` flag
 
 - New `shared/scripts/provider-emit.sh <copilot> <provider-id>` that reads `~/.code-copilot-team/providers.toml` and emits the right per-copilot config:
-  - For Claude Code / Aider / GH Copilot CLI: prints an env-var block to stdout the user sources (`. <(./shared/scripts/provider-emit.sh claude-code my-vllm)`).
   - For Codex: appends a `[model_providers.<id>]` block to `~/.codex/config.toml` (idempotent).
   - For Cursor / Windsurf: prints a settings-JSON snippet for paste-into-UI (best-effort; documented limitation).
 - Each `adapters/<copilot>/setup.sh` accepts optional `--provider <id>` and `--providers-file <path>`. When set, calls `provider-emit.sh` and writes the output where the copilot expects it.

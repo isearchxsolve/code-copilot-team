@@ -44,19 +44,16 @@ CCT's value is **governance + measurement around copilot workflows**: SDD gates,
 
 The harness is therefore **benchmark-agnostic**: a small adapter contract that any public benchmark (or one-off custom fixture) can implement. The MVP ships exactly one public adapter — Aider Polyglot — because the format (per-task two-shot with test feedback) exercises every harness moving part, and the dataset is small enough to iterate on.
 
-**Note on leaderboard comparison.** Earlier drafts of this spec proposed comparing `claude-code` runs against Aider's published Polyglot leaderboard. That comparison is apples-to-oranges: Aider's leaderboard reports *Aider-the-agent driving model X*, while CCT runs *Claude Code-the-agent driving model X*. Different agents, different scores. Apples-to-apples leaderboard comparison requires adding an Aider backend (Phase 4 candidate); for the MVP, the dogfood gate is "harness runs end-to-end on real Polyglot tasks," not "harness reproduces Aider's leaderboard."
 
 Out-of-scope for the MVP, on the explicit fork from issue origin:
 - Authoring custom CCT-specific fixtures as the primary deliverable. (Optional dogfood adapter is acceptable but secondary; see issue #33.)
 - LLM-judge scoring, charts, HTML reports, dollar-cost reporting (issue #34).
 - SWE-bench / LiveCodeBench / BigCodeBench adapters (issue #33).
-- **Additional copilot backends** beyond Claude Code — Aider, Codex, GitHub Copilot CLI move to issue #33 as Phase 4 candidates.
 
 ## Backends vs providers — load-bearing distinction
 
 Two terms with carefully separated meanings (see [`audit-2026-05-08.md`](audit-2026-05-08.md) for the architectural correction that surfaced this):
 
-- **Backend** = an *agentic copilot CLI* the harness drives. The backend has its own editor loop, tool use, and file-edit semantics. Examples: Claude Code, Aider, Codex, GitHub Copilot CLI.
 - **Provider** = an *LLM endpoint* the backend's copilot routes its model calls to. Examples: Anthropic API, vLLM, Ollama, LM Studio, OpenRouter.
 
 Same provider can serve different backends; same backend can route to different providers. They are orthogonal axes.
@@ -65,7 +62,6 @@ The harness *records* which provider a run used (by reading the backend's gatewa
 
 ## User Scenarios
 
-1. **Maintainer compares two models on Aider Polyglot via Claude Code.** A maintainer runs
    `./scripts/benchmark run --benchmark aider-polyglot --backend claude-code --model sonnet --runs 3`
    and again with `--model opus --runs 3`. They then run
    `./scripts/benchmark report --run-dir runs/<ts>/`. The Markdown report shows
@@ -99,12 +95,10 @@ The harness *records* which provider a run used (by reading the backend's gatewa
    task failures are cause-classified (harness bug / backend
    agent-loop / provider-side / model-side) in the merge commit body.
 
-5. **Local-LLM run via Claude Code gateway.** A maintainer launches a vLLM
    server with `vllm serve <model> --enable-auto-tool-choice --tool-call-parser openai`,
    exports `ANTHROPIC_BASE_URL=http://localhost:8000`,
    `ANTHROPIC_AUTH_TOKEN=dummy`, `ANTHROPIC_DEFAULT_SONNET_MODEL=<served-model-name>`,
    and runs `./scripts/benchmark run --benchmark aider-polyglot --backend claude-code --model <served-model-name> --runs 1`.
-   Claude Code routes its model calls to the local vLLM; the harness measures
    the full copilot+model stack and records `provider_endpoint=http://localhost:8000`
    in `backend_metadata`. Same flow works for Ollama (`ANTHROPIC_BASE_URL=http://localhost:11434`,
    `AUTH_TOKEN=ollama`) or LM Studio (`http://localhost:1234`).
@@ -151,7 +145,6 @@ class Backend(Protocol):
 `BackendResult` records the actual prompt sent, the model output, transcript path, token usage (input/output/cache), tool-call counts, elapsed time, and `failed_commands`.
 
 MVP backends:
-- `claude-code` (with `--model <id>`) — invokes `claude -p` headlessly via the launcher. The harness records `ANTHROPIC_BASE_URL`, `ANTHROPIC_AUTH_TOKEN_present` (boolean only — never the value), and `claude_code_invocation: "launcher" | "bare"` in `backend_metadata`. Provider routing happens via Claude Code's [LLM gateway support](https://code.claude.com/docs/en/llm-gateway) when the user has set the gateway env vars: Claude Code routes to vLLM ([integration](https://docs.vllm.ai/en/stable/serving/integrations/claude_code/)), Ollama ([blog post](https://ollama.com/blog/claude)), LM Studio, or any Anthropic-Messages-compatible endpoint. The harness captures *where it routed* but does not set the routing itself. Default invocation is launcher mode (full autodiscovery, OAuth/keychain auth); `CCT_CLAUDE_BARE=1` opts into `--bare` for cross-machine reproducibility (skips OAuth/keychain — requires `ANTHROPIC_API_KEY`).
 - `stub` — copies the adapter's `golden_patch` into the worktree and exits. Used by CI smoke test only; not a real backend.
 
 **Scoped into issue #33 as Phase 4 candidates:** Aider, Codex, GitHub Copilot CLI agent backends — each requires independent verification of headless-invocation surface and BYOK options before landing.
@@ -288,7 +281,6 @@ Two complementary gates with distinct purposes — both must pass before merge.
 
 > Run the Aider Polyglot adapter against `claude-code --model sonnet` on a small task subset (≥10 tasks, ≥1 per language). The merge commit must (1) link to the run-dir produced (under `specs/benchmark-harness/dogfood/<UTC-ts>/`); (2) state which provider the run used (Anthropic API by default, or `ANTHROPIC_BASE_URL=...` if a gateway was configured); (3) note any task-specific failures with cause classification (harness bug / backend agent-loop issue / provider-side issue / model-side issue). If the harness cannot run the adapter end-to-end at all, the issue does not merge.
 
-**Removed from this gate (v3 correction):** the prior version compared CCT's `claude-code` per-language pass rate against Aider's published Polyglot leaderboard. That comparison is apples-to-oranges — Aider's leaderboard reports *Aider-the-agent driving model X*, not *Claude Code driving model X*. Different agents, different scores. Apples-to-apples comparison requires adding an Aider backend (issue #33's scope).
 
 ### Gate 2 — Verdict correctness (memkernel#3 spec-first dogfood)
 
@@ -319,7 +311,6 @@ Both must pass.
 2. **Backend contract.** A backend is a Python module exposing the
    `Backend` protocol. The MVP ships exactly two: `claude-code` (with
    `--model <id>`) and `stub`. Provider routing for `claude-code` flows
-   through Claude Code's own gateway env vars; the harness reads them
    at run time and records them, never sets them. Additional copilot
    backends (Aider, Codex, GitHub Copilot CLI) are scoped into issue
    #33 as Phase 4 candidates.
@@ -408,7 +399,6 @@ What this issue MUST NOT build, even if convenient:
 - **No raw-LLM backend.** vLLM, Ollama, LM Studio, OpenRouter, etc.
   are *providers*, not backends. They're configured per-backend via
   the backend's own gateway env vars (e.g. `ANTHROPIC_BASE_URL` for
-  Claude Code; `OPENAI_API_BASE` for the future Aider backend); the
   harness records what was set, not how to set it. The optional
   per-run `--vllm-endpoint`-style harness flag from earlier drafts
   is dropped — provider routing is a shell-environment concern, not
@@ -442,8 +432,6 @@ Nothing in `scripts/` is reused; this is a new subsystem. The existing `scripts/
 ## Risks
 
 - **Aider Polyglot dataset shape changes.** The benchmark is maintained externally. Pin to a specific commit SHA in `benchmarks/adapters/aider-polyglot/REVISION` and document the upgrade procedure.
-- **Claude Code headless transcript format drifts.** The transcript parser is the most fragile MVP surface. Snapshot a transcript in tests; fail loudly on schema changes rather than silently mis-parsing usage.
-- **Gateway transcript variability.** When Claude Code is pointed at a non-Anthropic gateway (vLLM/Ollama/LM Studio), the response shape may differ from the Anthropic API's. Treat all token-usage fields as `Optional`; never crash on absence. Tag `backend_metadata.provider_endpoint` so reports can flag mixed-provider comparisons.
 - **Worktree contention.** `--runs 3` in parallel could race over the same worktree path. Worktrees are per-(run, task, attempt) — never shared. Cleanup on success; preserve on failure for postmortem.
 
 ## Deviation from origin
@@ -460,9 +448,7 @@ The strategic reasoning is captured in the user message of 2026-05-07 ("CCT shou
 
 ### v3 correction (2026-05-08)
 
-A second-order error surfaced: v2 framed `claude-code:<model>` and `vllm:<model>` as **peer backends**. They are not. Claude Code is a *copilot agent* (drives an editor loop, tool use, file edits); vLLM is a *provider* (an LLM-serving HTTP runtime). v3 separates the abstractions:
 
-- **Backends** = agentic copilot CLIs (Claude Code, plus Aider/Codex/GH-Copilot CLI under issue #33).
 - **Providers** = HTTP endpoints the backends route to via the backend's own gateway env vars.
 
 The CLI surface changes accordingly: `--backend <copilot> --model <id>` (separate flags), not `--backend <copilot>:<model>` (combined). The harness *records* the provider env vars (`ANTHROPIC_BASE_URL`, `ANTHROPIC_AUTH_TOKEN_present`, `claude_code_invocation`) but does not *set* them.
@@ -471,7 +457,6 @@ Removed in v3:
 - The `vllm:<model>` backend (was a Phase-2c stub + Phase-3b real implementation; the latter draft was uncommitted, the former is removed in a fresh refactor commit).
 - The harness-side `--vllm-endpoint` CLI flag.
 - The whole-file fenced-block "EDIT_FORMAT_INSTRUCTIONS" that the discarded vLLM backend appended to prompts.
-- The Aider-leaderboard comparison from the dogfood gate (apples-to-oranges; Aider's leaderboard is Aider-the-agent, not Claude Code).
 
 Audit + rollback documents:
 - [`audit-2026-05-08.md`](audit-2026-05-08.md) — line-pinned analysis of the v2-to-v3 changes.

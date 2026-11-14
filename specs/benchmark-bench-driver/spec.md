@@ -311,7 +311,6 @@ CCT_CLAUDE_TIMEOUT_SECONDS → 600`). What this feature adds:
 - **vLLM: probe-then-decide.** One token (`vllm:m@ep`); the wrapper
   picks user-proxy vs ephemeral-proxy by probing. Resolves the
   contradiction between issue #36 D1's literal env-fill and the merged
-  PR #35 reality that Claude Code cannot speak raw vLLM. Resolves OQ-2.
 - **D2/D5 built on merged Popen+pgkill**, divergence documented.
   Resolves OQ-3.
 - **Single-candidate presets route to `run`, not `compare`**
@@ -445,7 +444,6 @@ criteria* are delivered in full; the *implementation basis* is adjusted.
   kill path. All D2/D5 acceptance criteria remain deliverable. (OQ-3.)
 - **D1 vLLM env-fill → probe-then-decide.** Issue #36 D1 specifies a
   single `vllm:` env shape. Merged PR #35 + `benchmarks/backends/vllm.md`
-  prove Claude Code cannot speak raw vLLM (OpenAI-only); a literal
   env-fill yields a broken candidate. The wrapper instead probes and
   auto-selects user-proxy vs. ephemeral-proxy. +~30 min over the D1
   budget; justified by the user requirement to retain the verified

@@ -57,7 +57,6 @@ drift guard is natural. Header: a bold **"GENERATED — do not edit; run
 1. **Compatibility matrix** — one row per catalog capability, columns per
    adapter, cell = `runtime_status` (`kind`), e.g.:
 
-   | Capability | Default | Security | Pi | Claude Code |
    |---|---|---|---|---|
    | `agents.subagents` | disabled | advisory | degraded (cct-first-party) | enabled (native) |
    | `security.sandbox` | disabled | enforcing | degraded (cct-first-party) | disabled (cct-first-party) |

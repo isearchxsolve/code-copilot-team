@@ -168,7 +168,6 @@ def _validate(raw: Any, *, source: str = "<config>") -> CompareConfig:
         # Default name derived from (backend, model) keeps simple
         # configs simple. Users override when they need to distinguish
         # candidates that share (backend, model) but differ in env
-        # routing — e.g. same Claude Code + sonnet via Anthropic API
         # vs. via a vLLM gateway.
         default_name = f"{backend}:{model}" if model else backend
         name = c.get("name") or default_name

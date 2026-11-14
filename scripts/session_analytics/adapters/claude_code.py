@@ -1,4 +1,3 @@
-# session_analytics.adapters.claude_code — Claude Code JSONL adapter.
 #
 # Source: ~/.claude/projects/<project-hash>/<session-uuid>.jsonl
 # One JSONL file per session; a logical session can span multiple files
@@ -42,7 +41,6 @@ _SLASH_RE = re.compile(r"<command-name>\s*(/?[\w:-]+)\s*</command-name>")
 class ClaudeCodeAdapter:
     copilot_id = COPILOT_ID
     #: #371 A6 — whether this source exposes a STABLE PER-TURN IDENTITY
-    #: that survives a resume. Claude Code replays the ancestor's
     #: records and preserves their `uuid`, which is what makes lineage
     #: provable rather than inferred; another source carries no such
     #: identifier, so a thread is not merely absent for it, it is
@@ -160,7 +158,6 @@ class ClaudeCodeAdapter:
             # Per-turn model attribution (E5): the assistant message's own
             # model, falling back to the session-level model when this
             # turn's message has none. Non-assistant turns (user turns
-            # never carry a model in Claude Code transcripts) get None.
             turn_model = (msg.get("model") or session_model) if rtype == C.ROLE_ASSISTANT else None
 
             text, tool_calls = _blocks_to_turn(msg.get("content"), results_by_id)

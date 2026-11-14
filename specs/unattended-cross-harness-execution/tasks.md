@@ -50,7 +50,6 @@
 | # | [P] | Task | File(s) | Owner | Done |
 |---|-----|------|---------|-------|------|
 | 11 | | Add the supervisor ledger schema under `.cct/` with feature id, harness, worktree, attempts, cooldowns, exit classification, evidence, and timestamps (FR-15, FR-16) | `scripts/`, tests fixtures | build | [ ] |
-| 12 | | Implement harness-neutral launch/resume around `scripts/auto-build-loop.sh --resume`, `pi-code`, and the Claude Code wrapper; preserve project/worktree and posture (FR-14, FR-18) | `scripts/` | build | [ ] |
 | 13 | | Implement explicit usage-limit classification with stored evidence and unknown-error parking/failure (FR-16, FR-19) | `scripts/` | build | [ ] |
 | 14 | | Implement incomplete-task detection after clean exit and retry/cooldown caps with injectable sleep/test clock (FR-17, FR-18, FR-19) | `scripts/`, tests fixtures | build | [ ] |
 | 15 | | Prove no destructive git operations are issued by the supervisor; git ownership remains with the auto-build driver or user action (FR-20) | `tests/` | build | [ ] |

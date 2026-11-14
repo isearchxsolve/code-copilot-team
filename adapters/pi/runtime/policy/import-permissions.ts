@@ -1,5 +1,4 @@
 /**
- * Claude Code permissions/*.json -> Pi rule-list importer (T5.2, FR-009).
  *
  * Pure converter: maps Claude profile permission entries into Pi's existing
  * allow / ask / deny / protected-path / denied-command rule lists. It changes

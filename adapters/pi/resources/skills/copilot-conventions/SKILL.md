@@ -5,7 +5,6 @@ description: "Cross-copilot portable conventions: target alignment, complexity c
 
 # Cross-Copilot Conventions
 
-Shared rules that apply whether using Claude Code, GitHub Copilot, Cursor, or local LLMs.
 These conventions ensure consistent behaviour regardless of which AI tool is driving.
 
 ## Core Contract
@@ -28,7 +27,6 @@ Before planning, implementing, or approving agent-produced work:
 5. Complete the required path before optional improvements. Record useful extras as follow-up work instead of silently expanding scope.
 6. Before approval, ask: **What can be removed without weakening correctness, safety, or the acceptance criteria?**
 
-For a handoff from Claude Code or any other agent, explicitly classify the change as `on-target`, `overcomplicated`, or `off-target`, and explain the evidence. Green tests do not compensate for scope drift. Judge the artifact rather than guessing at a vendor's intent; complexity required by a concrete failure mode is not overengineering when the link is explicit.
 
 ## Single Source of Truth
 

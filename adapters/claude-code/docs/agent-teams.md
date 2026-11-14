@@ -1,6 +1,5 @@
 # Anthropic Agent Teams (experimental, advanced option)
 
-Claude Code v2.1.32+ has an experimental feature called **Agent Teams** that coordinates multiple Claude Code sessions on the same machine via a shared task list and mailbox at `~/.claude/teams/`. **Disabled by default**; enable with `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`.
 
 **Use only when all of these apply:**
 

@@ -164,7 +164,6 @@ def _load_attempts(run_dir: Path) -> list[dict]:
     ``score_path`` is included on every row so downstream grouping can
     derive candidate identity for compare-style run-dirs (where two
     candidates may share (backend_id, model) but live in different
-    nested directories — e.g. the same Claude Code model routed through
     two providers).
     """
     out: list[dict] = []

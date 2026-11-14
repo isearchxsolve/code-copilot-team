@@ -372,7 +372,7 @@ env_key = "SECOND_KEY"
 
 [model_providers.provider_toplevel]
 base_url = "https://toplevel.example/v1"
-api_key = "sk-should-never-be-read"
+api_key = "dummy_placeholder_secret"
 """
 
     def _codex_home(self, contents: str | None) -> Path:
@@ -459,7 +459,7 @@ api_key = "sk-should-never-be-read"
         # The fixture's top-level provider carries an api_key literal.
         home = self._codex_home(self._MULTI_PROVIDER_CONFIG)
         meta_str = str(self._meta_with_codex_home(home))
-        self.assertNotIn("sk-should-never-be-read", meta_str)
+        self.assertNotIn("dummy_openai_key_placeholder", meta_str)
 
 
 if __name__ == "__main__":

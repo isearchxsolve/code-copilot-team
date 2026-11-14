@@ -1,4 +1,3 @@
-# Claude Code Permission Profiles Guide
 
 `claude-code init` and `claude-code permissions` write a project's permission
 posture as one of three **tiers**. Pick a tier by how much you trust the

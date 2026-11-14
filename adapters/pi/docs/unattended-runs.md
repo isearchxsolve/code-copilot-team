@@ -20,7 +20,6 @@ Select it explicitly (opt-in):
 
 ```bash
 pi-code --profile unattended           # Pi
-# Claude Code: generate its settings from the same shared permission profile
 bash scripts/generate-claude-settings.sh relaxed
 ```
 
@@ -81,7 +80,6 @@ at the instant of compaction. Instead it is best-effort durable:
 
 `pi-code continuity` reports this as `compaction: degraded` and names the
 mechanism. The capability registry classifies `memory.session-state` as
-`degraded` for the same reason. **Claude Code** does expose native compaction
 hooks and can do better there — but the cross-harness contract stays
 durable-state-first so either adapter resumes from the same files.
 

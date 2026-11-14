@@ -42,7 +42,6 @@ re-discovering it every session.
 
 ## Where this shows up
 
-- **Adapter agent instructions.** Every adapter (Claude Code,
   Codex, Cursor, GitHub Copilot, Windsurf, Aider) is told via the
   `wiki-first-query` shared skill to consult
   [`index.md`](index.md) before re-reading raw sources for a

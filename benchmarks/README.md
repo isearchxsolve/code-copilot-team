@@ -78,14 +78,11 @@ You have a benchmark (say, Aider Polyglot) and you want to know which LLM does b
 
 ### 1. Make sure your backend is authenticated
 
-The harness *records* which provider an LLM run uses; it never *sets* the provider. **Where it cannot establish that, it records an honest absence rather than a guess** — for the `codex` backend the provider is unestablished (`provider_id: null`, #281), because that backend passes codex no provider selection and codex resolves its configuration in layers. Configuration happens through the backend's own gateway env vars. For Claude Code (the only copilot backend in the MVP — see issue #33 for Aider/Codex/GH-Copilot CLI):
 
 - **Anthropic API (default)**: `claude login` once, or set `ANTHROPIC_API_KEY` in your shell.
-- **Local LLM via vLLM**: spin up vLLM with its Anthropic-compatible endpoint (`vllm serve <model> --enable-anthropic-api`) and use the `env` block in the compare config to point Claude Code at it.
 - **Local LLM via Ollama**: same pattern; Ollama exposes an Anthropic-compatible endpoint on `http://localhost:11434`.
 - **LM Studio, OpenRouter, etc.**: same pattern; whatever URL the gateway serves goes into `ANTHROPIC_BASE_URL`.
 
-See [Claude Code's LLM gateway docs](https://code.claude.com/docs/en/llm-gateway) for the full env-var set.
 
 ### 2. Pick a benchmark and fetch its dataset
 
@@ -166,7 +163,6 @@ cat runs/20260513T140000Z-compare-aider-polyglot/report.md
 ```
 
 The report shows:
-- One group per candidate (labelled by the candidate's `name`), with total attempts, pass rate, and `mean ± stdev` for elapsed seconds. When two candidates share `(backend, model)` but differ in `env` routing — e.g. the same Claude Code model through Anthropic API vs. an OpenRouter gateway — the unique candidate names keep them as distinct groups rather than collapsing them.
 - A per-task table (which tasks each candidate passed).
 - Pairwise winner verdicts using the calibrated rule: `(Δ > 2σ) AND (|Δ| ≥ threshold)` per metric. Below those thresholds the report emits `directional, no winner declared` rather than calling a winner on noise.
 - `backend_metadata.provider_endpoint` per candidate, so a comparison that mixes Anthropic API + a local gateway is visibly marked as such.
@@ -226,7 +222,6 @@ Useful when you want to inspect run-dirs first before producing the comparison.
 | 0 | Contracts, CLI skeleton, schemas, tests | done |
 | 1 | Stub adapter + stub backend + run orchestration + CI smoke test + report skeleton | done |
 | 2 | Aider Polyglot adapter, `worktree+venv` tier | done |
-| 3 | Claude Code (`claude -p`) backend with provider-routing recording | done |
 | 4a | Calibrated winner-declaration rule, report verdicts, dogfood subcommand | done |
 | 4b | Gate 1 (Polyglot liveness) + Gate 2 (memkernel#3 spec-first verdict-correctness) dogfood execution | pending — maintainer-driven on user's machine |
 | #33 | SWE-bench Verified + BigCodeBench adapters, `docker` isolation tier, codex backend | done |
@@ -538,7 +533,6 @@ runs/<UTC-ts>-<benchmark>-<backend>/
       prompt.md               # canonical prompt the harness handed the backend
                               #   (output of adapter.prompt_for); sha256 in run-record.json
       effective-prompt.md     # optional: post-wrap prompt the backend actually sent
-                              #   (Claude Code's system prompt + user prompt, etc.);
                               #   present only when BackendResult.prompt_path is set
       model-output.txt        # optional: model's raw text response
                               #   (path also recorded in run-record.json)
@@ -777,7 +771,6 @@ For exercising the real `claude` CLI against the Polyglot fixture
 # Pull the upstream Polyglot dataset (one-time):
 python3 -m benchmarks.adapters.aider_polyglot.fetch
 
-# Run one Python task with Claude Code (default = Anthropic API):
 ./scripts/benchmark run --benchmark aider-polyglot \
     --backend claude-code --model sonnet --runs 1 --task python/bowling
 

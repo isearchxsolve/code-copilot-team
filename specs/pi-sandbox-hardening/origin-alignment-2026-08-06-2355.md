@@ -64,7 +64,6 @@ BOTH spawn boundaries; scope unchanged.
 
 Note: re-check after phase 3 (US3): config keys registered + default-ON,
 security.env-scrub capability across the 4 registry files (Pi degraded /
-Claude Code disabled) + regenerated COMPATIBILITY.md, battery invariant 10,
 manifest closure mapping, docs. All three #173 asks now delivered or
 honestly mapped; scope unchanged.
 

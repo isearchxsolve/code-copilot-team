@@ -63,7 +63,6 @@
     },
     {
       "id": "claude-code",
-      "title": "Claude Code",
       "kind": "doc",
       "globs": [
         "adapters/claude-code/docs/*.md"
@@ -160,7 +159,6 @@
     {
       "id": "which",
       "title": "Which adapter or mode?",
-      "blurb": "Claude Code or Pi; interactive, autonomous, or spec-driven.",
       "slug": "docs--sdd-vs-code-copilot-team"
     },
     {

@@ -1,8 +1,6 @@
-# Claude Code Session Kickoff — SDD Sprint 1
 
 ## How to Use This
 
-Start Claude Code in the `code-copilot-team` repo root, then paste the
 appropriate prompt below for each phase. Run one phase per session.
 
 ---
@@ -16,7 +14,6 @@ Build.
 
 ## Phase 2: Build
 
-Start a new Claude Code session (`claude` from repo root), then paste this
 prompt directly — the Build agent activates automatically based on context
 (there is no `/chat build` slash command):
 
@@ -30,7 +27,6 @@ Read these files first:
 
 Key constraints:
 - All rule/template changes go through shared/ → generate.sh → adapters/
-- Agent manifests (plan.md, build.md) are Claude Code adapter-specific — edit directly
 - Do NOT create files listed under "What NOT to Build" in the spec
 - Run the full test suite (834+ tests) after all changes
 - Show the delegation plan before executing
@@ -42,7 +38,6 @@ The plan has 6 tasks with non-overlapping file ownership. Delegate accordingly.
 
 ## Phase 3: Review
 
-Start a new Claude Code session (`claude` from repo root), then paste this
 prompt directly — the Review agent activates automatically based on context:
 
 ```

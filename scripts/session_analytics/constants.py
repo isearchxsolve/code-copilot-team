@@ -8,7 +8,6 @@
 from __future__ import annotations
 
 # ── Copilot identifiers ────────────────────────────────────────────────
-# Claude Code is the primary analyzer target; Aider is the secondary
 # multi-copilot example. Kiro is intentionally NOT here — Kiro ingestion is
 # owned by the upstream kiro-analyzer this tool mirrors architecturally.
 COPILOT_CLAUDE_CODE = "claude-code"
@@ -338,7 +337,6 @@ EXPORT_TABLES = EXPORT_DATA_TABLES + (EXPORT_TABLE_ALL,)
 COL_BENCHMARK_RUN_DIR = "benchmark_run_dir"
 
 # The benchmark harness's per-attempt artifact filename (``run.py``) and the
-# JSON key-path, inside that file, to the Claude Code session id
 # (``run_record["backend"]["metadata"]["session_id"]`` — may be null/absent
 # for bare mode, timeouts, or non-claude backends).
 RUN_RECORD_FILENAME = "run-record.json"

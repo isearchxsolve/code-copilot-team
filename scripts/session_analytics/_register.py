@@ -3,7 +3,6 @@
 # One call per adapter — no auto-discovery, so the active set is grep-able
 # from a single file. Mirrors benchmark_runner._register.
 #
-# The pipeline's primary target is Claude Code (the analyzer this tool
 # implements). Aider is the secondary multi-copilot example. Kiro is NOT an
 # adapter here — Kiro ingestion is already handled by the upstream
 # kiro-analyzer this tool mirrors architecturally.

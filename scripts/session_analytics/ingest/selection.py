@@ -75,7 +75,6 @@ def parse_since(text: str) -> float:
 def describe(ref: SessionRef) -> dict[str, Any]:
     """One row for the selection table, from the handle alone (no parse).
 
-    ``source`` is the directory the transcript sits in — for Claude Code
     that is the project folder name, which is the only project hint
     available before parsing.
     """

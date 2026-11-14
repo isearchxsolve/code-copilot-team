@@ -2,7 +2,6 @@
 # trace archive + portable substring search.
 #
 # The store keeps only 500-char redacted previews while full traces live in
-# volatile sources (Claude Code's transcript cleanup; prunable runs trees).
 # `archive()` walks the SAME sources ingest reads, re-parses via the SAME
 # adapters, and — for projects that EXPLICITLY opted in
 # (`projects.<key>.trace_archive: true`; OFF by default) — stores one

@@ -14,7 +14,6 @@ Use the Agent tool with `subagent_type: pitch-shaper`. Pass the topic and any ad
 
 The pitch-shaper will:
 - Pick the next `NNNN-slug` pitch id under `specs/pitches/`
-- List the genuinely open decisions (appetite, problem, solution shape, no-gos, circuit breaker) in the pitch's `## Open decisions` section, each with a default, and shape the pitch on those defaults. It cannot ask the owner itself: Claude Code removes `AskUserQuestion` from every subagent (#407).
 - Decompose into 3–7 scopes
 - Write `specs/pitches/<id>/pitch.md` from `${CLAUDE_PLUGIN_ROOT}/templates/sdd/pitch-template.md`
 - Set `bet_status: shaped`

@@ -188,7 +188,6 @@ ${support_rows}
 
 ## Slash commands
 
-Type these in an agent session (e.g. Claude Code).
 
 | Command | What it does |
 |---------|--------------|

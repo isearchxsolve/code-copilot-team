@@ -77,8 +77,6 @@ Phased delivery on `feat/benchmark-harness`. Each task is bounded and independen
 
 ## Phase 3 — Real backends
 
-### T3.1 — Claude Code backend
-- **Output:** `backends/claude_code.py`. Spawns `claude -p <prompt> --cwd <worktree>` (exact flags per Claude Code headless docs at implementation time), captures stdout transcript, parses final-event usage. Transcript parser is its own function with a snapshot test.
 - **Done when:** unit test against recorded transcript fixture asserts parsed `tokens_input`, `tokens_output`, `tool_calls` match expected values; smoke test passes a hand-crafted recorded transcript.
 
 ### T3.2 — vLLM backend
@@ -93,7 +91,6 @@ Phased delivery on `feat/benchmark-harness`. Each task is bounded and independen
 - **Output:** documented invocation that runs `claude-code:sonnet` against one Polyglot Python task, lands a real run record, and produces a real score. Not in CI.
 - **Done when:** maintainer can paste the command from the README and observe `result: pass` in `score.json`.
 
-**Phase 3 commit:** `feat(benchmark): Claude Code + vLLM backends`
 
 ## Phase 4 — Report + winner rule + dogfood gate
 

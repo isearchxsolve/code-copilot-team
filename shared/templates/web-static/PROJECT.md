@@ -76,7 +76,6 @@ playwright-cli install --skills
 ## Design System & Visual Review
 
 This site uses the **UI-Enhancement harness** to keep the design unique, on-brand,
-and release-grade — not "AI-generated"-looking.
 
 - **Steering bundle**: `DESIGN.md` + `design/tokens.json` at the repo root define the
   committed art direction and design tokens. Read them before building any UI.
@@ -91,7 +90,6 @@ and release-grade — not "AI-generated"-looking.
   defaults is the AI-slop tell.
 - **Verify** with the `visual-review` skill: `DEV_URL=<your dev url> npm run copilot:review`
   runs the axe-core WCAG 2.2 AA gate + anti-slop rubric + screenshot critique at
-  375/768/1440. On Claude Code the `visual-reviewer` agent is the critic.
 
 ## Agent Team
 

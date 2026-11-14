@@ -12,7 +12,6 @@ Origin claim:
 > Provide a detailed Spec Driven Development plan for supported PI
 > harness in Code Copilot Team and adding the heavy discoverable and
 > flexible configuration for supporting all features available in
-> Claude Code to this PI adoption. [Consolidated across three
 > independent plans + final resolutions R1–R6 + verification addenda
 > V1–V3, 2026-07-21.]
 
@@ -37,7 +36,6 @@ What changed since the superseded record:
     launcher-fallback drift guard). 11 of 64 tasks complete.
 
 Mismatches:
-  - none. The origin's "all features available in Claude Code" is
     realised via the capability model; the exclusions in spec.md
     Non-Goals (hosted services, Remote Control, transcript-identical
     parity) were fixed by resolutions R1–R6, which are part of the
@@ -45,7 +43,6 @@ Mismatches:
   - The previously recorded rescope of the Definition of Done has been
     withdrawn. Removing it moves the working artifacts closer to the
     origin, not further from it: the origin asked for support of all
-    Claude Code features, and the full Acceptance Criteria express that.
 
 Verdict: aligned
 Confidence: medium

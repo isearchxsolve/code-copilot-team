@@ -49,7 +49,6 @@ peer_for.pi = "codex"
 # fallback_chain.codex = ["ollama"]
 
 # ── Type: cli ────────────────────────────────────────────────
-# For locally installed CLI tools (Codex CLI, Claude Code headless, Aider).
 #
 # Required fields:
 #   command      — command template ({review_request} = review file path, {model} = optional model)
@@ -88,7 +87,6 @@ timeout_sec = 300
 healthcheck = "codex --version"
 version = "cli"
 
-# Claude Code, headless, as the peer for other subjects. `peer_for.codex`
 # below names this entry; without it a Codex session's review resolved a
 # provider that was never declared and failed at invocation rather than at
 # configuration time (found by scripts/validate-providers-profile.sh, #214

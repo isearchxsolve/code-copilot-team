@@ -432,7 +432,6 @@ cat <<'MANUAL'
   These need judgement or credentials no script has. Everything else
   above was checked automatically.
 
-  1. Install the Claude Code plugin and start a session (#363). The
      previously shipped plugin did not load at all; only a real install
      proves this one does.
   2. Read the [X.Y.Z] CHANGELOG section. Accuracy and voice are yours.

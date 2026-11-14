@@ -629,7 +629,6 @@ Usage:
 
 Provider tokens:
   sonnet / opus / haiku            Anthropic API shorthand
-  claude-code:<model>              Explicit Claude Code model
   ollama:<model[:tag]>[@ep]        Local Ollama (default http://localhost:11434)
   vllm:<model>@<endpoint>          vLLM endpoint (probed; spawns proxy if needed)
   lmstudio:<model>[@ep]            LM Studio (default http://localhost:1234)

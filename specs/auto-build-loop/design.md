@@ -6,7 +6,6 @@ Today, everything between "spec approved" and "merged to master" is human-gated 
 
 This is a **policy redesign with explicit opt-in autonomy profiles**, not just a missing orchestrator: the driver never silently bypasses existing human gates — it converts each gate into a configured state transition with escalation rules.
 
-Research based on: https://code.claude.com/docs/en/agent-sdk/agent-loop, "4 Levels of Loop Engineering" (heartbeat/cron/hook/goal loops), Ralph Wiggum loop, Codex CLI structured review (`codex exec --output-schema`), metaswarm escalation patterns (N rounds → human), Claude Code headless mechanics (`claude -p --output-format json`, result subtypes, session resume).
 
 ## Confirmed decisions (user, 2026-07-13)
 

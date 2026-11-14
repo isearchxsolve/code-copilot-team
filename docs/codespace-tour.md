@@ -13,7 +13,6 @@ The Codespace is a small Linux container with `bash`, `git`, `jq` and Python. Wh
 It opens the `master` branch (active development). The `cct` command it uses
 also ships in v2.0.0.
 
-**Not included:** a real Claude Code or Pi session. Those need the provider's own CLI and your own credentials, and nothing here asks for either. The tour shows the harness: what it installs, how you discover it, and the rails it puts around an agent.
 
 ## 1. See what was installed
 
@@ -57,7 +56,6 @@ Expect warnings and failures here, and a non-zero exit: this container has no `r
 
 ## 5. Watch a rail hold
 
-The hooks are ordinary scripts that read a tool call as JSON and answer with an exit code. Claude Code runs them before every edit and every shell command; here you call them by hand:
 
 ```bash
 printf '%s' '{"tool_input":{"file_path":".env"}}' | bash ~/.claude/hooks/protect-files.sh

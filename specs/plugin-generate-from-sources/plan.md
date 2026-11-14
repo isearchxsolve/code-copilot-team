@@ -30,7 +30,6 @@ origin:
 
 ## The shape of it
 
-`scripts/generate.sh` already turns `shared/skills/` and the Claude Code
 adapter into the codex, cursor, github-copilot and pi surfaces, and CI
 already fails when generated output is stale. The plugin becomes one
 more generated surface. Two files stay hand-authored because they are

@@ -2,7 +2,6 @@
 spec_mode: full
 feature_id: benchmark-harness
 risk_category: integration
-justification: "New subsystem touching scripts/, benchmarks/, .github/workflows/, and tests/. External integrations: Aider Polyglot dataset (git submodule or pinned download), Claude Code headless CLI, vLLM OpenAI-compatible HTTP. Multi-phase delivery with CI smoke gate and dogfood comparison against an external public leaderboard."
 status: draft
 date: 2026-05-07
 issue: 32
@@ -37,7 +36,6 @@ Phase 1 ships the stub adapter + stub backend + CI smoke test. From this point f
 
 Phase 2 ships the Aider Polyglot adapter. Still uses stub backend for the smoke test; integration is verified locally with `claude-code:sonnet` on one task.
 
-Phase 3 ships the Claude Code backend (`claude -p` headless) and the vLLM backend (OpenAI-compatible HTTP). Each is independently verifiable against the stub adapter and the Aider Polyglot adapter.
 
 Phase 4 ships the report generator and the winner-declaration rule (unit-tested), then runs the dogfood gate: ≥10 Aider Polyglot tasks × `claude-code:sonnet`, leaderboard comparison + cause classification.
 
@@ -50,7 +48,6 @@ Each phase is a separate commit (or commit chain) reviewed and approved before t
 | 0     | `./scripts/benchmark list` runs and prints `[]`                            | Code review                                   |
 | 1     | `./scripts/benchmark run --benchmark stub --backend stub` produces score    | CI smoke test green                           |
 | 2     | Aider Polyglot adapter loads, `list` shows tasks, stub-backend run scores  | Per-language smoke task passes via stub       |
-| 3     | Claude Code + vLLM backends produce real BackendResults                    | One real `claude-code:sonnet` task scores `pass` locally |
 | 4     | Report generator emits Markdown + JSON; winner rule unit-tested; dogfood   | Dogfood comparison + cause classification documented |
 
 ## Phase 0 — Scaffolding + contracts

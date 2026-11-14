@@ -1,7 +1,6 @@
 ---
 page_type: playbook
 slug: drive-claude-code-with-local-vllm
-title: Drive Claude Code With a Local vLLM Model
 status: stable
 last_reviewed: 2026-05-17
 sources:
@@ -12,11 +11,9 @@ sources:
   - issue: 35
 ---
 
-# Drive Claude Code With a Local vLLM Model
 
 ## Symptom
 
-You are pointing Claude Code at a local/remote vLLM model (to benchmark
 it against an Anthropic model, or to run it as a cheaper provider) and
 hitting one of these — each appears *only after* the previous is fixed,
 and most surface as a bare HTTP 400 with no hint of the real cause:
@@ -36,7 +33,6 @@ canonical map (verified vs reported, with detection + fix for each) is
 
 ## Recovery steps
 
-1. **Front vLLM with a translation proxy.** Claude Code speaks the
    Anthropic API; vLLM serves only OpenAI. Use LiteLLM proxy mode. Do
    **not** point `ANTHROPIC_BASE_URL` straight at vLLM.
 2. **Use the `hosted_vllm/` LiteLLM provider, never `openai/`.**

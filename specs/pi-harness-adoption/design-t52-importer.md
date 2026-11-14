@@ -1,7 +1,6 @@
 # T5.2 Design Read — Claude `permissions/*.json` importer (FR-009)
 
 Status: **design read — paused for mapping decisions before implementation.**
-Scope: import Claude Code profile permission files into Pi's existing
 `PermissionRuleSet` shape. No enforcement-semantics change except via the
 imported rules.
 

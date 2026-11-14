@@ -112,7 +112,6 @@ is the ≥1 additional backend it needs).
    `./scripts/benchmark run --benchmark swe-bench-verified --backend
    claude-code --model sonnet --task <id>`. The harness pulls the
    task's prebuilt image, mounts a worktree at the base commit, sends
-   the issue text as the prompt, lets Claude Code edit in-container,
    runs the task's `FAIL_TO_PASS`+`PASS_TO_PASS` pytest sets in the
    container, and scores `tests_passed` against the gold expectation.
 2. **codex backend.** `./scripts/benchmark run --benchmark

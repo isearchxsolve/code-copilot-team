@@ -45,7 +45,6 @@ to flush”; and no manifest was created.
 ## User Scenarios
 
 1. **Checkout user installs any adapter.** A user runs the root CCT setup for
-   Claude Code, Codex, Pi, or a project adapter. The setup creates or refreshes
    the repository `.venv` from the dedicated hashed wiki lock as well as any
    application requirements. `./scripts/wiki --version` then executes the exact
    reviewed wheel from that venv, independent of the user's `PATH`.
@@ -188,7 +187,6 @@ to flush”; and no manifest was created.
     proposal implicitly;
   - `wiki-first-query` still reads the wiki index and selected pages directly,
     with no package `query`/`find` call and no new model/backend cost;
-  - generated Claude Code and Pi copies preserve those contracts.
 
 - **FR-11 — Explicit installation coverage.** Managed installation is promised
   for users running root setup from a CCT checkout, for every adapter selected
@@ -285,4 +283,3 @@ to flush”; and no manifest was created.
 - Package-native retrieval or promotion UX.
 - Managed dependency installation for plugin-only/copied-adapter modes.
 - Making wiki lint a blocking repository gate.
-

@@ -185,7 +185,6 @@ class TestSchemaInvariants(unittest.TestCase):
 
     def test_run_record_effective_prompt_optional_nullable(self) -> None:
         schema = _load_json(SCHEMA_DIR / "run-record.schema.json")
-        # effective_prompt is for backends that wrap (Claude Code system
         # prompt, adapter-added framing). Optional + nullable.
         self.assertNotIn("effective_prompt", schema["required"])
         eff = schema["properties"]["effective_prompt"]

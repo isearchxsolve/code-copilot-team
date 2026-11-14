@@ -9,7 +9,6 @@ Working setup and troubleshooting patterns for:
 - standalone Ollama on NVIDIA DGX Spark
 - Open WebUI on DGX Spark
 - vLLM on DGX Spark — **container first**, source build as a last resort
-- serving coding agents (Claude Code, Codex, Pi) and RLM Studio from one box
 - running two models side by side without them fighting for memory
 - practical model usage rules
 - troubleshooting and important commands
@@ -24,7 +23,6 @@ Depth beyond this cookbook lives in `rlm-studio/docs/hosts/` — `dgx-spark.md`,
 - **Ollama — port 11434** — quantized chat models, fastest to stand up. One-line install, no build, model pull by name.
 - **vLLM — ports 8000 / 8001** — coding agents, tool calling, long context. The only one of these with structured `tool_calls[]`, `/v1/responses`, `/v1/messages`, prefix caching and MTP.
 - **Open WebUI — port 8080** — browser chat UI. Points at either.
-- **LiteLLM — port 8787** — Anthropic-to-OpenAI bridge, for Claude Code while the native Anthropic path is unproven.
 
 Ollama 0.14+ ships an Anthropic-shaped shim and needs no proxy. vLLM serves its own `/v1/messages`, but see *Agent transports* — that path has a live failure mode.
 
@@ -233,7 +231,6 @@ If `cu130-nightly` will not pull, Docker Hub also publishes `cu129-nightly` and 
 
 ### Flags that are not obvious
 
-- `--served-model-name qwen38-27b <hf-id>` — takes a **list**. The first entry is canonical and must be **slash-free**: Claude Code cannot address an id containing a slash. Keep the HF id as an alias so existing configs resolve.
 - `--kv-cache-dtype fp8` — halves KV bytes per token. This is what makes room for several clients at once.
 - `--gpu-memory-utilization 0.45` — the value the published GB10 run used. A fraction of **total** memory, not of free memory.
 - `--tool-call-parser qwen3_coder` — official recipe. Some reports use `qwen3_xml`; if `tool_calls[]` comes back empty with XML in `content`, switch.
@@ -284,7 +281,6 @@ One vLLM process serves three protocol surfaces. Different clients speak differe
 Codex        -> /v1/responses           direct
 RLM Studio   -> /v1/chat/completions    direct
 Pi           -> /v1/chat/completions    direct
-Claude Code  -> /v1/messages            see the warning below
 ```
 
 ### Codex
@@ -305,7 +301,6 @@ wire_api = "responses"
 export VLLM_API_KEY=dummy    # vLLM ignores it; Codex will not start without one
 ```
 
-### Claude Code — bridge first
 
 ```
 # ~/.code-copilot-team/litellm-qwen38.yaml
@@ -328,14 +323,11 @@ export ANTHROPIC_SMALL_FAST_MODEL="qwen38-27b"
 export CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000
 ```
 
-All five model variables are required. Claude Code asks for `sonnet`/`haiku`/`opus` by name; an unpinned tier 404s against a server that has never heard of it, and it reads as a network failure rather than a config one.
 
 ### Gateways that reject dynamic tool blocks
 
-When a deferred tool is loaded mid-session, Claude Code adds the tool's full
 definition to the conversation as a `tool_addition` block carrying a
 `tool_definition`. Some Anthropic-compatible endpoints reject that block.
-DeepSeek's does; the signature, seen on Claude Code 2.1.316 (#399):
 
 ```
 API Error: 422 Failed to deserialize the JSON body into the target type:
@@ -344,7 +336,6 @@ messages[56].content: unknown variant `tool_definition`, expected `tool_referenc
 
 The request fails during deserialization, before inference, so a plain
 text-completion healthcheck never sees it. The retry without tool-search
-fields that Claude Code 2.1.305+ performs after a 400/422 does not cover this
 block, and a session whose history already carries it keeps failing when
 resumed or forked.
 
@@ -358,7 +349,6 @@ export DISABLE_FEEDBACK_COMMAND=1                 # the SendFeedback tool, the o
 ```
 
 The cost is that every tool definition is in context from the start. Do not
-make this the default for every Claude Code session: it is a gateway
 setting. `ENABLE_TOOL_SEARCH=true` alone does **not** avoid the failure; tool
 search is what adds the block.
 
@@ -371,7 +361,6 @@ explicit LLM selector proposed in #400.
 
 ### The test that decides whether you can drop the bridge
 
-Claude Code ≥ 2.1.207 appends agent-registry context as a `system`-role message *inside* the messages array, after the user turn. On affected vLLM builds the prompt ends on a system block and the model answers *that* instead of the coding task — returning **HTTP 200**, `stop_reason: end_turn`, and the tool call as pseudo-XML in a text block. Roughly 90% of long agent runs die after one turn, and nothing errors.
 
 ```
 curl -s http://<dgx-spark-ip>:8001/v1/messages \
@@ -391,7 +380,6 @@ curl -s http://<dgx-spark-ip>:8001/v1/messages \
 - **PASS** — a `tool_use` block is present. The native path is safe on this build; drop the bridge.
 - **FAIL** — `end_turn` with only `text`. Keep LiteLLM.
 
-Do not infer the answer from the vLLM version. Recent builds carry inline-system normalization that may already fix it, and the upstream PR is still open — **run the test against the build you actually installed**, and re-run it after every Claude Code update.
 
 ## Base model vs chat model rule
 
@@ -471,7 +459,6 @@ Long context is memory-cheap and time-expensive. Measured prefill on GB10 runs ~
 - `tool_calls: []` with XML in `reasoning` — the reasoning parser is intercepting. For Qwen3-Coder-Next, pass no `--reasoning-parser` at all.
 - Multi-turn 400 with `212 validation errors` and `input_text` blocks — LiteLLM ≥ 1.50 auto-routing `openai/*` through `/v1/responses`. Use the `hosted_vllm/` prefix instead.
 - Requests succeed, model behaves as if it saw nothing — check `tokenizer_config.json` for `"truncation": {"max_length": 2048}` before touching a vLLM flag. Some early quantized releases shipped it.
-- Prefix cache hit rate near zero on Claude Code traffic — recent clients inject a per-request hash into the system prompt. Fixed in newer vLLM; on this hardware it matters a lot.
 
 ### Ports and processes
 
@@ -518,7 +505,6 @@ curl -s http://<dgx-spark-ip>:8001/v1/responses -H 'Content-Type: application/js
 - Added version floors (`vllm >= 0.26`, `transformers >= 5.8`) and an explicit "do not upgrade a working venv in place" — An in-place upgrade crosses a transformers major and eight vLLM minors on an ARM64 source build, with no way back. It would destroy the one verified configuration on the box to build its replacement.
 - Added *Running two models side by side* — Revision 1 assumed a single server. `--gpu-memory-utilization` is a fraction of total memory, so 0.72 + 0.45 is 142 GiB on a 121.6 GiB box — an impossibility, not a boot failure to debug.
 - Removed the blanket `pkill -f vllm` habit — It takes down the verified server along with the target.
-- Added *Agent transports* with the trailing-system test — The `/v1/messages` failure returns HTTP 200. Every other check passes against a server that is silently broken for Claude Code.
 - Added the tool-calling check to the base-vs-chat rule — `facebook/opt-125m` and a chat curl prove the server is up. Neither proves it can drive a coding agent.
 - Added *Memory bands* and the prefill note — Sizing on Spark is governed by weight footprint in GB, and long context is cheap in memory but expensive in time.
 - Expanded troubleshooting: flashinfer JIT OOM, KV budget, parser pairing, `hosted_vllm/` prefix, tokenizer truncation, prefix-cache hashes — All are Spark- or agent-specific and none were in revision 1.
@@ -536,7 +522,6 @@ curl -s http://<dgx-spark-ip>:8001/v1/responses -H 'Content-Type: application/js
 - NVIDIA DGX Spark vLLM instructions — https://build.nvidia.com/spark/vllm/instructions
 - **vLLM on the DGX Spark (container guidance)** — https://vllm.ai/blog/2026-06-01-vllm-dgx-spark
 - **vLLM Qwen3.8-27B recipe** — https://recipes.vllm.ai/Qwen/Qwen3.8-27B
-- **vLLM Claude Code integration** — https://docs.vllm.ai/en/stable/serving/integrations/claude_code/
 - **vLLM Codex integration** — https://docs.vllm.ai/en/stable/serving/integrations/codex/
 - **Measured Qwen3.8-27B on a single DGX Spark** — https://forums.developer.nvidia.com/t/qwen3-8-27b-nvfp4-on-a-single-dgx-spark-up-to-1m-context-vllm-mtp-measurements/380244
 - vLLM GPU installation docs — https://docs.vllm.ai/en/stable/getting_started/installation/gpu/

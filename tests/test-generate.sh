@@ -544,12 +544,10 @@ assert "Cursor coding-standards.mdc is identical" "[[ '$MD5_BEFORE_CURSOR' == '$
 assert "Windsurf rules.md is identical" "[[ '$MD5_BEFORE_WINDSURF' == '$MD5_AFTER_WINDSURF' ]]"
 assert "Aider CONVENTIONS.md is identical" "[[ '$MD5_BEFORE_AIDER' == '$MD5_AFTER_AIDER' ]]"
 
-# ── Section 25: Claude Code plugin ────────────────────────
 # spec: plugin-generate-from-sources FR-8. One assertion per property,
 # so the count pin does not move when a skill, agent or command is added.
 
 echo ""
-echo "=== Claude Code plugin ==="
 
 CC_DIR="$ADAPTERS/claude-code"
 PLUGIN="$CC_DIR/plugin"

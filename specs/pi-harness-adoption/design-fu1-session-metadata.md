@@ -15,7 +15,6 @@ adapter loses metadata today:
 | Adapter | Dropped metadata |
 |---|---|
 | **Pi** | `cost_usd`, `worker_outcomes`, `correlation_ids`, `final_verdict`, `feature_id` |
-| **Claude Code** | `git_branch` |
 | **Aider** | `provisional_format` |
 
 So the fix is one **adapter-neutral** surface, not a Pi-specific one.

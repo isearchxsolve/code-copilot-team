@@ -25,7 +25,6 @@ The bundle is one because the columns A4b reads are A4a's.
 
 Nothing records what harness a session ran under: which CCT release,
 which rules and skills were installed, which providers profile was in
-force, which Claude Code CLI. So "did the new skill change anything" can
 only be answered by the one-prompt plugin eval (#363 P3). MLflow's
 version tracking tags each trace with an application version and
 compares aggregates across versions (A4 in
@@ -40,8 +39,6 @@ compares aggregates across versions (A4 in
 | There is no `cct --version`, no `VERSION` file, no `__version__`; the version of record is `package.json` (`1.1.0`), cross-checked against `git describe --tags` by the release script | `scripts/cct`; `package.json:3`; `scripts/prepare-release.sh:24-38` |
 | The installed harness is plain files: `~/.claude/rules/<name>.md` (four always-rules), `~/.claude/skills/<name>/SKILL.md`, `~/.claude/agents`, `~/.claude/commands`, `~/.claude/hooks`, written by `setup.sh` and `--sync`. No content digest exists anywhere; the drift gate is regenerate-and-diff | `adapters/claude-code/setup.sh:25, 242-284, 1005-1043`; `.github/workflows/sync-check.yml:18-33` |
 | The providers profile is `${CCT_PROVIDER_PROFILE:-~/.code-copilot-team/providers.toml}`; never hashed; Session Analytics never reads it | `scripts/review-round-runner.sh:87`; `shared/schemas/providers.schema.json` |
-| Real Claude Code transcripts carry `version` (the CLI version) on user/assistant/system records; the adapter does not read it; the fixture has no `version` key | `~/.claude/projects/**/*.jsonl`; `adapters/claude_code.py:123-159`; `tests/fixtures/claude_code/project-hash/tiny-session.jsonl` |
-| Claude Code already runs two CCT `SessionStart` hooks; every hook receives `session_id`, `cwd`, `transcript_path` on stdin; the hook pattern is self-guarding (jq guard, plugin coexistence guard, exit 0 on any miss) | `adapters/claude-code/.claude/settings.json:85-99`; `.claude/hooks/reinject-context.sh:10-22` |
 | `local_heartbeat` is Pi-only, keyed by `(project_path, developer_id)`, written at checkpoint time: not a per-session stamp | `heartbeat.py:1-20`; `005_heartbeat.sql` |
 | The generated plugin ships an explicit allowlist of hooks (`CC_PLUGIN_HOOKS`); its `hooks.json` is authored, not generated; a plugin-only session loads skills/agents/commands from `CLAUDE_PLUGIN_ROOT`, not `~/.claude`, and has no `~/.cct/harness.json` | `scripts/generate.sh:88-97`; `adapters/claude-code/plugin/hooks/hooks.json:66-74` |
 | `session_kpi.avg_interaction_quality` is the packaged rubric's per-session mean of `heuristic_label.interaction_quality` (1–5), NULL when no turn was labelled | `002_analytics.sql:26, 46` |
@@ -78,11 +75,9 @@ compares aggregates across versions (A4 in
     `setup.sh`-installed hook runs regardless of the plugin, so a
     coexisting install is stamped from `~/.claude`, which is what that
     session runs under.)
-- **FR-2 The CLI version comes from the transcript.** The Claude Code
   adapter reads the record-level `version` (first non-null) as
   `cli_version`; absent → `null`.
 - **FR-3 Ingest joins the stamp by session id: earliest valid stamp,
-  plus mixed.** The Claude Code adapter reads the ledger once per
   ingest run (path from `CCT_HARNESS_STAMPS`, the one control the hook and the reader share; default `~/.cct/harness-stamps.jsonl`),
   indexes by `session_id`, sanitises on read (bounded strings, hex
   digests validated, malformed lines skipped with a warning, a missing
@@ -165,7 +160,6 @@ compares aggregates across versions (A4 in
 ## Out of scope
 
 Stamping Pi or Aider sessions (their runtimes have no session hook
-here) or plugin-only Claude Code sessions (FR-1). A time series of
 rules changes (the ledger is per session). A judge comparison beyond
 the packaged rubric's interaction quality and two rates (A5
 expectations would add success). `cct --version` as a user command (a

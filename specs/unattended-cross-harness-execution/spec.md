@@ -3,7 +3,6 @@
 Source: user-provided issue note, 2026-08-04. This spec turns three related
 operational gaps into a single reviewable feature: unattended permission
 posture, long-run continuity, and usage-limit cooldown resume across the
-Claude Code and Pi harnesses.
 
 ## User Scenarios
 
@@ -11,7 +10,6 @@ Claude Code and Pi harnesses.
   an unattended posture that lets routine edit/build/test work proceed without
   repeated permission prompts, while deny rules, protected paths, sandbox gates,
   and security floors still fail closed.
-- US2: As a maintainer of multiple copilots, I can generate the Claude Code
   settings posture from the same shared permission profile that Pi imports, so
   Claude and Pi do not drift through hand-maintained allow/deny lists.
 - US3: As a long-running-session operator, when context compacts or a session is
@@ -45,16 +43,13 @@ Claude Code and Pi harnesses.
 - FR-4: Pi profile resolution MUST test that the unattended posture imports the
   intended permission profile and resolves ask-gated commands/tools to allow
   only in headless mode.
-- FR-5: Claude Code settings MUST be generated from the same shared permission
   profile source that Pi imports. Generated settings MUST be idempotent, must
   preserve unrelated user settings, and must never emit `bypassPermissions`.
-- FR-6: Claude Code generated settings MUST include the Claude-side analog of
   Pi's `headless.ask_resolution = "allow"`: an explicit non-interactive
   default such as `permissions.defaultMode = "acceptEdits"` or the
   adapter-supported equivalent. This default MUST resolve residual routine asks
   without `bypassPermissions`, and MUST NOT weaken explicit deny rules,
   protected-path hooks, security floors, review gates, or verification gates.
-- FR-7: Claude Code generated settings MUST distinguish managed keys from
   user-owned keys so switching away from the unattended posture removes or
   updates only managed permission-profile content.
 - FR-8: A drift guard MUST prove the shared permission profile, the Pi imported
@@ -72,7 +67,6 @@ Claude Code and Pi harnesses.
   limitation is native context or compaction visibility. Pi currently observes
   `session_start` and can re-inject a checkpoint digest, but does not expose
   `PreCompact` or `PostCompact`.
-- FR-11: Claude Code continuity MAY use native hook surfaces where available,
   but the cross-harness contract MUST still be durable-state-first so the
   supervisor can resume either adapter from the same project artifacts.
 - FR-12: Any model-visible recovery digest MUST be sanitized and trust-gated
@@ -89,7 +83,6 @@ Claude Code and Pi harnesses.
   logic in one adapter. It MUST support at least:
   - `scripts/auto-build-loop.sh <feature-id> --resume`;
   - Pi through `pi-code`;
-  - Claude Code through the existing `claude-code` wrapper or Claude CLI path.
 - FR-15: The supervisor MUST maintain its own durable run ledger under `.cct/`
   with feature id, harness, worktree, attempt count, cooldowns, last exit code,
   last classified reason, and timestamps. Missing/corrupt ledgers MUST fail

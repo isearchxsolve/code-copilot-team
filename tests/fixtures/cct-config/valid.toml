@@ -9,5 +9,5 @@ deny_asks = true
 fail_closed = true
 
 [providers.openai]
-api_key = "placeholder-not-a-real-secret"
+api_key = "dummy_placeholder_secret"
 model = "gpt-4"

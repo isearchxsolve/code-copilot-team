@@ -17,7 +17,6 @@
 | 4 | Create spec-workflow on-demand rule | `shared/rules/on-demand/spec-workflow.md` | Rules agent | [x] |
 | 5 | Update generation pipeline for spec-workflow | `scripts/generate.sh` | Pipeline agent | [x] |
 
-## [US4] Agent-level enforcement (Claude Code)
 
 | # | Task | File(s) | Owner | Done |
 |---|------|---------|-------|------|

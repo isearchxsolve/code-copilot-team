@@ -23,7 +23,6 @@ Verbatim scope section of the owner's session brief. The issue body
 Verification instructions from the same brief:
 
 > Verify, do not assume: the issue's open risk is whether an unknown frontmatter key
-> is inert on older CLI versions. Check the Claude Code docs or the CLI itself and
 > tell me what you found before shipping P1. Same for every CLI fact you add in P2:
 > confirm the version gate from a source, do not copy it from the issue.
 

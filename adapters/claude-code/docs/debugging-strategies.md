@@ -1,12 +1,9 @@
-# Debugging Strategies for Claude Code
 
-Techniques for diagnosing and resolving issues during Claude Code sessions.
 
 ---
 
 ## 1. `/doctor` — Health Check
 
-Run `/doctor` to verify your Claude Code environment is working correctly.
 
 **What it checks:**
 - CLI version and available updates
@@ -20,7 +17,6 @@ Run `/doctor` to verify your Claude Code environment is working correctly.
 - Session won't start or crashes immediately
 - MCP tools suddenly unavailable
 - Hooks not firing after a config change
-- After upgrading Claude Code
 
 **Interpreting results:**
 - Green checks = healthy; no action needed
@@ -69,7 +65,6 @@ done &
 
 ## 3. Browser Debugging with Playwright
 
-Use [Playwright CLI](https://github.com/microsoft/playwright-cli) for browser-level debugging. It's token-efficient and works natively with Claude Code's shell access.
 
 ### Setup
 
@@ -114,7 +109,6 @@ This is especially useful for debugging UI issues that don't surface in test out
 
 ## 4. Agent Trace Debugging
 
-Claude Code saves full transcripts for every session. See [agent-traces.md](agent-traces.md) for storage locations and archival.
 
 ### Quick reference
 

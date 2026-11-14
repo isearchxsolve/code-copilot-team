@@ -93,7 +93,6 @@ Several wiki page types (decisions, incidents, concepts about
 shared infrastructure) describe how a generated artifact is
 distributed across the project — for example, "this skill
 reaches every adapter via `scripts/generate.sh`" or "this rule
-is always-on for Claude Code." Such claims are easy to overstate
 and hard to retract once cited from other pages.
 
 **Before writing any claim about how a generated artifact is

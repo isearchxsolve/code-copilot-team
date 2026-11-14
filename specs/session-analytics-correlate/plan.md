@@ -34,7 +34,6 @@ origin:
 Grounded (verified 2026-07-16): `copilot_session.benchmark_run_dir` already
 exists in `001_core.sql` (inert); `run-record.json → backend.metadata.session_id`
 (`benchmark_runner/run.py`) and `copilot_session.session_id`
-(`adapters/claude_code.py`) are the same Claude Code UUID → exact equi-join;
 `apply_ddl` is CREATE-only (no ALTER needed since the column already ships);
 `store.py upsert_session` omits the column; `export.py SESSIONS_COLUMNS` and
 `dashboard.py` are the surfacing points.

@@ -8,14 +8,12 @@ See [`specs/benchmark-harness/spec.md`](../specs/benchmark-harness/spec.md) for 
 
 ## Status
 
-**Phase 3** is the current phase: real Claude Code (`claude --bare -p`) and vLLM (OpenAI-compatible HTTP) backends are wired up and tested end-to-end against committed fixtures. `./scripts/benchmark list` shows `aider-polyglot` and `stub` as adapters, `stub`, `vllm`, and `claude-code` as backends.
 
 | Phase | Ships                                                                          |
 |-------|--------------------------------------------------------------------------------|
 | 0     | Contracts, CLI skeleton, schemas, tests — done                                 |
 | 1     | Stub adapter, stub backend, CI smoke test, run orchestration, report skeleton — done |
 | 2     | Aider Polyglot adapter, `worktree+venv` tier, vLLM backend stub — done         |
-| 3     | Claude Code (`claude --bare -p`) backend + real vLLM (OpenAI-compatible HTTP) backend — *current* |
 | 4     | Calibrated winner-declaration rule, dogfood gate vs Aider leaderboard          |
 
 ## CLI
@@ -79,7 +77,6 @@ The MVP ships these backends:
 | Backend          | Phase | Description                                                                                         |
 |------------------|-------|-----------------------------------------------------------------------------------------------------|
 | `stub`           | 1     | Copies `golden_patch` into the worktree; CI smoke test only.                                        |
-| `claude-code:<m>`| 3     | Spawns `claude --bare -p` headless in the worktree, parses the JSON transcript, captures usage. File editing is delegated to Claude Code's internal Edit tool — this backend doesn't extract files from text output. Requires the `claude` CLI on `PATH` and `ANTHROPIC_API_KEY` (or another configured auth path; `--bare` skips OAuth/keychain reads). |
 | `vllm:<model>`   | 3     | OpenAI-compatible HTTP client (zero-dep stdlib). Sends Chat Completions, parses `usage`, and applies the model's text response to the worktree using whole-file fenced blocks (see "vLLM file-edit format" below). Endpoint via `$CCT_VLLM_ENDPOINT` or `--vllm-endpoint`. Optional bearer token via `$CCT_VLLM_API_KEY`. |
 
 ### How to add a new backend
@@ -121,7 +118,6 @@ Pull the upstream Polyglot dataset:
 python3 -m benchmarks.adapters.aider_polyglot.fetch
 ```
 
-Run one Python task with Claude Code (requires `ANTHROPIC_API_KEY` or a logged-in Claude Code CLI):
 
 ```bash
 ./scripts/benchmark run \
@@ -146,7 +142,6 @@ export CCT_VLLM_API_KEY=optional-bearer-token-if-needed
   --task python/leap
 ```
 
-Expected outcome (Polyglot's `python/leap` is straightforward enough for a frontier model): `score.json` shows `"result": "pass"`, `tests_passed: true`, and the run-dir contains `prompt.md`, `transcript.json` (Claude Code) or `vllm-request.json` + `vllm-response.json` (vLLM), and a `worktree/leap.py` reflecting the model's edits.
 
 ## Isolation tiers
 
@@ -195,7 +190,6 @@ runs/<UTC-ts>-<benchmark>-<backend>/
       prompt.md               # canonical prompt the harness handed the backend
                               #   (output of adapter.prompt_for); sha256 in run-record.json
       effective-prompt.md     # optional: post-wrap prompt the backend actually sent
-                              #   (Claude Code's system prompt + user prompt, etc.);
                               #   present only when BackendResult.prompt_path is set
       model-output.txt        # optional: model's raw text response
                               #   (path also recorded in run-record.json)

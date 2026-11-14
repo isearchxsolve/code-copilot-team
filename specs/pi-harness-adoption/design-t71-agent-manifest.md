@@ -193,7 +193,6 @@ surface — to confirm below):
 - **Pi:** `degraded` — manifest schema + faithful Claude importer present;
   fields resolved/reported, enforcement pending the Phase 7 child-session runner
   and Pi SDK child-session verification. Reason string states the boundary.
-- **Claude Code:** `enabled` — native `Agent` tool + `.claude/agents/*.md`.
 
 (Edits: `capabilities.ts` TS seed + `shared/capabilities/{catalog,pi,claude-code}.yaml`;
 `validate-capabilities.sh` requires a reason for the non-enabled Pi status;

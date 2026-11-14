@@ -49,7 +49,6 @@ prompted to register as Strategies, same as A.
   signal. The rubric verdict is consistent with "wiki helped a
   little"; it is not a quantitative proof.
 - **Not a replacement for live-provider field testing.** Both sessions
-  were autonomous Claude Code with `--dangerously-skip-permissions`;
   no curator was present to evaluate the wiki's *workflow* value
   (only its *artifact* value).
 - **Not the ground truth on the rubric design itself.** The rubric's

@@ -98,7 +98,6 @@ a central interface; runaway recursive loops and budget breaches are flagged;
    on an interval (like `watch.py`) · vs · build a new emit/push path (Pi has no
    turn-end event, so a true stream is net-new).
 4. **Pi cost fidelity:** accept pass-through `total_cost_usd` for Pi (no per-turn
-   tokens) · vs · invest in a Pi token source. Claude Code already has real
    tokens; Pi does not.
 5. **Backend promotion:** keep SQLite-local + add an aggregation layer · vs ·
    promote Postgres to the shared team backend (the `db.py` dual-dialect seam

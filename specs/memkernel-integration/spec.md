@@ -8,7 +8,6 @@ status: draft
 
 ## Problem
 
-Claude Code sessions lose context across compactions and session restarts. The built-in file-based continuity (CLAUDE.md, phase recaps, specs/) works but is limited to what fits in static files. A previous attempt (GCC via Aline MCP) failed due to external dependency fragility and scattered conditional logic across all phase agents.
 
 ## Requirements
 

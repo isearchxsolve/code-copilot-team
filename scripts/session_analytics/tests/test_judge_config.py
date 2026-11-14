@@ -108,7 +108,6 @@ class TestEnvFileIO(unittest.TestCase):
 class TestJudgeResolution(unittest.TestCase):
     def test_default_is_copilot_native(self) -> None:
         j = _judge(by_copilot={"claude-code": ("claude-code", "")})
-        # Claude Code → its own LLM (empty model = Claude Code default / Opus 4.8)
         self.assertEqual(j.resolve("claude-code"), ("claude-code", ""))
         self.assertEqual(j.backend, "claude-code")
 

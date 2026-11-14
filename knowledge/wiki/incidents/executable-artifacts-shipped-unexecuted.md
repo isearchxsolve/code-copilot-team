@@ -17,7 +17,6 @@ sources:
 
 ## What happened
 
-Across at least three Claude Code sessions, the Build agent committed
 **executable artifacts** — Dockerfiles, shell scripts, launcher flags,
 CI workflows — without ever running them. Each artifact passed its
 language-level test runner (`pytest`, `npm test`, `./gradlew build`),

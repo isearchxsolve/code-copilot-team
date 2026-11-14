@@ -8,9 +8,7 @@
 </h1>
 
 
-An enforceable harness for AI-assisted coding: your rules, your workflow and your safety rails, applied the same way by every coding agent you use.
 
-Built for **Claude Code** as the reference implementation, with the provider-neutral **Pi** enforced harness and portable conventions for Cursor, GitHub Copilot, Windsurf, Aider, and local LLMs.
 
 [![Latest release](https://img.shields.io/github/v/release/gosha70/code-copilot-team)](https://github.com/gosha70/code-copilot-team/releases)
 [![CI](https://github.com/gosha70/code-copilot-team/actions/workflows/sync-check.yml/badge.svg)](https://github.com/gosha70/code-copilot-team/actions/workflows/sync-check.yml)
@@ -28,7 +26,6 @@ Built for **Claude Code** as the reference implementation, with the provider-neu
 
 ## What you get
 
-- **Rules that hold.** Coding standards, safety constraints and conventions install once and load in every session, on every tool — enforced by hooks on Claude Code and Pi, read as rules everywhere else.
 - **A workflow with gates.** Research → Plan → Build → Review, where a phase cannot complete until its verification passes and, if you want one, a second model has reviewed the diff.
 - **A second opinion on demand.** Point at any provider — a hosted API, a model on your own GPU, or another CLI — and it reviews your work against a fixed verdict contract.
 - **Unattended builds you can audit.** A driver builds an approved feature phase by phase outside the session, under spend and time caps, and leaves a ledger of every decision.
@@ -44,14 +41,12 @@ git clone --branch v2.0.0 https://github.com/gosha70/code-copilot-team.git
 cd code-copilot-team
 
 # 2. Install for your tool — see "Choose your tool" below
-./scripts/setup.sh --claude-code    # Claude Code → ~/.claude/
 
 # 3. Open a project — global rules load automatically
 cct start ~/projects/my-app         # (master) on v2.0.0: claude-code ~/projects/my-app
 ```
 
 Every other install path — Pi, Codex, Cursor, Copilot, Windsurf, Aider, the
-Claude Code plugin — is in [Install options](docs/install.md).
 
 > **Released as v2.0.0.** Everything this page describes is in the latest
 > release and what the Quick Start installs, except lines marked **(master)**:
@@ -217,7 +212,6 @@ per feature is [docs/features.md](docs/features.md), or ask the CLI:
 - **[UI design harness](shared/templates/ui-harness/DESIGN.md)** — Generated UI is steered by a committed DESIGN.md and design tokens and gated by a visual-review loop with an accessibility check and an anti-slop rubric.
 - **[LLM wiki maintainer](knowledge/README.md)** — Lessons and decisions are promoted into a curated project wiki that agents consult before re-reading raw sources, with an ingest pipeline and a lint.
 - **[Benchmark harness](benchmarks/README.md)** _(beta)_ — Coding agents are run against a task set through pluggable backends and scored with a judge, so a configuration change is measured rather than felt.
-- **[Session analytics](docs/session-analytics-cookbook.md)** — Claude Code, Pi and Aider sessions are ingested into a store and queried for cost, turns, tool use, phases, labels and struggle signals from a CLI or an MCP server.
 - **[Studio web UI](docs/session-analytics-cookbook.md)** _(beta)_ — The analytics, benchmarks, auto-build runs, team alerts and the project's own documentation are browsed in one local web app with a settings page for the judge and embedding providers.
 - **[LLM routing profiles](docs/llm-routing.md)** _(experimental)_ — Auto-build tasks are routed to a backend by route class and role under an execution profile, with validate, status and explain commands and a scheduled tick.
 - **[MemKernel persistent memory](shared/skills/memkernel-memory/SKILL.md)** _(experimental)_ — Session context is recalled at start, checkpointed before compaction and recovered after it by hooks that activate only when MemKernel is installed.
@@ -236,13 +230,11 @@ and the comparison with other spec-driven tooling is in
 
 ## Documentation
 
-**Claude Code specific:**
 - **[Setup Cookbook](adapters/claude-code/docs/claude-code-setup-cookbook.md)** — deep-dive into every configuration option
 - **[Config Guide](adapters/claude-code/docs/claude-config-guide.md)** — templates, agent teams, output styles, and workflow reference
 - **[Hooks Guide](adapters/claude-code/docs/hooks-guide.md)** — hook installation, customization, and supported stacks
 - **[Hooks — Manual Test Cases](adapters/claude-code/docs/hooks-test-cases.md)** — the by-hand checks that prove each hook fires and blocks
 - **[Sub-Agents Guide](adapters/claude-code/docs/subagents-guide.md)** — sub-agent configuration and usage
-- **[Agent Teams](adapters/claude-code/docs/agent-teams.md)** — Claude Code's experimental multi-session teams, and how they differ from in-session delegation
 - **[Agent Traces](adapters/claude-code/docs/agent-traces.md)** — locating, reading, and archiving agent transcripts
 - **[Debugging Strategies](adapters/claude-code/docs/debugging-strategies.md)** — /doctor, background tasks, Playwright MCP, trace debugging
 - **[Permissions Guide](adapters/claude-code/docs/permissions-guide.md)** — per-stack Allow/Deny wildcard patterns for /permissions

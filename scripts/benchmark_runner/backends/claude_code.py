@@ -1,15 +1,11 @@
-# benchmark_runner.backends.claude_code — Claude Code headless backend.
 #
 # Spawns ``claude -p "<prompt>"`` in the worktree (launcher mode by
 # default — full autodiscovery, OAuth/keychain auth) and captures the
 # structured JSON output.
 #
-# File editing is delegated to Claude Code's internal Edit tool — the
 # adapter's prepare_task placed the starter files in the worktree, the
-# backend tells Claude what to do, and Claude Code edits in place.
 #
 # Provider routing (per spec.md "Backends vs providers"):
-# Claude Code itself routes its model calls to whatever the user has
 # configured via ANTHROPIC_BASE_URL + friends (per
 # https://code.claude.com/docs/en/llm-gateway). The harness *records*
 # these env vars in backend_metadata so reports can distinguish
@@ -54,7 +50,6 @@ TIMEOUT_OPT_IN_ENV_VAR = "CCT_CLAUDE_TIMEOUT_SECONDS"
 GATEWAY_BASE_URL_ENV_VAR = "ANTHROPIC_BASE_URL"
 GATEWAY_AUTH_TOKEN_ENV_VAR = "ANTHROPIC_AUTH_TOKEN"
 
-# Values Claude Code's ``--effort`` CLI flag accepts. Surfaced as a
 # probe/tuning knob — NOT defaulted to anything by the harness. Higher
 # levels give the model more thinking + response budget; useful for
 # verbose-thinking local models like qwen3.6:27b that exhaust default
@@ -67,7 +62,6 @@ VALID_EFFORT_LEVELS: frozenset[str] = frozenset({"low", "medium", "high", "xhigh
 _DEFAULT_TIMEOUT_SECONDS = 600
 
 # Default tools to allow non-interactively. The adapter's prompt tells
-# the model what to edit; we let Claude Code use Read+Edit+Bash without
 # prompting.
 _DEFAULT_ALLOWED_TOOLS = "Read,Edit,Bash"
 
@@ -84,7 +78,6 @@ class InvalidClaudeTimeoutError(ValueError):
 
 
 class InvalidClaudeEffortError(ValueError):
-    """Raised when ``CCT_CLAUDE_EFFORT`` is set to a value Claude Code does not accept.
 
     Failing loud beats silently dropping a typo'd setting — the
     benchmark is meant to be reproducible, and a silently-ignored
@@ -102,7 +95,6 @@ class ClaudeCodeBackend:
 
     Construction is cheap; the heavy work happens in ``run``. The model
     string (passed through the harness CLI's ``--model`` flag) is sent
-    to Claude Code via ``--model``, so callers can use Anthropic's full
     IDs (``claude-sonnet-4-6``) or aliases (``sonnet``, ``opus``), or
     the served model name when routing through a gateway.
     """
@@ -149,7 +141,6 @@ class ClaudeCodeBackend:
 
         started = time.monotonic()
         # Bug #6 (discovered 2026-05-17): ``subprocess.run(..., timeout=)``
-        # is NOT safe with ``claude -p`` because Claude Code is a Node
         # binary that spawns grandchildren (MCP servers, hook
         # subprocesses via ``--settings``). On timeout, Python sends
         # SIGKILL to the immediate child (PID claude), then blocks
@@ -297,7 +288,6 @@ def _bare_mode_enabled() -> bool:
     """``CCT_CLAUDE_BARE=1`` (or any truthy non-empty value) opts into ``--bare``.
 
     Default is launcher mode (no ``--bare``) so the harness measures
-    real product behavior — Claude Code with its full autodiscovery
     plus the user's OAuth/keychain auth.
     """
     val = os.environ.get(BARE_OPT_IN_ENV_VAR, "")
@@ -339,9 +329,7 @@ def _effort_setting() -> Optional[str]:
     """Resolve the value to pass to ``claude -p --effort`` from the env.
 
     Returns the string when set + valid, ``None`` when unset (in which
-    case ``--effort`` is omitted entirely and Claude Code picks its
     own default). Raises ``InvalidClaudeEffortError`` when set to a
-    value Claude Code does not accept — fail loud, not silent-drop.
 
     This is a probe/tuning knob (see ``VALID_EFFORT_LEVELS``). NOT
     defaulted to anything by the harness — users opt in per-candidate
@@ -352,7 +340,6 @@ def _effort_setting() -> Optional[str]:
         return None
     if val not in VALID_EFFORT_LEVELS:
         raise InvalidClaudeEffortError(
-            f"{EFFORT_OPT_IN_ENV_VAR}={val!r} is not a valid Claude Code "
             f"effort level. Allowed values: {sorted(VALID_EFFORT_LEVELS)}"
         )
     return val
@@ -421,7 +408,6 @@ class _Parsed:
         self.tool_calls: dict[str, int] = {}
 
 
-# Field-name fallbacks. The Claude Code headless docs list ``result``
 # and ``session_id`` explicitly but don't enumerate the usage block;
 # we accept both Anthropic-shape and OpenAI-shape names defensively.
 _INPUT_TOKEN_KEYS = ("input_tokens", "prompt_tokens", "tokens_input")

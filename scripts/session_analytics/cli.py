@@ -32,7 +32,6 @@ def _build_parser() -> argparse.ArgumentParser:
         prog="session-analytics",
         description=(
             "Copilot session analytics & process-mining pipeline. Ingests "
-            "Claude Code (and Aider) sessions into PostgreSQL + an embedded "
             "Kùzu graph, runs an LLM-as-Judge heuristic pass, and serves a "
             "Studio UI. See specs/session-analytics/spec.md."
         ),

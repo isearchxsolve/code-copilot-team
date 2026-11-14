@@ -129,7 +129,6 @@ log text is never evidence.
 
 Explicitly out of scope, per the issue and the audit:
 
-- the Claude Code → DeepSeek → Codex chain (no #109 criterion requires
   it — established by the audit at `d7d6694`);
 - #268 (pytest collecting polyglot fixture stubs);
 - generalized session-analytics work, or any change to how analytics

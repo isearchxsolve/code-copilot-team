@@ -1,4 +1,3 @@
-# Tests for the Claude Code JSONL adapter.
 
 from __future__ import annotations
 
@@ -29,7 +28,6 @@ class TestClaudeCodeAdapter(RegistryResetTestCase):
         self.assertGreater(refs[0].latest_mtime, 0)
 
     def test_resumed_session_files_are_deduplicated_by_uuid(self) -> None:
-        # A resumed Claude Code session writes a SECOND file that repeats
         # the records it was resumed from. Both files share the sessionId,
         # so discover() groups them; load() must not count a turn twice.
         src = next(CLAUDE_CODE_ROOT.glob("*/*.jsonl"))

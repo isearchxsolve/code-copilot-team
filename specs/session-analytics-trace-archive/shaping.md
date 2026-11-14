@@ -12,7 +12,6 @@ The analytics store deliberately keeps only **500-char redacted previews**
 actually said and did. The full traces live in two places, both volatile:
 
 1. **Copilot transcripts** — `~/.claude/projects/<hash>/<uuid>.jsonl`: raw,
-   unredacted, and deleted by Claude Code's own transcript cleanup
    (`cleanupPeriodDays`, default ~30 days). A session older than the cleanup
    window is *permanently unrecoverable* — the store's preview is all that
    remains.
@@ -144,7 +143,6 @@ data-first-UI-second discipline that worked for E9 (#92 → #96).
   archive reuses the identical `redaction.redact_text` path ingest already
   trusts; tests must include adversarial redaction cases; opt-in default
   (archive OFF unless a project enables it) keeps the surface deliberate.
-- **Source formats drift** (Claude Code JSONL is an external contract) —
   already true for ingest; the archive adds no new parser, so no new risk
   class, but archive failures must be per-source resilient (E6/E9 pattern:
   skip + count, never abort).

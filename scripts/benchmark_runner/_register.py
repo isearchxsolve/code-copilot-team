@@ -7,7 +7,6 @@
 # set is grep-able from a single file.
 #
 # vLLM/Ollama/LM Studio are NOT backends — they're providers, routed
-# to via Claude Code's gateway env vars (ANTHROPIC_BASE_URL etc.).
 # The harness *records* which provider a run used; it does not set
 # the routing.
 

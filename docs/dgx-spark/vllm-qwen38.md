@@ -76,7 +76,6 @@ Both floors are real. transformers 4.x cannot load the Qwen3.8 config at all, an
 ```
 8000  ->  Qwen3-Coder-Next   host venv, vLLM 0.18.1rc1   (UNTOUCHED)
 8001  ->  Qwen3.8-27B        container, vLLM >= 0.26
-8787  ->  LiteLLM            Anthropic bridge for Claude Code
 ```
 
 Use `start-qwen38-27b-docker.sh`. It applies the same version floors *inside the image* before serving, because a nightly tag is a moving target, and prints the resolved digest so you can pin it once the gate passes. `start-qwen38-27b.sh` remains for a second, separate venv if you ever want one — never for an in-place upgrade.
@@ -142,12 +141,10 @@ Each of these is a property of the toolchain, the host or the transport rather t
 
 | **Flag** | **Delta** | **Reason** |
 |---|---|---|
-| `--served-model-name qwen38-27b unsloth/…` | Was a single HF-style id | **The flag takes a list.** The first entry is the canonical id returned by `/v1/models`; the rest are aliases. The canonical one must be **slash-free**, because Claude Code cannot address a model id containing `/`. Our current `RedHatAI/Qwen3-Coder-Next-NVFP4` served name would fail for that client. Keeping the upstream id as an alias means existing RLM Studio and Pi configs keep resolving. |
 | `--enforce-eager` | **Removed** | Spark's older stack needed it for CUDA-graph capture stability. vLLM 0.26 on GB10 is reported to capture graphs cleanly at ~0.15 GiB, and graphs are worth real decode throughput. The wrapper makes it opt-in via `VLLM_ENFORCE_EAGER=1` — flip it at the first sign of a capture-time hang. |
 | `--reasoning-parser qwen3` | **Added** | This inverts Blocker #2's guidance. Qwen3-Coder-Next emits no separate thinking output, so §3 there passes no reasoning parser. Qwen3.8 has a thinking mode with materially different token budgets per reasoning level, so the parser belongs here. If §6 Step 2 fails with tool-call XML landing in `reasoning`, change the **tool** parser before you remove this one. |
 | `--kv-cache-dtype fp8` | **Added** | Halves KV bytes per token. This is what turns "a 1M request fits" into "a 1M request fits alongside two other clients." The official vLLM recipe for the single-GPU NVFP4 variant uses it. |
 | `--speculative-config` MTP | **Added, but not in the first boot** | The draft head is 15 tensors inside the checkpoint; there is no second model to download. `n=3`–`n=5` is the measured GB10 range, roughly doubling single-stream decode. Full CUDA graphs are unavailable with spec decode — vLLM falls back to piecewise. Enable it only after §6 passes without it. |
-| `--max-num-seqs 4` | Was `1` | Four clients may share this server (RLM Studio, Pi, Codex, Claude Code). One sequence slot serialises them behind each other. See §5 on why the KV pool, not this flag, is the real concurrency limit. |
 | `--max-num-batched-tokens 8192` | unchanged | The published GB10 baseline value. Raise only with a KV-pool number in hand. |
 | `--enable-chunked-prefill` | **Added** | Keeps a very long prefill from monopolising the batch. At the context lengths this doc exists for, prefill is the dominant cost. |
 | `--hf-overrides` YaRN | **Not in the default config** | Native window is 262,144; factor 4.0 extends it to ~1.05M, and vLLM officially documents the extension. It is off by default because 262K plus prefix caching plus reliable tool calling is a better coding backend than 1M plus longer cold prefills — see §5.4. The wrapper derives the factor and refuses to apply rope scaling at or below the native window. |
@@ -268,12 +265,10 @@ bash scripts/dgx-spark/vllm/verify-qwen38-spark.sh <dgx-spark-ip> 8001 qwen38-27
 | 3 | `/v1/chat/completions` | two-turn continuation | Multi-turn route problem |
 | 4 | `/v1/responses` | endpoint answers | Codex cannot use this server at all (§8.2a) |
 | 5 | `/v1/responses` | a `function_call` item in `.output[]` | Codex sees prose where a tool invocation belongs — the Codex equivalent of gate 2 |
-| 6 | `/v1/messages` | **trailing system turn** → `tool_use` block | vllm#48874 (§7 #1). Route Claude Code via LiteLLM |
 | 7 | `/v1/messages` | structured content blocks accepted | vllm#44000 has regressed; the build predates PR #44283 |
 
 **#48874 is verified against affected released builds. Do not infer susceptibility from the vLLM version alone — gate 6 is authoritative for the installed build.** Current vLLM `main` already carries related inline-system normalization (`_detect_merge_inline_system()` / `merge_inline_system`), which for templates requiring system-first ordering can fold inline system messages into the leading system block. So a build newer than the reported 0.24.0/0.25.1 may already be healthy, and PR #52978 still being open does not by itself mean your server is broken. Equally, a build being new does not mean it is safe: the normalization is conditional on template detection. Run the gate.
 
-**Gate 6 is the reason this file was revised, and the only gate whose failure returns HTTP 200.** Gates 1–5 and 7 all pass against a server that is silently broken for Claude Code — I verified that against stub servers reproducing the #48874 response shape. A green smoke test and a broken agent are indistinguishable without gate 6.
 
 Gate 6 also gives you a clean attribution rule: it runs the *same task* as gate 2, differing only by the trailing system turn. **Gate 2 passing while gate 6 fails means the model is fine and the transport is not.**
 
@@ -283,13 +278,10 @@ Symptom strings are verbatim — operators grep for exact error text.
 
 | **#** | **Symptom (verbatim)** | **Cause** | **Fix** | **Detection** |  |  |
 |---|---|---|---|---|---|---|
-| 1 | **HTTP 200.** The agent completes one turn and stops. `stop_reason: end_turn`, no `tool_use` block, and the tool call sitting in a text block as pseudo-XML. Roughly 90% of long agent runs die this way | **vllm-project/vllm#48874.** Claude Code ≥ 2.1.207 appends agent-registry context as a `system`-role message *inside* the messages array, after the user turn. Affected builds render it positionally, so the prompt ends on a system block and the model answers *that* instead of the coding task. Reported against vLLM 0.24.0/0.25.1; 0.11.0 rejected it outright instead | Route Claude Code through the LiteLLM bridge (§8.3) until it is fixed on your build. Upstream fix is PR #52978 (hoists trailing system turns into the leading system block), open at the time of writing. Current `main` also carries `_detect_merge_inline_system()` / `merge_inline_system`, so some newer builds may already be healthy — **do not infer from the version, run gate 6** **RLM Studio, Pi and Codex are unaffected** — none of them use `/v1/messages` | §6 Gate 6. This is the only gate whose failure returns HTTP 200 |  |  |
-| 1b | `Input should be 'user' or 'assistant'` — HTTP 400 from `/v1/messages` before any inference | vllm#44000, Claude Code ≥ 2.1.154 sending `ctx`/`msg`/`system` roles. **Closed by PR #44283** — this is a regression guard, not a live suspicion | Upgrade vLLM. Seeing this means the build predates #44283 | §6 Gate 7 |  |  |
 | 2 | `ninja: build stopped: subcommand failed`, `Engine core initialization failed`, exit 137 on an nvcc/cicc/cc1plus subprocess during first boot | flashinfer JIT concurrency competing with resident weights for the unified pool | `MAX_JOBS=2 NINJA_JOBS=2`; drop to 1 if 2 still OOMs. Partial cache is preserved — resume, do not wipe | `watch -n 2 'pgrep -c -f "nvcc\ | cicc\ | cc1plus"'` during boot — should stay ≤ 2 |
 | 3 | HTTP 400 in <1s with `This model's maximum context length is N tokens. However, you requested M output tokens…` | vLLM enforces `prompt_tokens + max_tokens <= max_model_len` strictly. Agent clients ship a ~30–40K envelope on every call and default to a large `max_tokens` | Raise `--max-model-len`, or bound the client (`CLAUDE_CODE_MAX_OUTPUT_TOKENS`). RLM Studio's own budgets do not protect you here — this is enforced server-side | §6 Step 1 |  |  |
 | 4 | `tool_calls: []` with the tool-call XML buried in `content` or `reasoning` | Parser pairing wrong for this emission shape | Try `qwen3_xml` in place of `qwen3_coder`. If the XML is specifically in `reasoning`, change the **tool** parser first — unlike Coder-Next, this model does have a thinking mode and wants `--reasoning-parser qwen3` (§3.2) | §6 Step 2 |  |  |
 | 5 | The window appears to work, requests succeed, but answers behave as though the model saw almost nothing | Early `unsloth/Qwen3.8-27B-NVFP4` releases shipped `"truncation": {"max_length": 2048}` in the tokenizer config, silently cutting every prompt to 2K. Corrected upstream | Check `tokenizer_config.json` **before** touching a vLLM flag. Re-pull the checkpoint | `grep -n truncation ~/dgx-spark-vllm/models/Qwen3.8-27B-NVFP4/tokenizer_config.json` |  |  |
-| 6 | Prefix cache hit rate near zero on agent traffic; every turn re-prefills | Claude Code injects a per-request hash into the system prompt, busting the shared prefix. Handled automatically in vLLM after 0.17.1 | Upgrade vLLM. On this hardware this is not a nicety — it is the difference between a working loop and a 20-minute one | `--kv-cache-metrics` on the serve command |  |  |
 
 Blocker #4 from `dgx-spark-vllm.md` §7 — LiteLLM auto-routing `openai/*` through `/v1/responses` — **cannot fire on the RLM Studio path**, because the `vllm` backend prepends `hosted_vllm/` in all three prefix tables. It remains live for anything reaching this server through a generic `openai/` LiteLLM prefix, so the bridge config in §8.3 pins `hosted_vllm/` explicitly.
 
@@ -351,7 +343,6 @@ wire_api = "responses"
 
 ### 8.3 This server also fronts non-RLM-Studio clients
 
-The same vLLM process exposes an Anthropic Messages surface at `/v1/messages` alongside the OpenAI one. Agent clients (Claude Code, Pi) use that path; their configuration lives in the `code-copilot-team` repo, not here. Two consequences for this doc:
 
 - `--max-num-seqs` and the KV pool in §5 are shared with those clients. Budget accordingly — one GPU, one queue.
 - §7 #1 and #3 are failures **those** clients hit, not RLM Studio. They are documented here because they are properties of this server, and an operator debugging this server needs them.
@@ -365,7 +356,6 @@ In order. Each step removes a variable the next one would otherwise be confounde
 ```
 8000  ->  Qwen3-Coder-Next-NVFP4   (existing, verified, untouched)
 8001  ->  Qwen3.8-27B-NVFP4        (new)
-8787  ->  LiteLLM                  (Anthropic bridge for Claude Code)
 ```
 
 **Two servers, one memory pool.** `--gpu-memory-utilization` is a per-instance fraction of *total* memory — vLLM's own docs give two instances at 0.5 each as the canonical example. Summing the fractions therefore tests **budget arithmetic, not fit.** What the arithmetic rules out: Coder-Next at its verified `0.72` plus this at `0.45` is 142.3 GiB on a 121.6 GiB box. That is not a boot failure to debug; it is an impossibility. What the arithmetic does *not* establish: that `0.45 + 0.45` works. It shows the aggregate executor budget is **arithmetically viable (0.90)**; actual co-tenancy must still pass the boot and memory gate on the Spark. On unified memory the same pool carries the OS, page cache, container runtime and every other process, and allocations do not all behave like reserved slices — the published GB10 run at `0.45` reported 28.11 GiB fixed + 27.56 GiB KV = **55.67 GiB against a 54.73 GiB budget**, about 0.94 GiB outside the model, on a single instance. So `start-qwen38-27b.sh` §B is an **aggregate-utilization guard**, not a memory-fit check: it warns above 0.90 and refuses above 0.92, and says so in those words. The fit evidence comes from `record-spark-memory.sh`, run once both servers have loaded and served a request — `MemAvailable`, per-process RSS, and each server's KV-cache line. Until that table is filled in, this document does not say the two-model configuration fits. The estimate that Coder-Next at `0.45` retains ~8.7 GiB of KV ≈ **380K tokens** at 24 KB/token is **derived, not measured**. And KV capacity is not context length: a server with room for 380K KV tokens is still bounded by the `--max-model-len` it was started with and by the window that has actually been verified — 131,072 for Coder-Next. **Check the installed versions rather than assuming them.** The known-good Spark reference is vLLM `0.26.1rc1.dev244`; an independent GB10 NVFP4 benchmark used `0.27.1`. A generic "vLLM 0.6+" statement in an older local document is not evidence about your box: ```bash for v in <coder-next-venv> <qwen38-venv>; do ( source "$v/bin/activate" python - <<'PY' import vllm, transformers print(f" vllm={vllm.__version__} transformers={transformers.__version__}") PY ) done` `` This is also the argument for not mutating the working Coder-Next venv to get Qwen3.8 running.
@@ -386,10 +376,8 @@ The image preflight enforces the same floors that stopped the venv run. Record t
    bash scripts/dgx-spark/vllm/verify-qwen38-spark.sh <ip> 8001 qwen38-27b
 ```
 
-Gate 6 decides whether Claude Code gets the native Anthropic transport or the LiteLLM bridge. Gate 5 decides whether Codex is usable at all.
 
 - **A real Codex repo task**: inspect files → edit → run a command or test → fix → finish. Not a prompt, a task.
-- **A real Claude Code task through LiteLLM**, sustained for **15–30 tool turns**. A one-prompt smoke test cannot distinguish a working agent from #48874, which by construction fails on turn two.
 - **Add MTP** (`--speculative-config '{"method":"mtp","num_speculative_tokens":3}'`) and re-run §6. Now you are measuring speculative decoding, not tool calling.
 - **Run the anchor benchmark** three times in `code-copilot-team`:
 
@@ -419,7 +407,6 @@ Consider leaving it unregistered while the banner is up — an in-app doc reads 
 ## References
 
 - vLLM tool-calling docs — <https://docs.vllm.ai/en/stable/features/tool_calling/>
-- vLLM Claude Code integration — <https://docs.vllm.ai/en/stable/serving/integrations/claude_code/>
 - vLLM recipe, Qwen3.8-27B — <https://recipes.vllm.ai/Qwen/Qwen3.8-27B>
 - vllm-project/vllm#44000 (Anthropic role validation) — <https://github.com/vllm-project/vllm/issues/44000>
 - NVIDIA Developer Forums, Qwen3.8-27B-NVFP4 on a single DGX Spark, 1M context + MTP measurements — <https://forums.developer.nvidia.com/t/qwen3-8-27b-nvfp4-on-a-single-dgx-spark-up-to-1m-context-vllm-mtp-measurements/380244>

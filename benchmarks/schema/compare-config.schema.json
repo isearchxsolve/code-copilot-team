@@ -287,7 +287,6 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Provider-routing env vars applied only for this candidate's runs and restored afterward. Typical keys: ANTHROPIC_BASE_URL, ANTHROPIC_AUTH_TOKEN, ANTHROPIC_DEFAULT_SONNET_MODEL (for Claude Code's gateway support \u2014 see https://code.claude.com/docs/en/llm-gateway). VALUES MAY CONTAIN SECRETS and are read into os.environ for the candidate's runs; only the KEY NAMES are persisted to compare-manifest.json."
         }
       }
     }

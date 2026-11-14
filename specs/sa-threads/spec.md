@@ -76,7 +76,6 @@ Measured over the 163 transcripts in `~/.claude/projects/`.
 - **`copilot_turn.uuid` and `parent_uuid` already exist**
   (`001_core.sql`) and `uuid` is **unindexed** (`003_indexes.sql` has no
   entry for it).
-- **Only Claude Code carries a native uuid.** `adapters/aider.py` and
   `adapters/pi.py` have none.
 - **A column on an existing table is not additive.** `check_schema`
   refuses any store whose existing table lacks a `_REQUIRED_COLUMNS`

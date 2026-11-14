@@ -49,7 +49,6 @@ out of date with the current code:
 3. Do not silently fix wiki content as a side effect of other
    work — wiki edits are intentional, single-purpose changes.
 
-In Claude Code, the `/promote-lesson <description>` slash command
 runs the promotion workflow on your behalf. Other adapters can
 follow the workflow document directly. Its final lint runs
 wiki-studio 0.9.0 through `./scripts/wiki lint` from a CCT checkout

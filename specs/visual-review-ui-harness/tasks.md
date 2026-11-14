@@ -20,7 +20,6 @@ Status legend: [x] done · [ ] todo
 - [x] T3.4 `harness/{package.json, tsconfig.json}` + `PROJECT.md` + `commands/team-review.md`
 - [x] T3.5 `tsc --noEmit` clean + runner executed once (emits `critique-feedback.json`) ✓ verified
 
-## T4 — Claude Code critic
 - [x] T4.1 `claude_code/.claude/agents/visual-reviewer.md` (opus, multimodal) — FR-006
 - [x] T4.2 `generate.sh` agent-sync generalized → `adapters/claude-code/.claude/agents/visual-reviewer.md` — FR-006 ✓ verified
 

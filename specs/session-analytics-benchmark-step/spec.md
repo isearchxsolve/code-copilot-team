@@ -62,8 +62,6 @@ contract; the old bundle stays as the history of the first pass.
   receives the live `CorrelationStats` every `PROGRESS_EVERY` records
   and once at the end; the step publishes them as its job progress.
 - FR-5 **Linking boundary (unchanged from #91).** Outcomes are stored
-  for every benchmark backend. Session linking applies to Claude Code
-  runs whose run record carries a Claude Code session id matching a
   loaded session. The page, the step blurb, the Settings blurb and the
   cookbook say this; nothing implies every backend links.
 - FR-6 **Payload.** `/api/dashboard/benchmark` adds `runs_root {path,
@@ -107,7 +105,6 @@ contract; the old bundle stays as the history of the first pass.
 ## Constraints
 
 - No new GitHub issue (owner's standing rule); one PR.
-- The correlate contract of #91/#92 is unchanged: Claude Code-only exact
   join for session links, outcomes stored for every backend.
 - The judge is not involved; nothing here writes outside the scan's
   single commit.
@@ -116,5 +113,4 @@ contract; the old bundle stays as the history of the first pass.
 
 ## Out of scope
 
-Broadening linking beyond Claude Code; per-record progress rendering
 beyond the counters; any change to the harness's run-record format.

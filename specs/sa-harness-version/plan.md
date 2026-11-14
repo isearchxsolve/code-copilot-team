@@ -70,7 +70,6 @@ The issue row says "at ingest", and that is where the columns are
 written; but the *facts* must be captured when the session runs.
 Ingest-time capture would stamp every `--full` re-ingest of old sessions
 with today's rules digest, which is the one thing a compare must never
-do. Claude Code already runs two CCT SessionStart hooks and hands every
 hook the `session_id`; a third hook that appends one line to a ledger
 is the smallest honest source. Recommended. Alternative: capture at
 ingest only for sessions newer than the last `--sync` — a guess dressed

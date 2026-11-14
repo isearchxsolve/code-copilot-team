@@ -92,16 +92,13 @@ parity_case full-marker fail
 parity_case none-with-spec fail
 
 # ── Cross-adapter SDD agreement (T4.5) ──────────────────────
-# The Claude Code adapter gates SDD via build.md's rules, enforced in CI by
 # scripts/validate-spec.sh; the Pi adapter gates via the runtime validateSpecDir.
 # These must reach the same verdict on the same spec dirs, and both must match
 # the gate build.md documents. Distinct from T4.2 (script<->runtime): this
-# grounds agreement in the Claude Code adapter's stated contract.
 echo "--- cross-adapter SDD agreement ---"
 CROSS_FX="$REPO_DIR/tests/fixtures/sdd-cross-adapter"
 BUILD_MD="$REPO_DIR/adapters/claude-code/.claude/agents/build.md"
 
-# 1. The Claude Code adapter documents the same gate Pi enforces.
 assert "build.md gates full on spec.md + no [NEEDS CLARIFICATION]" \
   "grep -A2 '\*\*full\*\*' '$BUILD_MD' | grep -q 'spec.md' && grep -A2 '\*\*full\*\*' '$BUILD_MD' | grep -q 'NEEDS CLARIFICATION'"
 assert "build.md emits tasks.md for full" \
@@ -118,7 +115,6 @@ cross_case() { # $1=fixture $2=expected(proceed|block)
   pi=$(node --experimental-strip-types --input-type=module -e "
     import { validateSpecDir } from '$PI_DIR/runtime/workflow/sdd.ts';
     console.log(validateSpecDir('$CROSS_FX/$name').pass ? 'proceed' : 'block');" 2>/dev/null)
-  assert "cross-adapter[$name]: Claude Code and Pi agree ($cc)" "[[ '$cc' == '$pi' ]]"
   assert "cross-adapter[$name]: verdict is the expected $want" "[[ '$cc' == '$want' && '$pi' == '$want' ]]"
 }
 cross_case full-complete proceed

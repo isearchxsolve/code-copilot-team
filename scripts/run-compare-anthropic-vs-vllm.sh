@@ -6,8 +6,6 @@
 # LiteLLM proxy lifecycle below is now powered by the shared
 # benchmark_runner/proxy.py helper (extracted 2026-05-18).
 #
-# Automated 2-LLM benchmark: Claude Code → <anthropic-model> (Anthropic API)
-# vs. Claude Code → <vllm-model> (remote vLLM on an NVIDIA DGX Spark),
 # on Aider Polyglot.
 #
 # ARCHITECTURE (the part that differs from the Ollama sibling script):
@@ -18,7 +16,6 @@
 #
 #   Why the proxy: vLLM exposes an OpenAI-compatible API only
 #   (/v1/chat/completions, /v1/models). It does NOT serve an
-#   Anthropic-shaped /v1/messages. Claude Code speaks Anthropic API,
 #   so pointing ANTHROPIC_BASE_URL straight at vLLM 404s on
 #   /v1/messages. Ollama 0.14+ ships an Anthropic shim and needs no
 #   proxy; vLLM has none, so we front it with LiteLLM's proxy mode
@@ -445,10 +442,8 @@ except Exception:
 
     # 1f. claude CLI present?
     if ! command -v claude > /dev/null; then
-        err "claude CLI not on PATH. Install Claude Code first."
         exit 1
     fi
-    ok "Claude Code: $(claude --version)"
 
     # 1g. Polyglot dataset cached?
     if ! find benchmarks/.cache/polyglot -name "*.md" -print -quit 2>/dev/null | grep -q .; then

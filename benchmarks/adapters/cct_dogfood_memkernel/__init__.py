@@ -1,6 +1,5 @@
 # benchmarks.adapters.cct_dogfood_memkernel — Gate 2 dogfood fixture.
 #
-# Forward-looking spec-first dogfood: harness runs Claude Code against
 # memkernel#3 ("Define MemKernel Memory Brain Architecture"). Replaces
 # the original rlmkit#38/#41 retrospective plan, which was
 # backward-looking (the gist verdict is final, the experiment is

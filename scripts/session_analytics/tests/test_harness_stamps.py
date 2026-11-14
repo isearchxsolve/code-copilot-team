@@ -112,7 +112,6 @@ class TestLedgerReader(unittest.TestCase):
 
 
 class TestHookInvocation(unittest.TestCase):
-    """The hook itself, run as Claude Code would run it, against a temp HOME."""
 
     def setUp(self) -> None:
         self.home = Path(tempfile.mkdtemp(prefix="cct-sa-hookhome-"))
@@ -211,7 +210,6 @@ class TestInstallSurface(unittest.TestCase):
 
     @unittest.skipUnless(shutil.which("jq"), "jq not installed")
     def test_setup_writes_the_hook_into_fresh_and_existing_settings_exactly_once(self) -> None:
-        """The install path Claude Code actually reads: setup.sh's own
         HOOKS_CONFIG for a fresh ~/.claude/settings.json, and
         ensure_hook_command for an existing one — run twice, so a second
         --sync does not add it again. The repo's settings.json is not

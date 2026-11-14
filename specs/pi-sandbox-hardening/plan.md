@@ -181,7 +181,6 @@ no arrays needed beyond existing patterns).
 `config/lint.ts`: register `security.env_scrub`, `security.env_scrub_keep`,
 `security.env_scrub_extra`. Capability `security.env-scrub` in the 4 registry
 files — Pi `degraded` (enforced at CCT spawn boundaries; primary session
-untouched by design), Claude Code `disabled`. Docs: scrub contract +
 primary-session boundary in `adapters/pi/docs/security-model.md`; README/help
 lines; `configuration-reference.md` keys.
 
@@ -238,7 +237,6 @@ closure comment carries the gap-mapping table from `spec.md`.
    `PI_API_KEY` (plus the OS/CCT baselines); anything else via
    `security.env_scrub_keep`.
 3. **Capability status** — Pi `degraded` (enforced at CCT spawn boundaries
-   only; primary session untouched by design); Claude Code `disabled`.
 4. **Handoff mechanism** — CLI-computed unset list (`pi-code env scrub-list`),
    single TS pattern source, fail-closed when the call fails while scrub is
    enabled.

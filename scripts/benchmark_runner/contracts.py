@@ -3,7 +3,6 @@
 # The harness is benchmark-agnostic: any benchmark (Aider Polyglot,
 # SWE-bench Verified, BigCodeBench, LiveCodeBench, custom CCT fixtures)
 # implements ``BenchmarkAdapter``. Any copilot/model implementation
-# (Claude Code headless, vLLM HTTP, stub) implements ``Backend``.
 #
 # The harness owns isolation, run records, scoring, and reports. The
 # adapter owns "what is a task in this benchmark and how do I check it."
@@ -150,7 +149,6 @@ class BackendResult:
     The runner always writes the harness-provided prompt to
     ``<attempt>/prompt.md`` before calling ``Backend.run`` and records
     the path + sha256 in ``run-record.json``. If the backend wraps or
-    rewrites the prompt before sending it (Claude Code's headless mode
     appends a system prompt; some adapters add framing), the backend
     SHOULD also write the post-wrap "effective prompt" to disk and
     return its path here. Backends that do not wrap leave
@@ -159,7 +157,6 @@ class BackendResult:
 
     ``model_output_path`` is the model's raw text response, distinct
     from ``transcript_path`` (which may be backend-specific structured
-    log, e.g. Claude Code's JSON transcript). Backends that have no
     separate text output (only the worktree mutations) leave it
     ``None``.
 

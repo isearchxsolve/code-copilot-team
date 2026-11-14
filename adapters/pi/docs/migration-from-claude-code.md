@@ -1,6 +1,4 @@
-# Migrating from Claude Code to Pi
 
-Practical guide for teams already running CCT on Claude Code. The short version:
 **the engineering contract is the same** (SDD, phases, permissions, review,
 verification), the *mechanism* differs (Pi runs a runtime extension instead of
 native agents/hooks), and a few capabilities are honestly `degraded` because Pi
@@ -8,12 +6,10 @@ lacks the underlying primitive.
 
 The authoritative per-capability comparison is the generated matrix:
 [`../../../shared/capabilities/COMPATIBILITY.md`](../../../shared/capabilities/COMPATIBILITY.md)
-(Pi vs Claude Code, status × implementation kind, with verbatim reasons). This
 guide is the narrative.
 
 ## What maps directly (same behavior)
 
-| Claude Code | Pi | Notes |
 |---|---|---|
 | SDD classification + phase workflow | `workflow.sdd` / `workflow.phases` | same contract; both `enabled`. Cross-adapter contract tests assert agreement. |
 | permission profiles (`permissions/*.json`) | the permission engine | imported via `importClaudePermissions()` — allow/ask/deny, bare tools, `Bash(<prefix>:*)`, path-scoped denies. Entries with no faithful Pi target are reported, never silently dropped. |
@@ -36,7 +32,6 @@ limitation, not a fake:
 | `agents.teams` | **no team primitive** — coordination state + separate runners + polled message log | identities/claiming/approval/shutdown enforced; live transport/UI is not |
 | `integrations.mcp` | live JSON-RPC flows through Pi's own transport | opt in with `integrations.mcp.enabled` |
 
-## What is Pi-native (different from Claude Code)
 
 - **The launcher** `pi-code` wraps upstream `pi` (version-gated, recursion-guard,
   `--no-cct`, `--profile`, `--project`, `--` passthrough).

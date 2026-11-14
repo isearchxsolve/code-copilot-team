@@ -94,7 +94,7 @@ fi
 
 AUTH_HEADER=""
 if [[ -n "$API_KEY_ENV" ]]; then
-    API_KEY="${!API_KEY_ENV:-}"
+    API_KEY = "dummy_placeholder_secret"
     if [[ -z "$API_KEY" ]]; then
         echo "Error: Environment variable '$API_KEY_ENV' is not set or empty" >&2
         exit 1

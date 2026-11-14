@@ -1,6 +1,5 @@
 # Spec-Driven Development vs Code Copilot Team
 
-A side-by-side comparison of two complementary approaches to AI-assisted software development.
 
 | | [Spec Kit](https://github.com/github/spec-kit) (GitHub) | [Code Copilot Team](https://github.com/gosha70/code-copilot-team) |
 |---|---|---|
@@ -112,7 +111,6 @@ Both frameworks address the same root problems — lost context, hallucinations,
 
 ## Verdict: Complementary, Not Competing
 
-These frameworks address different halves of the AI-assisted development lifecycle:
 
 ```
 Spec Kit                              Code Copilot Team
@@ -139,4 +137,3 @@ Spec Kit                              Code Copilot Team
 - [GitHub Spec Kit](https://github.com/github/spec-kit)
 - [Code Copilot Team](https://github.com/gosha70/code-copilot-team)
 - [OpenAI Harness Engineering](https://openai.com/index/harness-engineering/)
-- [Claude Code Best Practice](https://github.com/shanraisshan/claude-code-best-practice)

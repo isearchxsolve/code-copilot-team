@@ -1,4 +1,3 @@
-# tests/test_claude_code_backend.py — Claude Code backend tests.
 #
 # These tests do NOT spawn the real ``claude`` CLI. The transcript
 # parser is exercised against committed fixtures, and the run() path
@@ -256,7 +255,6 @@ class TestBackendEndToEndAgainstFakeCli(unittest.TestCase):
 
     def test_cct_claude_effort_unset_omits_flag(self) -> None:
         # When CCT_CLAUDE_EFFORT is unset, --effort must NOT appear in
-        # argv (Claude Code picks its own default) and backend_metadata
         # records effort=None so audit trails know the flag was off.
         with mock.patch.dict(os.environ, {}, clear=False):
             os.environ.pop(EFFORT_OPT_IN_ENV_VAR, None)
@@ -280,7 +278,6 @@ class TestBackendEndToEndAgainstFakeCli(unittest.TestCase):
 
     def test_cct_claude_effort_allowlist_pins_the_five_documented_values(self) -> None:
         # Static check: VALID_EFFORT_LEVELS must contain exactly the
-        # five values Claude Code's `--effort` doc lists. This catches
         # a typo or accidental edit to the allowlist without doing N
         # round-trip backend invocations (which would each need a
         # fresh worktree dir — see _run_backend's setUp pattern).
@@ -297,7 +294,6 @@ class TestBackendEndToEndAgainstFakeCli(unittest.TestCase):
 
         # Point at the resolvable fake CLI (not the literal "claude"): the
         # CLI-presence guard runs before effort validation, so a bare
-        # "claude" makes this pass only where Claude Code is installed —
         # green locally, ERROR in CI.
         backend = ClaudeCodeBackend(model="sonnet", cli_executable=str(self._fake))
         with tempfile.TemporaryDirectory() as td:

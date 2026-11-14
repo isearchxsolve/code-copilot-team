@@ -3,7 +3,6 @@
 # Reuses the proven headless `claude -p --output-format json` invocation
 # pattern from benchmark_runner.judge.claude_code_judge: tools disabled
 # (`--tools ""`), start_new_session=True + os.killpg on timeout (the Bug #6
-# process-group kill — Claude Code spawns Node grandchildren whose open FDs
 # block communicate() if only the immediate child is killed).
 #
 # NOTE: this is a cloud path unless the user routes ANTHROPIC_BASE_URL to a
@@ -43,7 +42,6 @@ class ClaudeCodeSessionJudge:
     judge_id = JUDGE_FAMILY
 
     def __init__(self, model: str = "", *, cli_executable: str = "claude") -> None:
-        # Empty model == use Claude Code's OWN default model (Opus 4.8 today):
         # the judge omits ``--model`` entirely so the CLI picks its default.
         self._model = model
         self._model_label = model or "claude-code-default"

@@ -137,10 +137,8 @@ GATEWAY_GUIDE = "docs/dgx-spark/setup-cookbook.md"
 
 
 def check_gateway(report: Report) -> None:
-    """#399: a Claude Code gateway and its tool-compatibility settings.
     A text-completion healthcheck cannot see this failure: DeepSeek's
     Anthropic-compatible endpoint accepts prompts and rejects the dynamic
-    `tool_definition` block Claude Code adds when a deferred tool loads
     (422 before inference). Names only, never values."""
     if not os.environ.get(GATEWAY_VAR):
         report.add("Gateway", "claude-code", OK, f"{GATEWAY_VAR} not set — native Anthropic endpoint")

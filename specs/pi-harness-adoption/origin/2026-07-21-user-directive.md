@@ -5,7 +5,6 @@ Verbatim originating request:
 > Provide a detailed Spec Driven Development plan for supported PI
 > harness in Code Copilot Team and adding the heavy discoverable and
 > flexible configuration for supporting all features available in
-> Claude Code to this PI adoption.
 
 Consolidated across three independent plans + final resolutions R1–R6 +
 verification addenda V1–V3, 2026-07-21.

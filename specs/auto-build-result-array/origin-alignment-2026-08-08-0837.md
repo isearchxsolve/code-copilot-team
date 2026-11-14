@@ -19,7 +19,6 @@ surface. Gate fired exit 4 (stale record).
 ## Origin claim (verbatim)
 
 > `scripts/auto-build-loop.sh` parks **successful** build sessions as
-> `build_session_error`. It parses the Claude Code `-p --output-format
 > json` output as a single top-level object (`jq '.subtype'`), but the
 > current CLI returns a **JSON array of messages** — the result object is
 > the **last element** (`.[-1]`). So `.subtype` on the array throws, the

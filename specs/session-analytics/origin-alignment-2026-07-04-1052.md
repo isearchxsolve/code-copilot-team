@@ -4,7 +4,6 @@ Origin: https://github.com/gosha70/code-copilot-team/issues/63
 
 Origin claim:
 > Issue #63 asks for a session analytics & process-mining pipeline mirroring
-> the (now-unreachable) kiro-analyzer: ingest Claude Code + other copilot
 > sessions into PostgreSQL + an embedded Kùzu knowledge graph, run an
 > LLM-as-Judge heuristic pass over turns, expose an MCP server, and surface a
 > rich Next.js Studio UI (Dashboard, 5-step Analysis wizard, Knowledge-Graph
@@ -18,7 +17,6 @@ Origin claim:
 Working claim:
 > The working tree delivers `scripts/session_analytics/` — a Python 3.11
 > package with a `scripts/session-analytics` CLI (verbs: setup, list, ingest,
-> doctor, analyze, kpis, graph, mcp, serve), a Claude Code JSONL adapter (DAG
 > walker handling thinking blocks, sidechains, non-conversational line types)
 > plus an Aider adapter as the second copilot, an idempotent relational store
 > (PostgreSQL DDL, SQLite test dialect), an embedded Kùzu knowledge graph
@@ -38,7 +36,6 @@ Mismatches:
     second adapter instead. Documented as an explicit Non-Goal in spec.md
     (upstream kiro-analyzer owns Kiro ingestion; schema stays copilot-
     agnostic). The issue's own acceptance criterion — "At least 2 copilot
-    adapters working (Claude Code + one other)" — is satisfied.
   - The issue's premise "CCT already uses PostgreSQL in benchmarks" was
     verified false; Postgres is introduced here via docker-compose. Recorded
     as a documented deviation in the spec's origin block.

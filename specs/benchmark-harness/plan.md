@@ -2,7 +2,6 @@
 spec_mode: full
 feature_id: benchmark-harness
 risk_category: integration
-justification: "New subsystem touching scripts/, benchmarks/, .github/workflows/, and tests/. External integrations: Aider Polyglot dataset (git submodule or pinned download), Claude Code headless CLI (which itself can route to vLLM/Ollama/LM Studio via the Anthropic-Messages gateway). Multi-phase delivery with CI smoke gate and a run-to-completion dogfood gate. v3 (2026-05-08): backends are copilot agents, providers are LLM endpoints; the harness records provider env vars but does not set them."
 status: draft
 date: 2026-05-07
 issue: 32
@@ -42,9 +41,7 @@ Phase 1 ships the stub adapter + stub backend + CI smoke test. From this point f
 
 Phase 2 ships the Aider Polyglot adapter. Still uses stub backend for the smoke test; integration is verified locally with `claude-code --model sonnet` on one task.
 
-Phase 3 ships the Claude Code backend (`claude -p` headless via the launcher; `CCT_CLAUDE_BARE=1` opts into `--bare`). The harness records `ANTHROPIC_BASE_URL`, `ANTHROPIC_AUTH_TOKEN_present`, and `claude_code_invocation` in `backend_metadata` so reports distinguish Anthropic-API runs from gateway-routed runs (vLLM/Ollama/LM Studio served via Claude Code's [LLM gateway support](https://code.claude.com/docs/en/llm-gateway)).
 
-Additional copilot backends (Aider, Codex, GitHub Copilot CLI) are scoped into issue #33 as Phase 4 candidates — each requires independent verification of its headless-invocation surface. The earlier "Phase 3 vLLM backend" plan is dropped (v3 correction): vLLM is a *provider*, configured via Claude Code's gateway env vars, not a peer backend.
 
 Phase 4 ships the report generator, the winner-declaration rule (unit-tested), and **both dogfood gates**: (1) liveness — ≥10 Aider Polyglot tasks × `claude-code --model sonnet` running to completion; (2) verdict correctness — `cct-dogfood-memkernel` fixture (calibration infra; carve-out per spec § Constraints) snapshots memkernel at a pinned SHA, runs `claude-code --model sonnet --runs 3` against the verbatim memkernel#3 issue body, and compares the harness's `tests_passed` per (run, attempt) pair against the maintainer's read of the produced `specs/memory-brain/spec.md`. Gate 2 is the load-bearing one: a running harness that produces wrong verdicts is worse than no harness. memkernel#3 is a fresh forward-looking task — neither side knows the answer in advance, which is what makes the calibration meaningful (v4 retarget; the v3 plan compared against a closed retrospective).
 
@@ -57,7 +54,6 @@ Each phase is a separate commit (or commit chain) reviewed and approved before t
 | 0     | `./scripts/benchmark list` runs and prints `[]`                            | Code review                                   |
 | 1     | `./scripts/benchmark run --benchmark stub --backend stub` produces score    | CI smoke test green                           |
 | 2     | Aider Polyglot adapter loads, `list` shows tasks, stub-backend run scores  | Per-language smoke task passes via stub       |
-| 3     | Claude Code backend produces real BackendResults; provider env vars logged | One real `claude-code --model sonnet` task scores `pass` locally |
 | 4     | Report generator emits Markdown + JSON; winner rule unit-tested; dogfood   | Dogfood comparison + cause classification documented |
 
 ## Phase 0 — Scaffolding + contracts
@@ -114,7 +110,6 @@ Each phase is a separate commit (or commit chain) reviewed and approved before t
 - The two-attempt protocol is implemented in the runner, not the adapter: runner calls `prompt_for(task, attempt=1, prior=None)`, runs backend, calls `verify`, and if failed and `max_attempts() == 2`, calls `prompt_for(task, attempt=2, prior=verify_result)` and runs backend again.
 - Smoke target: one Python Polyglot task verified end-to-end against the stub backend (golden patch ships from upstream's reference solutions).
 
-## Phase 3 — Claude Code backend with provider-routing recording
 
 - `scripts/benchmark_runner/backends/claude_code.py`:
   - Spawns `claude -p` (no `--bare` by default — measures real product behavior with full autodiscovery + OAuth/keychain auth) with the prompt + working directory; captures transcript JSON; parses final-event usage.
@@ -124,7 +119,6 @@ Each phase is a separate commit (or commit chain) reviewed and approved before t
   - Opt-in to `--bare` via `CCT_CLAUDE_BARE=1` env var (deterministic CI use; skips OAuth/keychain, requires `ANTHROPIC_API_KEY`).
 - Tests use recorded transcript fixtures + a fake `claude` CLI shim — no live `claude -p` calls or network in unit tests. A separate, documented manual smoke (T3.4) exercises the real CLI locally.
 
-(Phase 3 originally also included a vLLM backend with raw OpenAI Chat Completions + a fenced-block file-edit format. Both are dropped in v3 — vLLM is a *provider*, configured via Claude Code's gateway env vars; the file-edit format problem doesn't exist when Claude Code does the file editing internally via its Edit tool.)
 
 ## Phase 4 — Reports + winner rule + dogfood
 
@@ -138,7 +132,6 @@ Each phase is a separate commit (or commit chain) reviewed and approved before t
   3. Commit the produced run-dir under `specs/benchmark-harness/dogfood/<UTC-ts>-liveness/`.
   4. Cause-classify any task failures (harness bug / backend agent-loop / provider-side / model-side) in the merge commit.
 
-  (Earlier draft compared per-language pass rate against Aider's published Polyglot leaderboard. Dropped in v3 — Aider's leaderboard is Aider-the-agent, not Claude Code; not apples-to-apples.)
 
 - Dogfood Gate 2 (verdict correctness — memkernel#3 spec-first dogfood):
   1. Build the `cct-dogfood-memkernel` fixture under `benchmarks/adapters/cct_dogfood_memkernel/`. The adapter snapshots memkernel at a pinned SHA (REVISION file) and exposes one task `memory-brain-spec`. The prompt is the verbatim memkernel#3 issue body. The verifier (`tasks/memory-brain-spec/verify.sh`) runs four hard checks (spec.md exists / 7 section headers / pyproject unchanged / src/memkernel/mcp/ unchanged) plus three best-effort checks (ruff / mypy / pytest, skipped if absent).
@@ -164,7 +157,6 @@ Per spec § "Out of scope" — SWE-bench / LiveCodeBench / BigCodeBench / custom
 
 - **Aider Polyglot dataset is large.** Cloning the full upstream repo is fine locally but bad for CI. The CI smoke test uses the stub adapter only; the Polyglot adapter never runs in CI in this MVP.
 - **Headless `claude -p` requires API auth.** The dogfood gate is run locally by the maintainer, not in CI. Document this clearly in `benchmarks/README.md`.
-- **Gateway provider may not be reachable at dev time.** Tests against the Claude Code backend use a fake `claude` CLI shim and recorded transcripts; live `claude -p` (whether against Anthropic API or a local gateway) is exercised only in the documented manual smoke and the dogfood gate. CI never makes live network calls.
 
 ## Phase-end gates (commit policy)
 

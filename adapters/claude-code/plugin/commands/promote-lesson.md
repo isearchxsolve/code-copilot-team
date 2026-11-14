@@ -34,7 +34,6 @@ If the user is asking you to remember something for *this session only*, use ses
    ```
    If it fails, fix the violation. Never commit lint violations and never silence the linter. If the launcher refuses (no managed environment, wiki-studio missing or not 0.9.0), run the remedy it prints — `bash scripts/setup-wiki.sh` — and lint again; do not skip the step.
 
-   **Without a CCT checkout** (the Claude Code plugin alone, or copied adapter files): nothing installs wiki-studio for you. Install `wiki-studio==0.9.0` into a virtual environment yourself, run `wiki-studio --version`, and only if it prints exactly `0.9.0` run `wiki-studio lint --root <project root>`. Any other version, or no installation, stops here with that message to the user; a missing lint is never silently skipped.
 
 5. **Stop.** Do not "improve" adjacent pages in the same turn. Drive-by edits make review hard. If the user wants more lessons promoted, run this command again per lesson.
 

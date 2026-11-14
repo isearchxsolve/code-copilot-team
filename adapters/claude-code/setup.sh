@@ -1,5 +1,4 @@
 #!/bin/bash
-# claude-setup.sh - One-time setup for Claude Code project templates
 #
 # Creates:
 #   ~/.claude/CLAUDE.md                    Global configuration
@@ -22,7 +21,6 @@ CLAUDE_DIR="$HOME/.claude"
 # The always-loaded global rules, named once: both the install and the sync
 # path below iterate this list, and scripts/check-doc-accuracy.sh and
 # scripts/generate-readme-inserts.sh read this assignment as the one source
-# of what "global rules" means for the Claude Code adapter (#214 Phase 2.2).
 ALWAYS_RULES="coding-standards copilot-conventions copyright-headers safety"
 TEMPLATES_DIR="$CLAUDE_DIR/templates"
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0" 2>/dev/null || echo "$0")")" && pwd)"
@@ -574,7 +572,6 @@ maybe_install_memkernel
 install_analytics_deps
 
 echo "============================================"
-echo "  Claude Code Project Template Setup v2"
 echo "  (with Agent Team configurations)"
 echo "============================================"
 echo ""

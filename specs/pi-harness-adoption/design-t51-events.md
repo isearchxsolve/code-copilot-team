@@ -30,7 +30,6 @@ event is hooked or referenced anywhere in the runtime. Their existence in Pi is
 infer them.
 
 ### Existing CCT shell hooks (`adapters/claude-code/plugin/hooks/hooks.json`)
-The neutral event vocabulary = Claude Code's hook semantics:
 
 | CCT hook event | Matcher    | Script(s)                          | Semantic                          |
 |----------------|------------|------------------------------------|-----------------------------------|

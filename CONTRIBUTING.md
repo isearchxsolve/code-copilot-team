@@ -19,7 +19,6 @@ shared/skills/*/SKILL.md  →  scripts/generate.sh  →  adapters/<tool>/
 
 **New tool adapters** — Want to add support for another AI coding tool? Add a generation target in `scripts/generate.sh` and create `adapters/<tool>/setup.sh`.
 
-**Claude Code improvements** — Agents, hooks, and commands live in `adapters/claude-code/.claude/`. Changes here don't require regeneration.
 
 **Bug fixes** — Especially for cross-platform issues (macOS vs Linux, bash version differences).
 

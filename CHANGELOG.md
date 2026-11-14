@@ -52,7 +52,6 @@ enforced runtime. See `adapters/pi/docs/quickstart.md`.
   shim next to the launcher, with the checkout path baked in and
   `CCT_REPO_DIR` as the override. A shim whose checkout has moved exits 2
   and names the remedy, and `cct doctor` checks the shim's target (#410).
-- **A configured Claude Code gateway is diagnosed, not guessed.** When
   `ANTHROPIC_BASE_URL` is set and neither `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS`
   nor `ENABLE_TOOL_SEARCH` is, the `claude-code` launcher prints a notice
   when it starts a session (interactive or `-p`, not on `help` or `list`)
@@ -204,7 +203,6 @@ enforced runtime. See `adapters/pi/docs/quickstart.md`.
   `CCT_REVIEW_CHECK_TEST_CLAIMS=false` turns it off (#406).
 
 - **`/shape` and the plan agent ask the owner from the main session.**
-  Claude Code removes `AskUserQuestion` from every subagent even when it
   is listed in `tools:`, so the `pitch-shaper` and `plan` agents could
   never ask the open decisions they were told to ask. They now list each
   open decision with a default (`## Open decisions` in the pitch,
@@ -233,7 +231,6 @@ enforced runtime. See `adapters/pi/docs/quickstart.md`.
   response" card prints the basis sentence the API already returned. An
   active-time figure with a stated idle cutoff needs a schema bump and is
   deferred to 2.1 (#414).
-- **The Claude Code plugin is named `cct`.** Plugin components are now
   `/cct:shape` and `cct:build`; install with `/plugin install
   cct@code-copilot-team`. Copies installed under the earlier
   `code-copilot-team` name keep working until uninstalled (#410).
@@ -289,7 +286,6 @@ generated, gated site with a `cct` command in front of it.
   every filter the store can answer and full-text search (#371 A2).
 - **`phase_violation` is no longer collected or published** (#300). The label
   was ungrounded; anything reading it will find it absent.
-- **The Claude Code plugin's `hooks.json` layout changed** (#363). Hook events
   are nested under `"hooks"`. The previously shipped plugin did not load, so
   there is no working installation to migrate — reinstall it.
 - **The README was restructured** (#214): v1.1.0 had 725 lines; v2.0.0 has
@@ -426,7 +422,6 @@ generated, gated site with a `cct` command in front of it.
   and harness-driven modes. **Auto code review cookbook (#347)**, served in
   Guides.
 
-#### Claude Code plugin
 
 - **Skills, agents and commands generated from their sources (#363)** — the
   plugin carried seven hand-copied hook scripts and nothing else, and one copy

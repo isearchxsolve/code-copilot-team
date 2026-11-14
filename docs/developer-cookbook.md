@@ -4,7 +4,6 @@ How a change moves from idea to merged PR in **code-copilot-team**, in two
 modes:
 
 1. **Self development** — a human working without an AI harness.
-2. **AI-harness development** — driving the work through Claude Code (or any
    copilot wired to this repo's rules).
 
 Both modes run the **same SDLC and the same gates**. The harness never gets a
@@ -225,7 +224,6 @@ Conventions that still bind you without a harness:
   re-deriving from raw sources; promote new lessons via
   `knowledge/wiki/workflows/promote-lesson-to-wiki.md`.
 
-## Mode 2 — AI-harness development (Claude Code or another copilot)
 
 The harness executes the same lifecycle; the repo steers it through
 committed rule and skill files, so behavior is reproducible across sessions

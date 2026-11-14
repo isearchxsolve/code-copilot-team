@@ -213,7 +213,6 @@ RC=0; OUTPUT=$(CCT_WIKI_VENV="$V7" CCT_WIKI_LOCK="$BAD_LOCK" CCT_WIKI_PYTHON="$H
 assert_eq "root setup --wiki: a failed install exits non-zero" 1 "$RC"
 assert_contains "...with the failure in the summary" "$OUTPUT" "Wiki tooling: FAILED"
 assert_eq "...and the adapter files were still installed" "1" "$([[ -d "$PROJ3/.cursor" ]] && echo 1 || echo 0)"
-# Review of the first pass: the Claude Code adapter creates .venv with a
 # plain python3 for Session Analytics; the wiki step must come first so the
 # resolver, not PATH order, picks the venv's interpreter.
 assert_eq "root setup runs the wiki step before any adapter" "1" \
@@ -225,8 +224,6 @@ RC=0; OUTPUT=$(CCT_WIKI_VENV="$WORK/venv8" CCT_WIKI_LOCK="$WORK/no-such-lock.txt
   bash "$ROOT_SETUP" --cursor "$PROJ4" 2>&1) || RC=$?
 assert_eq "root setup: an installer usage error is unavailable, exit 0, when the wiki was not requested" 0 "$RC"
 assert_contains "...and the summary says so" "$OUTPUT" "Wiki tooling: unavailable"
-# The Claude Code adapter's own venv creation asks the resolver first.
-assert_eq "the Claude Code adapter creates the shared venv with the resolver's interpreter" "1" \
   "$(grep -c 'wiki_find_interpreter' "$REPO_DIR/adapters/claude-code/setup.sh")"
 
 echo "=== root setup --wiki with no adapter detected ==="

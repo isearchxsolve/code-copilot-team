@@ -46,7 +46,6 @@ export default function SessionFiltersBar({
       />
       <select className={select} value={filters.copilot ?? ""} onChange={(e) => set({ copilot: e.target.value })} aria-label="copilot">
         <option value="">All copilots</option>
-        <option value="claude-code">Claude Code</option>
         <option value="aider">Aider</option>
       </select>
       <select className={select} value={filters.developer ?? ""} onChange={(e) => set({ developer: e.target.value })} aria-label="developer">

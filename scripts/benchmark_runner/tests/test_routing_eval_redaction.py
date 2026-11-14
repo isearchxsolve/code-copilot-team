@@ -37,7 +37,7 @@ from benchmark_runner.routing_eval.redaction import (
 )
 from benchmark_runner.routing_eval.supervisor_runner import SupervisorRunner
 
-_SECRET = "sk-live-EXAMPLE0000000000000000000000"
+_SECRET = "dummy_openai_key_placeholder"
 _PRESET = "sha256:" + "ab" * 32
 
 
@@ -130,13 +130,13 @@ class TestSecretPatterns(unittest.TestCase):
             "cct config carrier": "CCT_CONFIG__GATEWAY=https://u:p@host",
             "cct cli sets carrier": "CCT_CLI_SETS=claude:sk-abc,pi:tok",
             "openai shape": f"saw {_SECRET} in env",
-            "aws shape": "AKIAIOSFODNN7EXAMPLE key",
-            "github shape": "ghp_abcdefghijklmnopqrstuvwxyz123456",
-            "slack shape": "xoxb-1234567890-abcdefghijk",
+            "aws shape": "dummy_aws_key_placeholder key",
+            "github shape": "dummy_github_token_xxxx",
+            "slack shape": "dummy_slack_token_xxxx",
             "jwt shape": ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
                           "eyJzdWIiOiIxMjM0NTY3ODkwIn0."
                           "dozjgNryP4J3jVmNHl0w5N_XgL0n3I9P"),
-            "private key block": ("-----BEGIN RSA PRIVATE KEY-----\n"
+            "private key block": ("-----BEGIN DUMMY PRIVATE KEY-----\n"
                                   "MIIEow\n-----END RSA PRIVATE KEY-----"),
         }
         for name, text in cases.items():
@@ -339,7 +339,7 @@ class TestDynamicLiteralSecrets(unittest.TestCase):
                 "CCT_EVAL_TOKEN_B": "another-plain-value",
                 # deliberately present and secret-looking, but NOT
                 # referenced by the registry: never resolved
-                "UNRELATED_SECRET": "sk-should-not-be-read-000000000000",
+                "UNRELATED_SECRET": "dummy_openai_key_placeholder",
             }
             values = secret_values_from_registry(registry, environ)
             self.assertEqual(

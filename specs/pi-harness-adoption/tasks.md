@@ -74,7 +74,6 @@ order deviates.
     /cct:phase / doctor. Applying model/thinking (session respawn) is Phase 7; live
     per-phase permission switching is Phase 5 — both reported as not-enforced._
 - [x] **T4.4 (P1)** `/cct:phase`, `/cct:status`; status UI fields (FR-020).
-- [x] **T4.5 (P1)** Cross-adapter SDD fixtures (Claude Code vs Pi agreement).
 
 ### Phase 5 — Hooks, permissions, protected operations
 - [x] **T5.1 (P0)** Neutral lifecycle-event schema + Pi event translator + shell-hook adapter (reuse existing hooks where semantics match; degraded/unsupported reporting otherwise) (FR-010).

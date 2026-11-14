@@ -16,7 +16,6 @@ in-session scope decisions).
 
 - **Intent**: unchanged. #66 asks for a reusable UI-Enhancement harness (design-system
   + visual-review skills across 6 adapters; a tool-agnostic ui-harness template with a
-  Playwright/axe/rubric runner and pluggable critic; a Claude Code visual-reviewer
   agent; web-template wiring). The spec's FR-001..FR-010 map 1:1 to the issue's scope
   and acceptance criteria.
 - **Appetite/delivery**: match the user's in-session decisions — FULL closed loop +

@@ -37,7 +37,6 @@ cases are explicitly deferred to follow-up issues.
    types, each with at least one citation in `sources:` frontmatter.
 4. **Promote-to-wiki workflow.** A documented, runnable manual
    procedure for turning a session-level lesson into a wiki page,
-   plus a slash command shim for the Claude Code adapter
    (`/promote-lesson`).
 5. **Wiki-first query convention.** A short addition to CLAUDE.md
    and to every adapter instruction artifact telling agents to

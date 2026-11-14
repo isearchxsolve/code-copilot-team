@@ -105,7 +105,6 @@ def _frontmatter(text: str) -> tuple[dict[str, str], str]:
 
 
 def _clean_title(raw: str) -> str:
-    # `# **🎛️ Claude Code Setup Cookbook**` → `Claude Code Setup Cookbook`;
     # `# \`knowledge/\` — Project Knowledge Layer` → `knowledge/ — Project Knowledge Layer`
     t = raw.replace("**", "").replace("`", "").strip()
     t = re.sub(r"^[^\w(\[/.]+", "", t)   # leading emoji / symbols

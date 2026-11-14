@@ -68,7 +68,7 @@ cat > "$SENTINEL" <<'TOML'
 [providers.hosted]
 type = "openai-compatible"
 base_url = "https://api.example.com/v1"
-api_key_env = "sk-SENTINELdoNOTprintTHISvalue0000"
+api_key_env = "dummy_openai_key_placeholder"
 TOML
 RC=0; SOUT=$(bash "$VALIDATE" "$SENTINEL" 2>&1) || RC=$?
 assert "a key-shaped api_key_env is rejected (exit 1)" "[[ '$RC' == '1' ]]"

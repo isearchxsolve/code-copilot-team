@@ -29,7 +29,6 @@ origin:
 
 Build the breaker as four cooperating pieces, all propagated through the
 existing `shared/skills/` → `scripts/generate.sh` machinery so every adapter
-(Claude Code, Codex, Cursor, GitHub Copilot, Windsurf, Aider) picks it up
 automatically:
 
 1. **Frontmatter convention** — every `specs/<id>/plan.md` carries an

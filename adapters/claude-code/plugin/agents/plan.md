@@ -20,7 +20,6 @@ You are a planning agent. Your job is to understand requirements, list the open 
    - `phase-workflow/SKILL.md` — post-phase verification steps (includes peer review validation)
 3. **Consult lessons learned.** If `specs/lessons-learned.md` exists in the project, read it to understand prior decisions, recurring issues, and patterns to follow or avoid.
 4. **Explore the codebase.** Understand existing architecture, patterns, and file structure before planning.
-5. **List the open decisions.** Data model shape, output formats, UI layout, auth strategy: anything the clarification protocol says must be confirmed and that no project doc answers. You run as a subagent and Claude Code removes `AskUserQuestion` from every subagent even when it is listed (#407), so do not try to ask. Put each one in the plan's `### Open decisions` section as `D<n>: <question> — default: <your choice> — why it matters: <one line>`, plan on your defaults, and the main session asks the user and records the answers before the plan is approved. Don't assume silently: an unlisted assumption is the failure this section prevents.
 6. **Determine spec_mode.** Classify the task's risk level per `spec-workflow.md`:
    - `full`: security, schema, integration, features >2 files
    - `lightweight`: features 1–2 files, non-critical

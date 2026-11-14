@@ -6,7 +6,6 @@
 ## Summary
 
 Code Copilot Team (CCT) adds [Pi](https://pi.dev/) as a first-class **executable**
-harness adapter — the second enforced-tier adapter after Claude Code. The
 deliverable is one distribution with two activation surfaces:
 
 > **`pi install` gives reusable CCT content; `pi-code` gives the enforced CCT harness.**
@@ -21,7 +20,6 @@ deliverable is one distribution with two activation surfaces:
   system. Never loaded by bare `pi`.
 
 The objective is **behavioral parity** with the CCT engineering contract as
-enforced on Claude Code — not implementation parity and not reimplementation of
 Anthropic-hosted platform services.
 
 ## User Scenarios
@@ -146,7 +144,6 @@ forking Pi.
   Pi `--approve`), `--config <path>`, `--set <k=v>`, `--strict`,
   `--diagnostic`, and the peer-review trio below.
 - **FR-000a (R4)** Enforced-launcher symmetry: for capabilities shared with
-  Claude Code, `pi-code` mirrors the `claude-code` launcher's command names,
   option names (`--peer-review [provider]`, `--peer-review-off`,
   `--peer-review-scope <code|design|both>`), environment contract
   (`CCT_PEER_REVIEW_ENABLED`, `CCT_PEER_PROVIDER`, `CCT_PEER_REVIEW_SCOPE`),
@@ -333,7 +330,6 @@ forking Pi.
 ## Constraints
 
 - **C-1** Additive only: existing adapters, setup flags, shared skills,
-  Claude Code behavior, review/analytics/benchmark formats, provider
   profiles, and project templates continue to work unchanged.
 - **C-2** Minimum supported Pi version ≥ 0.79.0; compatibility CI confirms
   the exact range; feature-detect where possible; exact CLI flags validated
@@ -402,7 +398,6 @@ tested gate, not aspiration):
 11. Security tests pass (path traversal, symlinks, shell-wrapper bypass,
     injection via docs/tool output, package substitution, fork bombs,
     worktree cross-contamination, analytics secret leakage).
-12. Cross-adapter contract tests pass: Claude Code and Pi agree on SDD
     classification, artifacts, phase order, gate/permission decisions,
     review artifact formats, provider dispatch, verification outcomes,
     analytics semantics (behavioral parity, not identical text).

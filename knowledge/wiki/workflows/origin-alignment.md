@@ -49,7 +49,6 @@ For each `issue`, URL, and transcript listed under `origin:`:
 - `issue: <repo>#N` — `gh issue view N --repo <repo>` and read the
   body in full.
 - `urls:` — fetch each URL (`curl -fsSL` with caching, or `WebFetch`
-  in Claude Code) and read it. Do not paraphrase from training-data
   memory.
 - `transcripts:` — read each file under
   `specs/<feature-id>/origin/<date>-<slug>.md`.
@@ -106,7 +105,6 @@ Map the exit code to a decision:
 ### 5. On exit ≥ 2, surface the escalation
 
 The verifier prints the resolution menu in its error output. The
-slash command (in Claude Code) renders it as `AskUserQuestion`. In
 other adapters, present the same three options as plain text:
 
 - **A) Rescope the working spec to match the origin.**

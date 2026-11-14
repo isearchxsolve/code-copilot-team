@@ -15,7 +15,6 @@ incremental pattern; new tables need no migration (idempotent `apply_ddl`).
 
 - US1: As an operator who enabled `trace_archive: true` for a project, I run
   `session-analytics archive`; later the source transcript is deleted by
-  Claude Code's cleanup — the redacted TURN TEXT still exists in my store,
   per turn, and exports with everything else. (Scope honesty, settled at
   review 2026-07-19: v1 archives redacted turn text ONLY; tool inputs and
   tool results — the highest-risk redaction surface — are deliberately

@@ -193,8 +193,6 @@ Meanwhile, AI coding sessions operate without any external quality check. The sa
 ## Key Entities
 
 - **review-round-runner.sh**: Script that executes one review round. Spawns reviewer in read-only sandbox, captures output, parses findings, writes round artifacts, checks breakers. Stateless per invocation — loop state lives in `state.json`.
-- **`/review-submit`**: Claude Code command that the Build agent runs to trigger a review round. Validates clean worktree, invokes runner, returns verdict.
-- **`/review-decide`**: Claude Code command that the human runs to resolve a circuit breaker. Writes `decision.json`. Sole decision channel.
 - **Finding**: A single issue identified by the reviewer. Has a stable ID (file + category + normalized description), severity, category, and lifecycle (created → dispositioned → resolved or stale).
 - **Finding ID**: SHA-256 truncated to 8 hex chars of `(file + category + normalized_description)`. Line numbers excluded to remain stable across edits.
 - **Disposition**: Builder's response to a finding: `fixed` (with commit ref), `disputed` (with explanation), `deferred` (acknowledged, fix later), `not-applicable` (wrong target).

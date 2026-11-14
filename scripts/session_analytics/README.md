@@ -1,8 +1,6 @@
 # session_analytics
 
 Copilot session analytics & process-mining pipeline (issue #63) — the
-**Claude Code analyzer**, mirroring the architecture of the upstream
-kiro-analyzer (which already covers Kiro). Ingests Claude Code (and Aider)
 sessions into PostgreSQL + an embedded Kùzu knowledge graph, runs an
 LLM-as-Judge heuristic pass over turns, exposes an MCP server, and serves a
 Next.js Studio UI.
@@ -17,7 +15,6 @@ See `specs/session-analytics/{spec,plan,tasks}.md` for the full design.
 #    (local SQLite + local Ollama as judge — fully local).
 ./scripts/session-analytics setup
 
-# 2. Ingest your local Claude Code sessions (nothing leaves the machine).
 ./scripts/session-analytics ingest
 
 # 3. Inspect counts.
@@ -265,7 +262,6 @@ override), keyed by model id:
 ```
 
 - Rates are **USD per 1,000,000 tokens** (`input`, `output`, `cache_read`,
-  `cache_write` — the four token types Claude Code reports).
 - **`effective_date`** is also the *price version*: it is stamped onto every
   turn priced with that rate (`copilot_turn.cost_price_version`), so a stored
   `cost_usd` is always traceable to the rate that produced it.
@@ -397,7 +393,6 @@ produced, so a session can be traced back to its benchmark attempt directory:
 ```
 
 It recursively scans `--runs-root` for `run-record.json` files and, for each
-record that carries a Claude Code `session_id`
 (`backend.metadata.session_id`), stamps `copilot_session.benchmark_run_dir`
 with that record's **attempt directory** on the matching
 `(copilot='claude-code', session_id)` row (a parameterized, idempotent
@@ -471,7 +466,6 @@ time-window fallback for null-`session_id` runs — a later E9 issue.
 
 ## Harness stamp (#371 A4a)
 
-Every Claude Code session ingested after the stamp is installed carries
 the harness it ran under, so "did the new skill change anything" has a
 population to compare over (the compare itself is A4b):
 
@@ -480,7 +474,6 @@ population to compare over (the compare itself is A4b):
 | `cct_version`, `cct_sha` | `~/.cct/harness.json`, written by `setup.sh` on install and `--sync`: the repo's `package.json` version and the **full** commit the instructions were installed from |
 | `instructions_digest` | sha256 over the rules, skills, agents and commands actually present in `~/.claude` at session start — hand edits included |
 | `providers_digest` | sha256 of the providers profile's bytes at session start (the bytes are read only to hash them) |
-| `cli_version` | the Claude Code CLI version the transcript records carry |
 | `harness_mixed` | true when a later stamp for the same session, or a second CLI version in its transcript, differed from the earliest |
 
 The first four are captured **when the session starts**, not at ingest,
@@ -510,7 +503,6 @@ recorded, and mixed stays mixed. The session page shows the stamp
 shown", or "Harness: unstamped".
 
 **What is unstamped, and stays so.** Sessions from before the hook was
-installed; Pi and Aider sessions (no hook); plugin-only Claude Code
 sessions — the generated plugin deliberately omits the hook, because a
 plugin loads its instructions from `CLAUDE_PLUGIN_ROOT`, not `~/.claude`,
 and a digest of the wrong tree would be worse than none. The ledger is
@@ -762,7 +754,6 @@ then run `session-analytics ingest --full`.
 ## Trace archive + search (E10 Slice A, issue #98)
 
 The store keeps only 500-char redacted previews, while full traces live in
-volatile sources (Claude Code's own transcript cleanup deletes them after
 ~30 days). `archive` makes traces durable — **redaction-safe by
 construction** and **off by default**.
 
@@ -1447,7 +1438,6 @@ along with the records, so two sessions in one lineage share a first
 timestamp to the millisecond: time here is not a weak signal, it is a
 wrong one.
 
-The unit is a **source transcript**, not a session row. The Claude Code
 adapter groups a resume chain's files under one `sessionId` and
 deduplicates their turns — correct, and load-bearing — but that
 grouping consumes the evidence that there were several. So several

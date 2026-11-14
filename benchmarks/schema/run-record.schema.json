@@ -79,7 +79,6 @@
       }
     },
     "effective_prompt": {
-      "description": "The prompt the backend actually sent to the model after any wrapping (Claude Code's system prompt, adapter-added framing, etc.). Optional — backends that do not wrap omit this. When present, the path is relative to the attempt directory.",
       "type": ["object", "null"],
       "required": ["path", "sha256"],
       "additionalProperties": false,

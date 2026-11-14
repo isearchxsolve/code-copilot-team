@@ -241,6 +241,5 @@ contract.
 
 ## Out of scope
 
-#268; the Claude Code → DeepSeek → Codex chain; any routing-policy
 change; any traffic-interception layer (O2 was rejected as
 architecturally insufficient, not merely expensive).

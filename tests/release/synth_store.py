@@ -6,7 +6,6 @@
 The packaged fixture is one 6-turn session, which cannot exercise what
 v2.0.0 actually claims: a list that pages at 50, a timeline that windows
 at 100, lineage proven by shared turn identifiers. This writes real
-Claude Code transcripts — the same format ingest parses in production —
 so the checks run through the real ingest path rather than INSERTing
 rows behind it.
 

@@ -42,7 +42,6 @@ const NO_ANSWER_STATUSES = new Set(["backend_error", "timeout"]);
 
 const LEVER_HINT: Record<string, string> = {
   SCRIPT: "a shell or Python script",
-  HOOK: "a Claude Code hook",
   SKILL: "a reusable skill",
   STEERING: "a CLAUDE.md rule",
 };

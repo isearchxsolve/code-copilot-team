@@ -11,7 +11,6 @@
 # documented history format; this adapter has NOT been validated against a
 # real .aider.chat.history.md on this machine (none present). The committed
 # fixture is provisional — regenerate it (and re-confirm the parser) from a
-# real Aider capture before relying on the Aider numbers. Claude Code is the
 # validated adapter.
 
 from __future__ import annotations
@@ -46,7 +45,6 @@ _USER_PREFIX = "#### "
 class AiderAdapter:
     copilot_id = COPILOT_ID
     #: #371 A6 — whether this source exposes a STABLE PER-TURN IDENTITY
-    #: that survives a resume. Claude Code replays the ancestor's
     #: records and preserves their `uuid`, which is what makes lineage
     #: provable rather than inferred; Aider carries no such
     #: identifier, so a thread is not merely absent for it, it is

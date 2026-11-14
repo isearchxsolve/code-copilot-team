@@ -87,6 +87,5 @@ the plugin is named `code-copilot-team` in
   adapter's home) to `~/.cct/`. Deferred in #410 with the planning
   finding; it is a migration, not a command rename.
 - A `cct start --pi` or `cct start --codex` form. The owner's session is
-  Claude Code; other harnesses keep their launchers.
 - Renaming the GitHub repository, the marketplace, the `CCT_*`
   environment prefix, or the `code-copilot-team-pi` package.

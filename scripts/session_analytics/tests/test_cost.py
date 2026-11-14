@@ -212,7 +212,6 @@ class TestPerTurnModelAttribution(RegistryResetTestCase):
         # a mid-session /model switch — FR-2).
         self.assertEqual(assistant_turns[2].model, "claude-sonnet-4-8")
 
-        # User turns never carry a model in Claude Code transcripts.
         user_turns = [t for t in session.turns if t.role == C.ROLE_USER]
         self.assertTrue(all(t.model is None for t in user_turns))
 

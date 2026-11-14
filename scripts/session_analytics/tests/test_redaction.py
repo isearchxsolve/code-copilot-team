@@ -17,7 +17,7 @@ from session_analytics.relational.db import Database, apply_ddl
 
 from session_analytics.tests.support import RegistryResetTestCase
 
-_SECRET = "SECRET_TOKEN=sk-test-should-not-store"
+_SECRET = "SECRET_TOKEN=dummy_openai_key_placeholder"
 
 
 class TestRedactionHelpers(unittest.TestCase):

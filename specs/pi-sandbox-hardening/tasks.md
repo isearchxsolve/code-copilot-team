@@ -34,7 +34,6 @@ TS pattern source, fail-closed.
 | # | [P] | Task | File(s) | AC |
 |---|-----|------|---------|----|
 | 8 | | Register `security.env_scrub`, `security.env_scrub_keep`, `security.env_scrub_extra` in config lint; document in `configuration-reference.md`. | `config/lint.ts`, docs | SC-3 |
-| 9 | [P] | Capability `security.env-scrub` ×4 files — Pi `degraded` (CCT spawn boundaries only; primary session untouched by design), Claude Code `disabled`; registry gate green. | `shared/capabilities/*.yaml`, `capabilities.ts` | SC-5 |
 | 10 | [P] | Battery invariant 9 (credential-shaped var does not survive into the scrubbed spawn env; keeps do) + `security-battery.md` row + "#173 closure mapping" section (asks 1/3 already delivered; containment honestly degraded). | `tests/pi-runtime/security-battery.test.mjs`, `specs/pi-harness-adoption/security-battery.md` | SC-5/6 |
 | 11 | | Docs: scrub contract + primary-session boundary in `security-model.md`; README pointer; launcher help. | `adapters/pi/docs/*`, `bin/pi-code` | SC-6 |
 

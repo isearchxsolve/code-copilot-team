@@ -50,7 +50,6 @@ const GROUPS: { title: string; blurb: string; keys: string[] }[] = [
     blurb:
       "Where this repository's benchmark harness wrote its runs. With it " +
       "set, Analysis → Link benchmark runs (and Run all) stores every " +
-      "attempt's pass/fail and links Claude Code runs whose run record " +
       "names a loaded session — what the Benchmark tab shows. Leave it " +
       "blank if you have not run the harness; the step is then skipped.",
     keys: ["CCT_SA_BENCHMARK_RUNS_ROOT"],

@@ -12,7 +12,6 @@ Origin claim:
 > Provide a detailed Spec Driven Development plan for supported PI
 > harness in Code Copilot Team and adding the heavy discoverable and
 > flexible configuration for supporting all features available in
-> Claude Code to this PI adoption. [Consolidated across three
 > independent plans + final resolutions R1–R6 + verification addenda
 > V1–V3, 2026-07-21.]
 
@@ -25,7 +24,6 @@ Working claim:
 > monotonic security floor), risk-scaled SDD enforcement, the
 > Research→Plan→Build→Review phase workflow, permission/protected-path
 > policy, and gated provider/wiki/benchmark/analytics integration.
-> Claude Code feature coverage is expressed as a two-dimensional
 > capability model with honest machine-readable parity reporting;
 > Anthropic-hosted platform services are declared external-platform /
 > unavailable rather than claimed as parity.
@@ -39,7 +37,6 @@ What changed since the superseded record:
   - `.github/workflows/pi-tests.yml` now runs the three Pi suites in CI.
 
 Mismatches:
-  - none. The origin's "all features available in Claude Code" is
     realised via the capability model; the exclusions in spec.md
     Non-Goals (hosted services, Remote Control, transcript-identical
     parity) were fixed by resolutions R1–R6, which are part of the

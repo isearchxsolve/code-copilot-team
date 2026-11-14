@@ -29,7 +29,6 @@ Session Analytics does not (`doc_internal/plans/session-analytics-mlflow-gaps-20
 | Fact | Where |
 |---|---|
 | `copilot_tool_call` stores `tool_name`, `tool_name_raw`, `input_preview`, `sequence_num` per turn; `copilot_tool_result` stores `status`, `is_error`, `output_length`, `error_message`; `copilot_file_access` stores `file_path`, `access_type`, `language` with turn and tool-call refs | `scripts/session_analytics/config_data/ddl/postgres/001_core.sql` |
-| `copilot_turn` stores `uuid`, `parent_uuid`, `is_sidechain`, tokens, `cost_usd`, `timestamp`; the Claude Code adapter fills `parent_uuid` and `is_sidechain` at ingest | `001_core.sql`; `adapters/claude_code.py:153-154` |
 | `input_preview` is produced by `redaction.redact_tool_input(...)` under the session's redaction mode before the row is written | `relational/store.py:300` |
 | Tool result bodies are not stored, by the trace-archive rule ("tool I/O is explicitly not archived") | `scripts/session_analytics/README.md` (E10) |
 | `get_session_details` returns turns (sequence, role, preview, `has_tool_use`, judge fields, timestamp, archived content) and an aggregate `tool_usage` map; no tool calls, no results, no sidechain fields | `mcp/tools.py:258-300` |

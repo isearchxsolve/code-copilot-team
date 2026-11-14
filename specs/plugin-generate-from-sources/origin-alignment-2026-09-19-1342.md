@@ -31,7 +31,6 @@ Differences from the origin, each surfaced in the bundle:
    skills. The plan ships them as ordinary skills and says so in the
    docs. Put to the owner as D1.
 3. "Address plugin-namespaced commands" is met by verifying and
-   documenting what Claude Code does with same-named components, not by
    code, unless the verification shows real harm (FR-5). The owner may
    have meant more than that.
 4. Duplicate hooks are handled by a guard that deliberately excludes the

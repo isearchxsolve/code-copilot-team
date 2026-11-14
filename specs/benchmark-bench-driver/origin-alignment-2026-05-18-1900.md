@@ -27,7 +27,6 @@ constraints; no verdict/scoring/isolation change (D5 adds only a
    stale `subprocess.run` premise. Intent + acceptance criteria
    unchanged. (OQ-3 → "build on existing, document divergence".)
 2. **D1 vLLM env-fill → probe-then-decide** (user-proxy vs.
-   ephemeral-proxy auto-detect) because Claude Code cannot speak raw
    vLLM. (OQ-2.)
 3. **Legacy `run-compare-*.sh` kept + shared proxy helper extracted**,
    not superseded/deleted. No capability discarded. (OQ-1.)

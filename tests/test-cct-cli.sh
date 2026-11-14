@@ -83,7 +83,6 @@ assert "start without a launcher says it wants the installed one, not the checko
   "grep -q 'INSTALLED launcher' <<<\"\$NOLAUNCHER_OUT\""
 rm -r "$START_BIN" "$START_HOME" "$EMPTY_HOME"; rm "$START_LOG"
 
-# ── doctor reports the Claude Code gateway and its compat settings (#399) ──
 gw_status() {
   # gw_status <json> → the Gateway row's status
   python3 -c "
@@ -272,7 +271,7 @@ cat > "$BAD_PROFILE" <<'TOML'
 [providers.hosted]
 type = "openai-compatible"
 base_url = "https://api.example.com/v1"
-api_key_env = "sk-SENTINELpastedKEYnotAname"
+api_key_env = "dummy_openai_key_placeholder"
 healthcheck = "true"
 TOML
 BAD_OUT=$(CCT_PROVIDER_PROFILE="$BAD_PROFILE" bash "$CCT" doctor --no-network 2>&1 || true)
@@ -393,7 +392,7 @@ assert "a missing automation config exits 2" "[[ '$RC' == '2' ]]"
 
 # ── explain must never print a credential (#362 review) ──────
 SA_CONFIG="$(mktemp -d)/session-analytics.json"
-printf '{"judge": {"api_key": "sk-SENTINELdoNOTprintTHIS"}}' > "$SA_CONFIG"
+printf '{"judge": {"api_key": "dummy_openai_key_placeholder"}}' > "$SA_CONFIG"
 KEY_OUT=$(CCT_SA_USER_CONFIG="$SA_CONFIG" bash "$CCT" config explain analytics.judge.api_key 2>&1 || true)
 KEY_JSON=$(CCT_SA_USER_CONFIG="$SA_CONFIG" bash "$CCT" config explain analytics.judge.api_key --json 2>&1 || true)
 assert "explain never prints a credential (human)" "! grep -q 'SENTINELdoNOTprint' <<<\"\$KEY_OUT\""

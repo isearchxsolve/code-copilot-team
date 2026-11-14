@@ -1,4 +1,3 @@
-# Claude Code adapter capability classification (FR-029).
 #
 # Present so parity reporting compares two classified adapters rather than
 # comparing Pi against an assumed baseline. Ids must exist in catalog.yaml.
@@ -56,7 +55,6 @@ capabilities:
     implementation_kind: optional-bridge
     runtime_status: disabled
     reason: >-
-      Claude Code can invoke Pi as a peer-review provider, but the reviewer
       execution contract has not passed its acceptance gates.
     status_probe: "providers-health.sh check for a working pi-code."
 
@@ -79,7 +77,6 @@ capabilities:
     implementation_kind: native
     runtime_status: enabled
     reason: >-
-      Claude Code is the first-party client for these services, so they are
       native here and external-platform elsewhere.
     status_probe: "Provided by the host application."
 
@@ -87,7 +84,6 @@ capabilities:
     implementation_kind: cct-first-party
     runtime_status: enabled
     reason: >-
-      Claude Code's PreCompact/PostCompact hooks checkpoint before compaction
       and recover after — a true pre-compaction hook (Pi has no such event).
     status_probe: "PreCompact/PostCompact hooks checkpoint + recover session state."
 
@@ -95,26 +91,21 @@ capabilities:
     implementation_kind: cct-first-party
     runtime_status: disabled
     reason: >-
-      Pi-runtime sandbox provider (FR-019). The Claude Code adapter relies on
       host + permission-mode controls and does not implement the CCT sandbox
       detection/gate; reported disabled rather than overclaimed.
-    status_probe: "Not implemented in the Claude Code adapter."
 
   - id: security.env-scrub
     implementation_kind: cct-first-party
     runtime_status: disabled
     reason: >-
-      Pi-runtime env scrubbing (#173). The Claude Code adapter does not
       implement the CCT spawn-boundary scrub (its sandboxing and subagent
       spawning are native surfaces); reported disabled rather than
       overclaimed.
-    status_probe: "Not implemented in the Claude Code adapter."
 
   - id: memory.promotion
     implementation_kind: cct-first-party
     runtime_status: enabled
     reason: >-
-      Claude Code promotes memories to its persistent memory layer and can reach
       MemKernel over MCP for code-aware retrieval.
     status_probe: "Native memory + MemKernel MCP server."
 
@@ -122,7 +113,6 @@ capabilities:
     implementation_kind: native
     runtime_status: enabled
     reason: >-
-      Claude Code runs subagents as native SDK child sessions defined by
       `.claude/agents/*.md` manifests, dispatched through the Agent tool.
     status_probe: "Native Agent tool + .claude/agents/*.md manifests."
 
@@ -130,7 +120,6 @@ capabilities:
     implementation_kind: cct-first-party
     runtime_status: disabled
     reason: >-
-      Claude Code isolates parallel subagents in native git worktrees (Agent
       isolation: "worktree"), but the CCT worker/ownership/verification/merge/
       cleanup ledger (FR-013) is not implemented in the Claude adapter; reported
       disabled rather than overclaimed.
@@ -140,7 +129,6 @@ capabilities:
     implementation_kind: cct-first-party
     runtime_status: disabled
     reason: >-
-      Claude Code ships native Agent Team configurations, but the CCT
       team-coordination ledger (FR-012 shared ledger / claiming / plan approval /
       controlled shutdown) is not implemented in the Claude adapter; reported
       disabled rather than overclaimed.

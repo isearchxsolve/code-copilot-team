@@ -19,7 +19,6 @@ origin:
 
 Add spec-driven development templates, a spec-workflow rule, a Plan Approval Gate,
 and conditional Build gating (spec_mode: full | lightweight | none) to the
-code-copilot-team framework. Claude Code adapter gets agent-level enforcement;
 other adapters get advisory content via generate.sh.
 
 ## Technical Context
@@ -27,7 +26,6 @@ other adapters get advisory content via generate.sh.
 **Language/Version**: Bash (scripts), Markdown (rules/templates/agents)
 **Primary Dependencies**: scripts/generate.sh, shared/rules/, shared/templates/
 **Testing**: bash tests (test-shared-structure.sh, test-generate.sh, test-hooks.sh)
-**Constraints**: All changes must flow through shared/ → generate.sh → adapters/. No direct adapter edits except Claude Code agent manifests (which are adapter-specific by design).
 
 ## Scope
 
@@ -99,7 +97,6 @@ other adapters get advisory content via generate.sh.
 - [ ] phase-workflow.md includes spec artifact verification steps
 - [ ] Both files reference specs/ directory convention
 
-### Task 4: Modify Agent Manifests (2 files, Claude Code only)
 
 **Files to modify:**
 
@@ -169,4 +166,3 @@ other adapters get advisory content via generate.sh.
 
 - generate.sh modification could break existing adapter generation → mitigate by running full test suite after
 - Codex AGENTS.md has 32 KiB limit → verify size after adding spec-workflow content
-- Agent manifest changes are Claude Code–specific; other adapters get advisory content only

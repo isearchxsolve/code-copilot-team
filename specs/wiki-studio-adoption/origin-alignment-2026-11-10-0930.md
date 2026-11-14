@@ -28,7 +28,6 @@ The issue's scope, before later owner rulings, is:
 > dependency's home; make `cct doctor` report whether it is installed and at
 > what version; update the `wiki-maintainer` catalogue prerequisite and adapter
 > support; make `shared/skills/wiki-first-query/SKILL.md` and the
-> `/promote-lesson` command for Claude Code, the plugin and Pi call the packaged
 > CLI; retarget or retire both wiki CI workflows; and keep
 > `knowledge/wiki/schema/` as the CCT project override. Delete the embedded
 > engine and preserve the five existing verbs (`ingest`, `promote`, `query`,
@@ -69,7 +68,6 @@ quoted in
 `specs/wiki-studio-adoption/origin/2026-11-09-owner-direction.md`,
 **Owner ruling**, items 1 and 3:
 
-1. **Managed adapter installation.** The issue names Claude Code, plugin and Pi
    commands without distinguishing their delivery modes. The owner approved
    managed installation for checkout-based setups initially, conditioned on the
    spec documenting the gap and making no parity claim for plugin-only or
@@ -116,4 +114,3 @@ Studio visibility remain excluded.
 
 Verdict: aligned
 Confidence: high
-

@@ -2,7 +2,6 @@
  * Neutral lifecycle-event schema + Pi->CCT translators (T5.1, FR-010).
  *
  * Pi emits a small set of lifecycle events; CCT hooks are expressed in the
- * neutral vocabulary shared with the Claude Code adapter (PreToolUse, ...).
  * This module defines the adapter-agnostic event record, the Pi->CCT mapping
  * matrix with an explicit support level, and pure translators for the two
  * events Pi is verified to emit (session_start, tool_call).
@@ -37,7 +36,6 @@ export interface CctLifecycleEvent {
   event: CctHookEvent;
   phase: EventPhase;
   tool?: string;
-  matcher?: string; // Claude Code matcher, e.g. "Edit|Write" | "Bash"
   input?: Record<string, unknown>;
   result?: Record<string, unknown>; // PostToolUse only (unsupported today)
   cwd: string;
@@ -116,7 +114,6 @@ export function supportOf(event: CctHookEvent): SupportLevel {
   return SUPPORT_BY_EVENT[event] ?? "unsupported";
 }
 
-/** Claude Code tool-name + matcher for a Pi tool name (write/exec veto set). */
 const TOOL_MATCHER: Record<string, string> = {
   edit: "Edit|Write",
   write: "Edit|Write",
@@ -169,7 +166,6 @@ export function translateToolCall(
  * Serialize a lifecycle event to the Claude-Code-shaped stdin JSON the existing
  * `.sh` hooks read (`.tool_name`, `.tool_input.file_path`, `.tool_input.command`,
  * `.hook_event_name`, `.cwd`). Pi input keys (path/file_path/filePath, cmd) are
- * normalized to the Claude Code field names so the scripts run unmodified.
  */
 export function toClaudeStdin(ev: CctLifecycleEvent): string {
   const input = ev.input ?? {};

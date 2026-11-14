@@ -33,7 +33,6 @@ origin:
 - Pi's permission engine already has the required three-way headless policy:
   `allow`, `deny`, and `fail`. The permission engine distinguishes ask from
   deny, so ask-resolution can be loosened without weakening deny rules.
-- Claude Code has shared permission profile JSON files under
   `adapters/claude-code/permissions/`, but project `.claude/settings.json`
   remains a Claude-launcher-owned generated artifact rather than a common
   profile output shared with Pi.
@@ -64,7 +63,6 @@ clear, auditable opt-in.
 ### D2: Shared Permission Output for Claude
 
 Keep the shared permission profile JSON as the source. Add a generator or
-launcher subcommand that produces Claude Code `settings.json` managed
 permission keys from that source. The generator must:
 
 - emit no `bypassPermissions`;
